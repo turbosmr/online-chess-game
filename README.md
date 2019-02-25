@@ -1,4 +1,4 @@
-# csc667-teamproject-teamNN
+# csc667-teamproject-team10
 
 # Todo:
 
