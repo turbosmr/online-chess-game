@@ -1,113 +1,91 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>lobby page</title>
+  <title>Game</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
-  <style>
-  body, html {
-      height: 100%;
-      margin: 0;
-    }
-    
-    .bg {
-      /* The image used */
-      background-image: url("images/chessboard.jpg");
-    
-      /* Full height */
-      max-height: 100%;
-      max-width: 100%;
-      height: 550px; 
-      width: 550px;
-      /* Center and scale the image nicely */
-      background-position: 0;
-      background-repeat: no-repeat;
-      background-size:100%;
-      
-    }
-  .footer{
-      background-color:rgb(37, 36, 36);
-      color: white;
-      padding: 15px;
-
-    }
-    .center-block{
-        float: none;
-    }
-    .container{
-        justify-content: center;
-        align-items: center;
-
-    }
-  </style>
+  <link rel="stylesheet" href="stylesheets/style.css">
 </head>
 <body style= "background-color:rgb(56, 52, 52);">
-        <nav class="navbar navbar-inverse">
-                <div class="container-fluid">
-                  <div class="navbar-header">
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-                      <span class="icon-bar"></span>
-                      <span class="icon-bar"></span>
-                      <span class="icon-bar"></span>                        
-                    </button>
-                    <a class="navbar-brand" href="index.html">Team 10 Chess</a>
-                  </div>
-                  <div class="collapse navbar-collapse" id="myNavbar">
-                    <ul class="nav navbar-nav">
-                            <li><a href="index.html">Login</a></li>
-                        <li><a href="lobby.html">Lobby</a></li>
-                      <li class="active"><a href="chessBoard.html">Chess Board</a></li>
-                    </ul>
-                  </div>
-                </div>
-              </nav>
-                
+   
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container-fluid">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>                        
+            </button>
+            <a class="navbar-brand" href="index.html">Team 10 Chess</a>
+          </div>
+          <div class="collapse navbar-collapse" id="myNavbar">
+            <ul class="nav navbar-nav">
+              <li><a href="lobby.html">Lobby</a></li>
+              <li><a href="#">Profile</a></li>
+              <li><a href="#">How to Play</a></li>
+              <li><a href="#">About</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+              <li><a href="#"><span class="glyphicon glyphicon-user"></span> Steve R</a></li>
+              <li><a href="index.html"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
+            </ul>
+          </div>
+        </div>
+      </nav>
   
 <div class="container">
-        <h1 class="text-center" style="color:white">TEAM 10 CHESS</h1>
-        
-       
-        <br><br><br>
+  <br><br><br><br>
+  <h1 class="text-center" style="color:white">TEAM 10 CHESS</h1>
+</div>
 
+<div class="container">
+    <h2 class="text-center" style="color:white">Johnson W</h2>
+</div>
+
+<div class="container">
     <div class="row">
       <div class="col-md-3" >
-        <div class="col-md-12" style="background-color:rgb(145, 168, 145);">
+          <div class="well well-sm"> 
                 <div >
-                        <br><br>
-                        <button type="button" class=" btn btn-dark center-block">Move</button><br><br>
-                        <button type="button" class=" btn btn-dark center-block">Redue</button><br><br>
-                        <button type="button" class=" btn btn-dark center-block">Resign</button><br><br>
-                     
-                            
-                      </div>
-       </div>
-     </div>
-     <div class="col-md-6" >
-            
-       <div class="col-md-12 bg" >
-        
-       
-       </div>
+                   <br>
+                     <button type="button" class=" btn center-block">Submit Move</button><br>
+                     <button type="button" class=" btn btn-danger center-block">Resign Game</button><br>
+               </div>
+          </div>
+          <br>
+          <h3 style="color:white">Time Per Move: 1 Day</h3>
+          <h3 style="color:white">Time Left: 12:54</h3>  
+          <h3 style="color:white">Your Move</h3>
+      </div>
+       <div class="col-md-6 chessboard">
+      <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+       <h2 class="text-center" style="color:white">Steve R <span class="dot"></span> </h2>
      </div>
       <div class="col-md-3" >
-        <div class="col-md-12" style="background-color:rgb(145, 168, 145);">
-          <h2>Chat</h2>
-          <p>This is where you can chat with other players</p>
-
-          <ul id="messages"></ul>
-<form action="">
-<input id="m" autocomplete="off" /><button>Send</button>
-</form><br>
+          <div class="well well-sm"> 
+              <div class="well">Johnson W: This is my first time, take it easy on me.
+                 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br> </div>
+               <ul id="messages"></ul>
+               <form id="lobbyChat">
+                 <input id="m" autocomplete="off" /> <button class="btn btn-success btn-xs">Send</button>     
+               </form><br>
        </div>
      </div>
     </div>
+  </div>
+
     <br><br><br>
-        <footer class = "footer container-fluid text-center">
-             <p> footer</p>
-             </footer>
+    <footer class = "footer container-fluid text-center">
+        <p><a href="lobby.html"style="color:lightgrey">Lobby</a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+           <a href="lobby.html"style="color:lightgrey">Profile settings</a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+           <a href="lobby.html"style="color:lightgrey">How to play</a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+           <a href="lobby.html"style="color:lightgrey">About</a></p>  
+    </footer>
 </body>
 </html>
 

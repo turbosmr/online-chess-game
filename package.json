@@ -1,18 +1,19 @@
 {
-  "name": "untitled",
-  "version": "0.0.0",
-  "private": true,
+  "name": "master",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "author": "",
+  "license": "ISC",
   "scripts": {
-    "start": "node server.js"
+    "start":"node server.js"
   },
   "dependencies": {
     "body-parser": "^1.18.3",
-    "cookie-parser": "~1.4.3",
-    "debug": "~2.6.9",
-    "express": "~4.16.0",
-    "morgan": "~1.9.0",
+    "express": "^4.16.4",
+    "http": "0.0.0",
+    "install": "^0.12.2",
     "mysql": "^2.16.0",
-    "sequelize": "^5.2.11",
     "socket.io": "^2.2.0"
   }
 }

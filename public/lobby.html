@@ -1,23 +1,51 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>lobby page</title>
+  <title>Lobby</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
-  <style>
-  .footer{
-      background-color:rgb(37, 36, 36);
-      color: white;
-      padding: 15px;
+  <link rel="stylesheet" href="stylesheets/style.css">
 
-    }
-  </style>
+<script src="/socket.io/socket.io.js"></script>
+<script src="https://code.jquery.com/jquery-1.11.1.js"></script>
+<script>
+    $(function () {
+        var socket = io();
+        // To prevent from displaying multiple times during server restarts
+        socket.on('reconnect', () => {
+            $('#users-connected').empty();
+            $('#messages').empty();
+        })
+        // Retrieve number of connected users
+        socket.on('users connected', function(num_users_connected){
+            $('#users-connected').append($('<i>').text("Users connected: " + num_users_connected));
+        });
+        // Retrieve messages from database upon entering chatroom
+        socket.on('retrieve messages', function(msg){
+            $('#messages').append($('<li>').text(msg.user + ": " + msg.message));
+        });
+        $("#lobbyChat").submit(function(e){
+            e.preventDefault(); // prevents page reloading
+            if($('#m').val() != ""){ // prevents user from submitting empty message
+              socket.emit('chat message', $('#m').val());
+              $('#m').val('');
+            }
+            return false;
+        });
+        // Display messages on screen
+        socket.on('chat message', function(msg){
+            $('#messages').append($('<li>').text("User: " + msg));
+        });
+    });
+</script>
+
 </head>
 <body  style= "background-color:rgb(56, 52, 52);">
-    <nav class="navbar navbar-inverse">
+
+    <nav class="navbar navbar-inverse navbar-fixed-top">
         <div class="container-fluid">
           <div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
@@ -29,74 +57,249 @@
           </div>
           <div class="collapse navbar-collapse" id="myNavbar">
             <ul class="nav navbar-nav">
-                <li><a href="index.html">Login</a></li>
               <li class="active"><a href="lobby.html">Lobby</a></li>
-              <li><a href="chessBoard.html">Chess Board</a></li>
+              <li><a href="#">Profile</a></li>
+              <li><a href="#">How to Play</a></li>
+              <li><a href="#">About</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+              <li><a href="#"><span class="glyphicon glyphicon-user"></span> Steve R</a></li>
+              <li><a href="index.html"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
             </ul>
           </div>
         </div>
       </nav>
-        
-  
+
 <div class="container">
+    <br><br><br><br>
         <h1 class="text-center" style="color:white">TEAM 10 CHESS</h1>
-        
-        <h3 class="text-center"> Lobby</h3>
-        <br><br>
+        <br>
+        <h5 class="text"style="color:white" > Welcome to the Team 10 Chess Lobby. Here you can join a chess game or create your own.
+        To join a game, select the player's game you'd like to join and click on "Join Game". To create your own game, click on the 
+        "Create Game" button.</h5>
+        <br>
 
     <div class="row">
-      <div class="col-md-3" >
-        <div class="col-md-12" style="background-color:rgb(145, 168, 145);">
-          <h2>Availible Games</h2>
-          <p>This is where you can find avialible game to play</p>
-          <p> Leo</p>
-          <p> Leo</p>
-          <p> Leo</p>
-          <p> Leo</p>
-          <p> Leo</p>
-          <p> Leo</p>
-          <p> Leo</p>
-          <p> Leo</p>
-          <p> Leo</p>
-       </div>
-     </div>
-     <div class="col-md-6" >
-       <div class="col-md-12" style="background-color:rgb(145, 168, 145);">
-        <h2>Leader Board</h2>
-        <p>This is where you can find the leading players</p>
-        <p> Leo</p>
-        <p> Leo</p>
-        <p> Leo</p>
-        <p> Leo</p>
-        <p> Leo</p>
-        <p> Leo</p>
-        <p> Leo</p>
-        <p> Leo</p>
-        <p> Leo</p>
-       </div>
-     </div>
-      <div class="col-md-3" >
-        <div class="col-md-12" style="background-color:rgb(145, 168, 145);">
-          <h2>Chat</h2>
-          <p style= "background-color: white ">This is where you can chat with other players</p>
-          <p style= "background-color: white "> Leo</p>
-          <p style= "background-color: white "> Leo</p>
-          <p style= "background-color: white "> Leo</p>
-          <p style= "background-color: white "> Leo</p>          
-          <p style= "background-color: white "> Leo</p>          
-          <p style= "background-color: white "> Leo</p>          
-          <p style= "background-color: white "> Leo</p>
-          <ul id="messages"></ul>
-<form action="">
-<input id="m" autocomplete="off" /><button>Send</button>
-</form>
-       </div>
+      <div class="col-lg-4" >
+          <div class="well well-sm"> 
+              <h3 class="text-center">Current Games</h3>
+               <div class="panel-group">
+               <div class="well"> <table class="table">
+                  <thead>
+                    <tr>
+                      <th>Player</th>
+                      <th>Time</th>
+                      <th>Move</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>Johnson <span class="dot"></span> </td>
+                      <td>23:45</td>
+                      <td>Theirs</td>
+                      <td><a type="button"href="chessBoard.html"class="btn btn-success btn-xs">Rejoin Game</a></td> 
+                    </tr>
+                    <tr>
+                      <td>Anthony</td>
+                      <td>1 day</td>
+                      <td>Yours</td>
+                      <td><button type="button" class="btn btn-success btn-xs">Rejoin Game</button></td> 
+                    </tr>
+                  </tbody>
+                </table>
+                </div>   
+      
+          <h3 class="text-center">Available Games</h2>
+           <div class="well"> <table class="table">
+              <thead>
+                <tr>
+                  <th>Player</th>
+                  <th>Time</th>
+                  <th>Rank</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>John</td>
+                  <td>3 days</td>
+                  <td>15</td>
+                  <td><button type="button" class="btn btn-xs">Join Game</button></td> 
+                </tr>
+                <tr>
+                  <td>Mary</td>
+                  <td>1 day</td>
+                  <td>23</td>
+                  <td><button type="button" class="btn btn-xs">Join Game</button></td> 
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          
+            <div class="container">
+           
+                <!-- Button to Open the Modal -->
+                <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#myModal">Create Game</button>
+              
+                <!-- The Modal -->
+                <div class="modal" id="myModal">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                    
+                      <!-- Modal Header -->
+                      <div class="modal-header">
+                        <h4 class="modal-title">Create New Game</h4>
+                      </div>
+                      
+                      <!-- Modal body -->
+                      <div class="modal-body">
+                        Select time per move
+                        <select class="browser-default custom-select">
+                          <option selected>Select one</option>
+                          <option value="1">1 min</option>
+                          <option value="2">3 min</option>
+                          <option value="3">5 min</option>
+                          <option value="4">1 day</option>
+                          <option value="5">3 days</option>
+                        </select>
+                        <div class="radio">
+                          <p>Timed Game</p>
+                            <label><input type="radio" name="optradio" checked>Yes</label>
+                          </div>
+                          <div class="radio">
+                            <label><input type="radio" name="optradio">No</label>
+                          </div>
+                          Select time per game
+                          <select class="browser-default custom-select">
+                            <option selected>Select one</option>
+                            <option value="1">10 min</option>
+                            <option value="2">20 min</option>
+                            <option value="3">1 hour</option>
+                          </select>
+                      </div>
+                      
+                      <!-- Modal footer -->
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" data-dismiss="modal">Create Game</button>
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+      </div>
      </div>
     </div>
+     <div class="col-lg-5" >
+      <div class="well well-sm"> 
+        <h3 class="text-center">Leader Board</h3>
+         <div class="well"> <table class="table">
+            <thead>
+              <tr>
+                <th>Rank</th>
+                <th>Player</th>
+                <th>Wins</th>
+                <th>Loss</th>
+                <th>Draw</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>1</td>
+                <td>Anthony</td>
+                <td>1054</td>
+                <td>5</td>  
+                <td>2</td>             
+              </tr>
+              <tr>
+                <td>2</td>
+                <td>Steve</td>
+                <td>204</td>
+                <td>68</td> 
+                <td>1</td>              
+              </tr>
+              <tr>
+                <td>3</td>
+                <td>Leo</td>
+                <td>308</td>
+                <td>206</td>
+                <td>4</td> 
+              </tr>
+              <tr>
+                <td>4</td>
+                <td>Kurtis</td>
+                <td>209</td>
+                <td>206</td>  
+                <td>9</td>                 
+              </tr>
+              <tr>
+                <td>5</td>
+                <td>Dave</td>
+                <td>309</td>
+                <td>503</td> 
+                <td>3</td>      
+              </tr>
+              <tr>
+                <td>6</td>
+                <td>Johnson</td>
+                <td>205</td>
+                <td>503</td> 
+                <td>3</td>              
+              </tr>
+              <tr>
+                <td>7</td>
+                <td>Kathy</td>
+                <td>109</td>
+                <td>530</td> 
+                <td>3</td>      
+              </tr>
+              <tr>
+                <td>8</td>
+                <td>Betty</td>
+                <td>30</td>
+                <td>609</td> 
+                <td>3</td>              
+              </tr>
+              <tr>
+                <td>9</td>
+                <td>Al</td>
+                <td>3</td>
+                <td>509</td> 
+                <td>3</td>      
+              </tr>
+              <tr>
+                <td>10</td>
+                <td>Rose</td>
+                <td>2</td>
+                <td>1209</td> 
+                <td>3</td>              
+              </tr>
+            </tbody>
+          </table>       
+          </div>   
+     </div>
+    </div>
+      <div class="col-lg-3 center-text" >
+        <div class="well well-sm"> 
+            <h3 class="text-center">Chat</h3>
+         <div class="well">
+            <p id="users-connected"></p>
+          <ul id="messages"></ul>
+         </div>
+<form id="lobbyChat">
+  <input id="m" autocomplete="off" /> <button class="btn btn-success btn-xs">Send</button>     
+</form>
+</div>
+</div>
+</div>
+</div>
     <br><br><br>
-        <footer class = "footer container-fluid text-center">
-             <p> footer</p>
-             </footer>
+    <footer class = "footer container-fluid text-center">
+        <p><a href="lobby.html"style="color:lightgrey">Lobby</a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+           <a href="lobby.html"style="color:lightgrey">Profile settings</a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+           <a href="lobby.html"style="color:lightgrey">How to play</a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+           <a href="lobby.html"style="color:lightgrey">About</a></p>  
+    </footer>
 </body>
 </html>
 
