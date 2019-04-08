@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Game</title>
+  <title>game</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
@@ -21,30 +21,34 @@
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>                        
             </button>
-            <a class="navbar-brand" href="index.html">Team 10 Chess</a>
+            <a class="navbar-brand" href="index.html">TEAM 10 CHESS</a>
           </div>
           <div class="collapse navbar-collapse" id="myNavbar">
             <ul class="nav navbar-nav">
               <li><a href="lobby.html">Lobby</a></li>
-              <li><a href="#">Profile</a></li>
               <li><a href="#">How to Play</a></li>
               <li><a href="#">About</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-              <li><a href="#"><span class="glyphicon glyphicon-user"></span> Steve R</a></li>
-              <li><a href="index.html"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
+              <li class="dropdown">
+          <a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-user"></span> Steve R
+          <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="#"> Profile</a></li>
+            <li><a href="index.html"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
+          </ul>
+        </li>
             </ul>
           </div>
         </div>
       </nav>
   
 <div class="container">
-  <br><br><br><br>
-  <h1 class="text-center" style="color:white">TEAM 10 CHESS</h1>
+  <br><br><br><br><br>
 </div>
 
 <div class="container">
-    <h2 class="text-center" style="color:white">Johnson W</h2>
+    <h3 class="text-center" style="color:white">Johnson W</h3>
 </div>
 
 <div class="container">
@@ -58,22 +62,22 @@
                </div>
           </div>
           <br>
-          <h3 style="color:white">Time Per Move: 1 Day</h3>
-          <h3 style="color:white">Time Left: 12:54</h3>  
-          <h3 style="color:white">Your Move</h3>
+          <h3 class= "thin" style="color:white">Time Per Move: 1 Day</h3>
+          <h3 class= "thin" style="color:white">Time Left: 12:54</h3>  
+          <h3 class= "thin" style="color:white">Your Move</h3>
       </div>
        <div class="col-md-6 chessboard">
       <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-       <h2 class="text-center" style="color:white">Steve R <span class="dot"></span> </h2>
+       <h3 class="text-center" style="color:white">Steve R <span class="dot"></span> </h3>
      </div>
       <div class="col-md-3" >
           <div class="well well-sm"> 
               <div class="well">Johnson W: This is my first time, take it easy on me.
                  <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br> </div>
                <ul id="messages"></ul>
-               <form id="lobbyChat">
-                 <input id="m" autocomplete="off" /> <button class="btn btn-success btn-xs">Send</button>     
-               </form><br>
+     <form action="">
+     <input id="m" autocomplete="off" /><button type="button" class="btn btn-success btn-sm">Send</button>
+     </form><br>
        </div>
      </div>
     </div>

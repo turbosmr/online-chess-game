@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Lobby</title>
+  <title>lobby page</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
@@ -21,18 +21,17 @@
         })
         // Retrieve number of connected users
         socket.on('users connected', function(num_users_connected){
-            $('#users-connected').append($('<i>').text("Users connected: " + num_users_connected));
+            $('#users-connected').empty();
+            $('#users-connected').append("Users connected: " + num_users_connected);
         });
         // Retrieve messages from database upon entering chatroom
         socket.on('retrieve messages', function(msg){
-            $('#messages').append($('<li>').text(msg.user + ": " + msg.message));
+          $('#messages').append($('<li>').text(msg.user + ": " + msg.message));
         });
-        $("#lobbyChat").submit(function(e){
+        $('form').submit(function(e){
             e.preventDefault(); // prevents page reloading
-            if($('#m').val() != ""){ // prevents user from submitting empty message
-              socket.emit('chat message', $('#m').val());
-              $('#m').val('');
-            }
+            socket.emit('chat message', $('#m').val());
+            $('#m').val('');
             return false;
         });
         // Display messages on screen
@@ -53,27 +52,37 @@
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>                        
             </button>
-            <a class="navbar-brand" href="index.html">Team 10 Chess</a>
+            <a class="navbar-brand" href="index.html">TEAM 10 CHESS</a>
           </div>
           <div class="collapse navbar-collapse" id="myNavbar">
             <ul class="nav navbar-nav">
               <li class="active"><a href="lobby.html">Lobby</a></li>
-              <li><a href="#">Profile</a></li>
               <li><a href="#">How to Play</a></li>
               <li><a href="#">About</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-              <li><a href="#"><span class="glyphicon glyphicon-user"></span> Steve R</a></li>
-              <li><a href="index.html"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
+              <li class="dropdown">
+          <a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-user"></span> Steve R
+          <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="profile.html"> Profile</a></li>
+            <li><a href="index.html"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
+          </ul>
+        </li>
             </ul>
           </div>
         </div>
       </nav>
+      
 
 <div class="container">
-    <br><br><br><br>
-        <h1 class="text-center" style="color:white">TEAM 10 CHESS</h1>
-        <br>
+
+        <br> <br> <br>
+        <div class="banner">
+    
+            <h1 class="lobbyBanner" style="color:white">LOBBY</h1>
+              </div>
+              <br>
         <h5 class="text"style="color:white" > Welcome to the Team 10 Chess Lobby. Here you can join a chess game or create your own.
         To join a game, select the player's game you'd like to join and click on "Join Game". To create your own game, click on the 
         "Create Game" button.</h5>
@@ -281,13 +290,13 @@
     </div>
       <div class="col-lg-3 center-text" >
         <div class="well well-sm"> 
-            <h3 class="text-center">Chat</h3>
+            <h3 class="text-center">Online Chat</h3>
          <div class="well">
             <p id="users-connected"></p>
           <ul id="messages"></ul>
          </div>
-<form id="lobbyChat">
-  <input id="m" autocomplete="off" /> <button class="btn btn-success btn-xs">Send</button>     
+<form action="">
+<input id="m" autocomplete="off" /><button type="button" class="btn btn-success btn-sm">Send</button>     
 </form>
 </div>
 </div>

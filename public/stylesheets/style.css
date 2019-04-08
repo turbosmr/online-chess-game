@@ -10,20 +10,30 @@ body, html {
   /* Full height */
   max-height: 100%;
   max-width: 100%;
-  height: 100%; 
+  height: 650px; 
   width: 100%;
   /* Center and scale the image nicely */
   background-position: 0;
   background-repeat: no-repeat;
   background-size:100%;
-  
+}
+.banner {
+  /* The image used */
+  background-image: url("/images/Chessbg.jpg");
+
+  /* Full height */
+  max-height: 100%;
+  max-width: 100%;
+  height: 150px; 
+  width: 100%;
+  /* Center and scale the image nicely */
+  background-position: 0;
+  background-repeat: no-repeat;
+  background-size:100%;
 }
 
-
 * { 
-  margin: 0; 
-  padding: 0; 
-  box-sizing: border-box; 
+  margin: 0; padding: 0; box-sizing: border-box; 
 }
 
 #users-connected { 
@@ -31,9 +41,7 @@ body, html {
 }
 
 #messages { 
-  list-style-type: none; 
-  margin: 0; 
-  padding-top: 0px; 
+  list-style-type: none; margin: 0; padding-top: 0px; 
 }
 
 #messages li { 
@@ -45,14 +53,7 @@ body, html {
 }
 
 form { 
-  padding: 3px;
-  bottom: 0;
-  width: 100%; 
-}
-
-form input { 
-  padding: 1px; 
-  width: 80%; 
+  padding: 3px; bottom: 0; width: 100%; 
 }
 
 .chessboard {
@@ -89,4 +90,27 @@ form input {
     background-color:lawngreen;
     border-radius: 50%;
     display: inline-block;
+}
+h1 {
+  font-weight: lighter;
+  font-size: 50px;
+}
+h1.lobbyBanner {
+  font-weight: thin;
+  font-size: 40px;
+  text-align: center;
+  line-height: 150px;
+  text-shadow: 1px 1px black;
+
+}
+h3.thin {
+  font-weight: lighter;
+}
+
+td {
+  font-weight: lighter;
+ 
+}
+.navbar-brand {
+  font-weight: lighter;
 }
