@@ -15,7 +15,7 @@
 
 /* board */
 .board-b72b1 {
-  border: 2px solid lightgrey;
+  border: 2px solid rgb(152, 149, 163);
   -moz-box-sizing: content-box;
   box-sizing: content-box;
 }
@@ -36,14 +36,15 @@
 
 /* white square */
 .white-1e1d7 {
-  background-image: url("/images/white-marble-sq.jpg");
-  color: #070231;
+  background-color:rgb(189, 192, 185);
+  /*background-color:rgb(215, 217, 221);*/
+  /*background-image: url("/images/white-marble-sq.jpg");*/
 }
 
 /* black square */
 .black-3c85d {
-  
-  background-color:rgb(88, 87, 87);
+  background-color:rgb(70, 71, 71);
+  /*background-color:rgb(98, 112, 121);*/
 }
 
 /* highlighted square */
