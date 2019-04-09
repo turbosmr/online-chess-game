@@ -56,21 +56,6 @@ form {
   padding: 3px; bottom: 0; width: 100%; 
 }
 
-.chessboard {
-  /* The image used */
-  background-image: url("/images/chessboard.jpg");
-
-  /* Full height */
-  max-height: 100%;
-  max-width: 100%;
-  height: 550px; 
-  width: 550px;
-  /* Center and scale the image nicely */
-  background-position: 0;
-  background-repeat: no-repeat;
-  background-size:100%;
-  
-}
 .footer{
   background-color:rgb(37, 36, 36);
   color: white;
@@ -114,4 +99,14 @@ td {
 }
 .navbar-brand {
   font-weight: lighter;
+}
+
+.lobbyChatScroll {
+   height:350px;
+   overflow-y:scroll;
+}
+
+.gameChatScroll {
+   height:455px;
+   overflow-y:scroll;
 }
