@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Lobby</title>
+  <title>TEAM 10 CHESS lobby</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
@@ -21,18 +21,17 @@
         })
         // Retrieve number of connected users
         socket.on('users connected', function(num_users_connected){
-            $('#users-connected').append($('<i>').text("Users connected: " + num_users_connected));
+            $('#users-connected').empty();
+            $('#users-connected').append("Users connected: " + num_users_connected);
         });
         // Retrieve messages from database upon entering chatroom
         socket.on('retrieve messages', function(msg){
-            $('#messages').append($('<li>').text(msg.user + ": " + msg.message));
+          $('#messages').append($('<li>').text(msg.user + ": " + msg.message));
         });
-        $("#lobbyChat").submit(function(e){
+        $('form').submit(function(e){
             e.preventDefault(); // prevents page reloading
-            if($('#m').val() != ""){ // prevents user from submitting empty message
-              socket.emit('chat message', $('#m').val());
-              $('#m').val('');
-            }
+            socket.emit('chat message', $('#m').val());
+            $('#m').val('');
             return false;
         });
         // Display messages on screen
@@ -53,27 +52,37 @@
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>                        
             </button>
-            <a class="navbar-brand" href="index.html">Team 10 Chess</a>
+            <a class="navbar-brand" href="index.html">TEAM 10 CHESS</a>
           </div>
           <div class="collapse navbar-collapse" id="myNavbar">
             <ul class="nav navbar-nav">
               <li class="active"><a href="lobby.html">Lobby</a></li>
-              <li><a href="#">Profile</a></li>
               <li><a href="#">How to Play</a></li>
               <li><a href="#">About</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-              <li><a href="#"><span class="glyphicon glyphicon-user"></span> Steve R</a></li>
-              <li><a href="index.html"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
+              <li class="dropdown">
+          <a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-user"></span> Steve R
+          <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="profile.html"> Profile</a></li>
+            <li><a href="index.html"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
+          </ul>
+        </li>
             </ul>
           </div>
         </div>
       </nav>
+      
 
 <div class="container">
-    <br><br><br><br>
-        <h1 class="text-center" style="color:white">TEAM 10 CHESS</h1>
-        <br>
+
+        <br> <br> <br>
+        <div class="banner">
+    
+            <h1 class="lobbyBanner">LOBBY</h1>
+              </div>
+              <br>
         <h5 class="text"style="color:white" > Welcome to the Team 10 Chess Lobby. Here you can join a chess game or create your own.
         To join a game, select the player's game you'd like to join and click on "Join Game". To create your own game, click on the 
         "Create Game" button.</h5>
@@ -84,7 +93,7 @@
           <div class="well well-sm"> 
               <h3 class="text-center">Current Games</h3>
                <div class="panel-group">
-               <div class="well"> <table class="table">
+                  <div class="well lobbyGamesScroll"> <table class="table">
                   <thead>
                     <tr>
                       <th>Player</th>
@@ -105,12 +114,25 @@
                       <td>Yours</td>
                       <td><button type="button" class="btn btn-success btn-xs">Rejoin Game</button></td> 
                     </tr>
+                    <tr>
+                      <td>Anthony</td>
+                      <td>1 day</td>
+                      <td>Yours</td>
+                      <td><button type="button" class="btn btn-success btn-xs">Rejoin Game</button></td> 
+                    </tr>
+                    <tr>
+                      <td>Johnson <span class="dot"></span> </td>
+                      <td>23:45</td>
+                      <td>Theirs</td>
+                      <td><a type="button"href="chessBoard.html"class="btn btn-success btn-xs">Rejoin Game</a></td> 
+                    </tr>
                   </tbody>
                 </table>
-                </div>   
+                  
+              </div> 
       
           <h3 class="text-center">Available Games</h2>
-           <div class="well"> <table class="table">
+           <div class="well lobbyGamesScroll"> <table class="table">
               <thead>
                 <tr>
                   <th>Player</th>
@@ -127,6 +149,18 @@
                 </tr>
                 <tr>
                   <td>Mary</td>
+                  <td>1 day</td>
+                  <td>23</td>
+                  <td><button type="button" class="btn btn-xs">Join Game</button></td> 
+                </tr>
+                <tr>
+                  <td>John</td>
+                  <td>3 days</td>
+                  <td>15</td>
+                  <td><button type="button" class="btn btn-xs">Join Game</button></td> 
+                </tr>
+                <tr>
+                   <td>Mary</td>
                   <td>1 day</td>
                   <td>23</td>
                   <td><button type="button" class="btn btn-xs">Join Game</button></td> 
@@ -199,7 +233,7 @@
                 <th>Rank</th>
                 <th>Player</th>
                 <th>Wins</th>
-                <th>Loss</th>
+                <th>Losses</th>
                 <th>Draw</th>
               </tr>
             </thead>
@@ -275,28 +309,173 @@
                 <td>3</td>              
               </tr>
             </tbody>
-          </table>       
-          </div>   
+          </table>  
+
+            <!-- Button to Open the Modal -->
+            <button type="button" class="btn btn-sm btn-defalt" data-toggle="modal" data-target="#myModal-2">See Full Leader Board</button>
+              
+            <!-- The Modal -->
+            <div class="modal" id="myModal-2">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                
+                  <!-- Modal Header -->
+                  <div class="modal-header">
+                   <h3 class="text-center">Leader Board</h3>
+                  </div>
+                  
+                  <!-- Modal body -->
+                  <div class="modal-body">
+                      <div class="well leaderBoardScroll"> <table class="table">
+                         <thead>
+                           <tr>
+                             <th>Rank</th>
+                             <th>Player</th>
+                             <th>Wins</th>
+                             <th>Losses</th>
+                             <th>Draw</th>
+                           </tr>
+                         </thead>
+                         <tbody>
+                           <tr>
+                             <td>1</td>
+                             <td>Anthony</td>
+                             <td>1054</td>
+                             <td>5</td>  
+                             <td>2</td>             
+                           </tr>
+                           <tr>
+                             <td>2</td>
+                             <td>Steve</td>
+                             <td>204</td>
+                             <td>68</td> 
+                             <td>1</td>              
+                           </tr>
+                           <tr>
+                             <td>3</td>
+                             <td>Leo</td>
+                             <td>308</td>
+                             <td>206</td>
+                             <td>4</td> 
+                           </tr>
+                           <tr>
+                             <td>4</td>
+                             <td>Kurtis</td>
+                             <td>209</td>
+                             <td>206</td>  
+                             <td>9</td>                 
+                           </tr>
+                           <tr>
+                             <td>5</td>
+                             <td>Dave</td>
+                             <td>309</td>
+                             <td>503</td> 
+                             <td>3</td>      
+                           </tr>
+                           <tr>
+                             <td>6</td>
+                             <td>Johnson</td>
+                             <td>205</td>
+                             <td>503</td> 
+                             <td>3</td>              
+                           </tr>
+                           <tr>
+                             <td>7</td>
+                             <td>Kathy</td>
+                             <td>109</td>
+                             <td>530</td> 
+                             <td>3</td>      
+                           </tr>
+                           <tr>
+                             <td>8</td>
+                             <td>Betty</td>
+                             <td>30</td>
+                             <td>609</td> 
+                             <td>3</td>              
+                           </tr>
+                           <tr>
+                             <td>9</td>
+                             <td>Al</td>
+                             <td>3</td>
+                             <td>509</td> 
+                             <td>3</td>      
+                           </tr>
+                           <tr>
+                             <td>10</td>
+                             <td>Rose</td>
+                             <td>2</td>
+                             <td>1209</td> 
+                             <td>3</td>              
+                           </tr>
+                         </tbody>
+                       </table>  
+                      </div>
+                  </div>
+                  
+                  <!-- Modal footer -->
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>  
+           
      </div>
     </div>
       <div class="col-lg-3 center-text" >
         <div class="well well-sm"> 
-            <h3 class="text-center">Chat</h3>
-         <div class="well">
-            <p id="users-connected"></p>
-          <ul id="messages"></ul>
+            <h3 class="text-center">Online Chat</h3>
+         <div class="well lobbyChatScroll">
+  
+              <ul class = "thin" id="messages"></ul>
+              <p>
+
+              Johnson W: This is my first time, take it easy on me.<br>
+              Steve R: Not a Chance!!!<br>
+              Johnson: Hey, I got it to scolllll!!<br>
+              Johnson W: This is my first time, take it easy on me.<br>
+              Steve R: Not a Chance!!!<br>
+              Johnson: Hey, I got it to scolllll!!<br>
+              Johnson W: This is my first time, take it easy on me.<br>
+              Steve R: Not a Chance!!!<br>
+              Johnson: Hey, I got it to scolllll!!<br>
+              Johnson W: This is my first time, take it easy on me.<br>
+              Steve R: Not a Chance!!!<br>
+              Johnson: Hey, I got it to scolllll!!<br>
+              Johnson W: This is my first time, take it easy on me.<br>
+              Steve R: Not a Chance!!!<br>
+              Johnson: Hey, I got it to scolllll!!<br>
+              Johnson W: This is my first time, take it easy on me.<br>
+              Steve R: Not a Chance!!!<br>
+              Johnson: Hey, I got it to scolllll!!<br>
+              Johnson W: This is my first time, take it easy on me.<br>
+              Steve R: Not a Chance!!!<br>
+              Johnson: Hey, I got it to scolllll!!<br>
+              Johnson W: This is my first time, take it easy on me.<br>
+              Steve R: Not a Chance!!!<br>
+              Johnson: Hey, I got it to scolllll!!<br>
+              Johnson W: This is my first time, take it easy on me.<br>
+              Steve R: Not a Chance!!!<br>
+              Johnson: Hey, I got it to scolllll!!<br>
+              Johnson W: This is my first time, take it easy on me.<br>
+              Steve R: Not a Chance!!!<br>
+              Johnson: Hey, I got it to scolllll!!<br>
+
+            </p>
          </div>
-<form id="lobbyChat">
-  <input id="m" autocomplete="off" /> <button class="btn btn-success btn-xs">Send</button>     
+<form action="">
+<input id="m" autocomplete="off" /><button type="button" class="btn btn-success btn-sm">Send</button>     
 </form>
+<p id="users-connected"></p>
 </div>
 </div>
 </div>
 </div>
-    <br><br><br>
+    <br>
     <footer class = "footer container-fluid text-center">
         <p><a href="lobby.html"style="color:lightgrey">Lobby</a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-           <a href="lobby.html"style="color:lightgrey">Profile settings</a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
            <a href="lobby.html"style="color:lightgrey">How to play</a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
            <a href="lobby.html"style="color:lightgrey">About</a></p>  
     </footer>
