@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>lobby page</title>
+  <title>TEAM 10 CHESS lobby</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
@@ -120,6 +120,12 @@
                       <td>Yours</td>
                       <td><button type="button" class="btn btn-success btn-xs">Rejoin Game</button></td> 
                     </tr>
+                    <tr>
+                      <td>Johnson <span class="dot"></span> </td>
+                      <td>23:45</td>
+                      <td>Theirs</td>
+                      <td><a type="button"href="chessBoard.html"class="btn btn-success btn-xs">Rejoin Game</a></td> 
+                    </tr>
                   </tbody>
                 </table>
                   
@@ -151,6 +157,12 @@
                   <td>John</td>
                   <td>3 days</td>
                   <td>15</td>
+                  <td><button type="button" class="btn btn-xs">Join Game</button></td> 
+                </tr>
+                <tr>
+                   <td>Mary</td>
+                  <td>1 day</td>
+                  <td>23</td>
                   <td><button type="button" class="btn btn-xs">Join Game</button></td> 
                 </tr>
               </tbody>
@@ -221,7 +233,7 @@
                 <th>Rank</th>
                 <th>Player</th>
                 <th>Wins</th>
-                <th>Loss</th>
+                <th>Losses</th>
                 <th>Draw</th>
               </tr>
             </thead>
@@ -320,7 +332,7 @@
                              <th>Rank</th>
                              <th>Player</th>
                              <th>Wins</th>
-                             <th>Loss</th>
+                             <th>Losses</th>
                              <th>Draw</th>
                            </tr>
                          </thead>
@@ -416,8 +428,10 @@
         <div class="well well-sm"> 
             <h3 class="text-center">Online Chat</h3>
          <div class="well lobbyChatScroll">
-           
-              <ul id="messages"></ul>
+  
+              <ul class = "thin" id="messages"></ul>
+              <p>
+
               Johnson W: This is my first time, take it easy on me.<br>
               Steve R: Not a Chance!!!<br>
               Johnson: Hey, I got it to scolllll!!<br>
@@ -448,7 +462,8 @@
               Johnson W: This is my first time, take it easy on me.<br>
               Steve R: Not a Chance!!!<br>
               Johnson: Hey, I got it to scolllll!!<br>
-           
+
+            </p>
          </div>
 <form action="">
 <input id="m" autocomplete="off" /><button type="button" class="btn btn-success btn-sm">Send</button>     
@@ -458,7 +473,7 @@
 </div>
 </div>
 </div>
-    <br><br><br>
+    <br>
     <footer class = "footer container-fluid text-center">
         <p><a href="lobby.html"style="color:lightgrey">Lobby</a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
            <a href="lobby.html"style="color:lightgrey">How to play</a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;

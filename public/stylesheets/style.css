@@ -98,7 +98,10 @@ h3.thin {
   text-align: center;
   color:white;
 }
-
+h3.gameroom {
+  font-weight: lighter;
+  color:white;
+}
 h1.thin {
   font-weight: lighter;
   text-align: center;
@@ -130,4 +133,10 @@ td {
 .leaderBoardScroll {
   height:456px;
   overflow-y:scroll;
+}
+p.thin{
+  font-weight: lighter;
+}
+.gameroom2 {
+  min-height: 76px;
 }
