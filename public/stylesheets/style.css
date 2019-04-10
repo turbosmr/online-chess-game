@@ -64,7 +64,6 @@ form {
   background-color:rgb(37, 36, 36);
   color: white;
   padding: 30px;
-
 }
 .center-block{
     float: none;
@@ -116,13 +115,18 @@ td {
   font-weight: lighter;
 }
 
+.lobbyWells {
+  height:590px;
+
+}
+
 .lobbyChatScroll {
    height:421px;
    overflow-y:scroll;
 }
 
 .lobbyGamesScroll {
-  height:195.5px;
+  height:174px;
   overflow-y:scroll;
 }
 
