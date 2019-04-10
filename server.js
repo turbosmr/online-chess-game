@@ -1,12 +1,21 @@
-var express = require('express');
-var http = require('http');
-var path = require('path');
-var socketIO = require('socket.io');
-var mysql = require('mysql')
+const express = require('express');
+const http = require('http');
+const path = require('path');
+const socketIO = require('socket.io');
+const mysql = require('mysql')
 
-var app = express();
-var server = http.Server(app);
-var io = socketIO(server);
+const app = express();
+const server = http.Server(app);
+const io = socketIO(server);
+
+//User Router and model for passport
+const userRouter = require('./routes/users');
+const userModel = require('./models/index').User;
+//Session for Login using passport, express-session and bcrypt. bcrypt defined within lib bcrypt.js
+var session = require("express-session");
+const {comparePassword} = require('./lib/bcrypt');
+var passport = require('passport')
+  , LocalStrategy = require('passport-local').Strategy;
 
 app.set('port', 8081);
 app.use(express.static(path.join(__dirname, 'public')));
@@ -17,7 +26,7 @@ app.get('/', function(req, res){
     res.sendFile(__dirname + '/public/index.html');
 });``
 
-// Display login.html
+// Display login.html ok but better using routing method
 app.get('/login', function(req, res){
     res.sendFile(__dirname + '/public/login.html');
 });
@@ -25,6 +34,43 @@ app.get('/login', function(req, res){
 app.get('/lobby', function(req, res){
     res.sendFile(__dirname + '/public/lobby.html');
 });
+
+/*login using passport in here */
+app.use(express.static("public"));
+app.use(session({ secret: "cats" }));
+app.use(passport.initialize());
+app.use(passport.session());
+app.post('/login',
+  passport.authenticate('local', { successRedirect: '/',
+                                   failureRedirect: '/login',
+                                   failureFlash: 'Invalid username or password.',
+                                   successFlash: 'Welcome!' }));
+//passport user setup
+passport.use(new LocalStrategy(
+    function(username, password, done) {
+      console.log(userModel);
+      userModel.findOne({ userName: username }, function (err, user) {
+        if (err) { return done(err); }
+        if (!user) {
+          return done(null, false, { message: 'Incorrect username.' });
+        }
+        if (!comparePassword(password, user.password)) {
+          return done(null, false, { message: 'Incorrect password.' });
+        }
+        return done(null, user);
+      });
+    }
+  ));
+  passport.serializeUser(function(user, done) {
+      done(null, user.id);
+  });
+    
+  passport.deserializeUser(function(id, done) {
+      userModel.findById(id, function(err, user) {
+        done(err, user);
+      });
+  });
+
 
 /* Create database connection */
 var pool = mysql.createPool({
@@ -95,3 +141,8 @@ server.listen(app.get('port'), function(){
 
 /* End connection with DB */
 pool.end
+
+
+
+
+module.exports = app;
