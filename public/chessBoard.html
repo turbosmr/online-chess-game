@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Game</title>
+  <title>TEAM 10 CHESS Game</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
@@ -9,83 +9,202 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+  <script src="js/chessboard-0.3.0.min.js"></script>
+  <script src="js/chessboard-0.3.0.js"></script>
+  <script src="js/chess.js"></script>
+  <script src="js/chess.min.js"></script>
+  <link rel="stylesheet" href="stylesheets/chessboard-0.3.0.css">
   <link rel="stylesheet" href="stylesheets/style.css">
 </head>
-<body style= "background-color:rgb(56, 52, 52);">
-   
-    <nav class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container-fluid">
-          <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>                        
-            </button>
-            <a class="navbar-brand" href="index.html">Team 10 Chess</a>
-          </div>
-          <div class="collapse navbar-collapse" id="myNavbar">
-            <ul class="nav navbar-nav">
-              <li><a href="lobby.html">Lobby</a></li>
-              <li><a href="#">Profile</a></li>
-              <li><a href="#">How to Play</a></li>
-              <li><a href="#">About</a></li>
-            </ul>
-            <ul class="nav navbar-nav navbar-right">
-              <li><a href="#"><span class="glyphicon glyphicon-user"></span> Steve R</a></li>
-              <li><a href="index.html"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
-            </ul>
-          </div>
-        </div>
-      </nav>
-  
-<div class="container">
-  <br><br><br><br>
-  <h1 class="text-center" style="color:white">TEAM 10 CHESS</h1>
-</div>
 
-<div class="container">
-    <h2 class="text-center" style="color:white">Johnson W</h2>
-</div>
-
-<div class="container">
-    <div class="row">
-      <div class="col-md-3" >
-          <div class="well well-sm"> 
-                <div >
-                   <br>
-                     <button type="button" class=" btn center-block">Submit Move</button><br>
-                     <button type="button" class=" btn btn-danger center-block">Resign Game</button><br>
-               </div>
-          </div>
-          <br>
-          <h3 style="color:white">Time Per Move: 1 Day</h3>
-          <h3 style="color:white">Time Left: 12:54</h3>  
-          <h3 style="color:white">Your Move</h3>
+<!--nav bar-->
+<nav class="navbar navbar-inverse navbar-fixed-top">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>                        
+      </button>
+        <a class="navbar-brand" href="index.html">TEAM 10 CHESS</a>
       </div>
-       <div class="col-md-6 chessboard">
-      <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-       <h2 class="text-center" style="color:white">Steve R <span class="dot"></span> </h2>
-     </div>
-      <div class="col-md-3" >
-          <div class="well well-sm"> 
-              <div class="well">Johnson W: This is my first time, take it easy on me.
-                 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br> </div>
-               <ul id="messages"></ul>
-               <form id="lobbyChat">
-                 <input id="m" autocomplete="off" /> <button class="btn btn-success btn-xs">Send</button>     
-               </form><br>
-       </div>
+      <div class="collapse navbar-collapse" id="myNavbar">
+        <ul class="nav navbar-nav">
+          <li><a href="lobby.html">Lobby</a></li>
+          <li><a href="howToPlay.html">How to Play</a></li>
+          <li><a href="about.html">About</a></li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+        <li class="dropdown">
+      <a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-user"></span> Steve R
+      <span class="caret"></span></a>
+      <ul class="dropdown-menu">
+        <li><a href="profile.html"> Profile</a></li>
+        <li><a href="index.html"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
+      </ul>
+        </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+<br><br><br>
+
+<body style= "background-color:rgb(56, 52, 52);"></body>
+<div class="container">
+  <div class="row">
+
+    <div class="col-md-3">
+
+      <!--gameroom2 class div is needed to give proper height to buttons container-->
+      <div class= "gameroom2">
+      </div>
+
+      <!--buttons for game-->
+      <div class="well well-sm">
+        <br>
+        <button type="button" class=" btn center-block">Submit Move</button><br>
+        <button type="button" class=" btn center-block">Offer Draw</button><br>
+        <button type="button" class=" btn btn-danger center-block">Resign Game</button>
+        <br>
+      </div>
+        <br>
+
+        <!--text to display time per move, time left, and your move-->
+        <h3 class= "gameroom" style="color:white">Time Per Move: 1 Day</h3>
+        <h3 class= "gameroom" style="color:white">Time Left: 12:54</h3>  
+        <h3 class= "gameroom" style="color:white">Your Move</h3>
+    </div>
+
+   
+    <div class="col-md-6">   
+
+      <!--text for person you are playing-->
+      <h3 class="text-center" style="color:white">Johnson W</h3>
+      <br>
+    
+      <!--chessboard and pieces-->
+      <div class="well chessboard well-sm"> 
+        <div id="board" style="width: 100%"></div>
+
+        <script>
+          var board,
+          game = new Chess();
+
+          // do not pick up pieces if the game is over
+          // only pick up pieces for White
+          var onDragStart = function(source, piece, position, orientation) {
+            if (game.in_checkmate() === true || game.in_draw() === true ||
+              piece.search(/^b/) !== -1) {
+              return false;
+            }
+          };
+          
+          var makeRandomMove = function() {
+            var possibleMoves = game.moves();
+          
+            // game over
+            if (possibleMoves.length === 0) return;
+          
+            var randomIndex = Math.floor(Math.random() * possibleMoves.length);
+            game.move(possibleMoves[randomIndex]);
+            board.position(game.fen());
+          };
+          
+          var onDrop = function(source, target) {
+            // see if the move is legal
+            var move = game.move({
+              from: source,
+              to: target,
+              promotion: 'q' // NOTE: always promote to a queen for example simplicity
+            });
+          
+            // illegal move
+            if (move === null) return 'snapback';
+          
+            // make random legal move for black
+            window.setTimeout(makeRandomMove, 250);
+          };
+          
+          // update the board position after the piece snap
+          // for castling, en passant, pawn promotion
+          var onSnapEnd = function() {
+            board.position(game.fen());
+          };
+          
+          var cfg = {
+            showNotation: false,
+            draggable: true,
+            position: 'start',
+            onDragStart: onDragStart,
+            onDrop: onDrop,
+            onSnapEnd: onSnapEnd
+          };
+          board = ChessBoard('board', cfg);
+        </script>
+      </div>
+
+      <!--text for person you are playing-->
+      <h3 class="text-center" style="color:white">Steve R</h3>
+    </div>
+
+   
+    <div class="col-md-3" >
+
+       <!--gameroom2 class div is needed to give proper height to chat containerr-->
+      <div class= "gameroom2">
+      </div>
+
+      <!--Chat-->
+      <div class="well well-sm"> 
+        <h4 class="text-center">Chat with Johnson W</h4>
+        <div class="well gameChatScroll">
+          Johnson W: This is my first time, take it easy on me.<br>
+          Steve R: Not a Chance!!!<br>
+          Johnson: Hey, I got it to scolllll!!<br>
+          Johnson: Hey, I got it to scolllll!!<br>
+          Johnson: Hey, I got it to scolllll!!<br>
+          Johnson: Hey, I got it to scolllll!!<br>
+          Johnson: Hey, I got it to scolllll!!<br>
+          Johnson: Hey, I got it to scolllll!!<br>
+          Johnson: Hey, I got it to scolllll!!<br>
+          Johnson: Hey, I got it to scolllll!!<br>
+          Johnson: Hey, I got it to scolllll!!<br>
+          Johnson: Hey, I got it to scolllll!!<br>
+          Johnson: Hey, I got it to scolllll!!<br>
+          Johnson: Hey, I got it to scolllll!!<br>
+          Johnson: Hey, I got it to scolllll!!<br>
+          Johnson: Hey, I got it to scolllll!!<br>
+          Johnson: Hey, I got it to scolllll!!<br>
+          Johnson: Hey, I got it to scolllll!!<br>
+          Johnson: Hey, I got it to scolllll!!<br>
+          Johnson: Hey, I got it to scolllll!!<br>
+          Johnson: Hey, I got it to scolllll!!<br>
+          Johnson: Hey, I got it to scolllll!!<br>
+          Johnson: Hey, I got it to scolllll!!<br>
+          Johnson: Hey, I got it to scolllll!!<br>
+          Johnson: Hey, I got it to scolllll!!<br>
+          Johnson: Hey, I got it to scolllll!!<br>
+          Johnson: Hey, I got it to scolllll!!<br>
+          Johnson: Hey, I got it to scolllll!!<br>
+          <ul id="messages"></ul>
+        </div>
+        <form action="">
+        <input id="m" autocomplete="off" /><button type="button" class="btn btn-success btn-sm">Send</button>
+        </form>
+        <br>
+      </div>
      </div>
     </div>
   </div>
+  <br>
 
-    <br><br><br>
+    <!--footer-->
     <footer class = "footer container-fluid text-center">
         <p><a href="lobby.html"style="color:lightgrey">Lobby</a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-           <a href="lobby.html"style="color:lightgrey">Profile settings</a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
            <a href="lobby.html"style="color:lightgrey">How to play</a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
            <a href="lobby.html"style="color:lightgrey">About</a></p>  
     </footer>
+    
 </body>
 </html>
 

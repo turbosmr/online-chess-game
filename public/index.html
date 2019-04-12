@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Login</title>
+  <title>TEAM 10 CHESS Login</title>
   <meta charset="utf-8">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -11,8 +11,7 @@
   <link rel="stylesheet" href="stylesheets/style.css">
 </head>
 
-<body  style= "background-color:rgb(56, 52, 52);">
-  
+    <!-- Nav bar -->
     <nav class="navbar navbar-inverse navbar-fixed-top">
         <div class="container-fluid">
           <div class="navbar-header">
@@ -21,62 +20,65 @@
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>                        
             </button>
-            <a class="navbar-brand" href="index.html">Team 10 Chess</a>
+            <a class="navbar-brand" href="index.html">TEAM 10 CHESS</a>
           </div>
           <div class="collapse navbar-collapse" id="myNavbar">
             <ul class="nav navbar-nav">
               <li><a href="lobby.html">Lobby</a></li>
-              <li><a href="#">How to Play</a></li>
-              <li><a href="lobby.html">About</a></li>
+              <li><a href="howToPlay.html">How to Play</a></li>
+              <li><a href="about.html">About</a></li>
+              <li><a href="/register">Register</a></li>
             </ul>
           </div>
         </div>
       </nav>
   
-  
-<div class="container"style= "background-color:rgb(56, 52, 52);">
-  <br><br><br><br>
-   <h1 class="text-center" style="color:white">TEAM 10 CHESS</h1>
-   <br><br>
-       <div class="login">
+<body  style= "background-color:rgb(56, 52, 52);">
+<div class="container">
+  <br><br><br>
+
+  <h1 class="thin">Welcome to TEAM 10 CHESS</h1>
+  <h3 class="thin">Login to start playing</h3>
+  <br>
+
+      <div class="login">
        <div class="row">
-          <br> <br><br> <br>
+          <br><br><br><br><br><br>
+
+           <!-- empty container for spacing login in middle-->
           <div class="col-md-4"> 
            </div>
+           <!-- Login form -->
            <div class="col-md-4">
-             <form action="">
-          <br><br><br><br> <br><br> <br>
-          
-          <div class="form-group">
-              <label for="email">User Name:</label>
-              <input type="email" class="form-control" id="email">
+            <form action="/" method="post">
+            <br><br>  
+            <div class="form-group">
+              <label for="username">User Name:</label>
+              <input type="text" class="form-control" name="username" id="email">
             </div>
             <div class="form-group">
               <label for="pwd">Password:</label>
-              <input type="password" class="form-control" id="pwd">
+              <input type="text" class="form-control" name="password" id="pwd">
             </div>
             <div class="checkbox">
               <label><input type="checkbox"> Remember me</label>
             </div>
             <button type="submit" class="btn btn-default">Login</button>
-            <button type="submit" class="btn btn-default">Register</button>
-          <br><br><br><br><br><br><br><br>
-          
-          </form>
-           </div>
-        
+            </form>
+            </div>
+          <!-- empty container for spacing login in middle-->
           <div class="col-md-4" >  
            </div>
            
-        </div>
+         </div>
         </div>
       </div>
-        <br><br><br>
+        <br><br>
+
+        <!-- footer -->
         <footer class = "footer container-fluid text-center">
             <p><a href="lobby.html"style="color:lightgrey">How to play </a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                <a href="lobby.html"style="color:lightgrey">About</a></p>  
         </footer>
-
-
 </body>
 </html>
