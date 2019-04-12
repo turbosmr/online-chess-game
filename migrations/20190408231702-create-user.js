@@ -26,7 +26,7 @@ module.exports = {
       rating: {
         type: Sequelize.DOUBLE
       },
-      isActive: {
+      isActive: {g
         type: Sequelize.BOOLEAN
       },
       createdAt: {

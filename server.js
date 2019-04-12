@@ -2,14 +2,16 @@ const express = require('express');
 const http = require('http');
 const path = require('path');
 const socketIO = require('socket.io');
-const mysql = require('mysql')
+const mysql = require('mysql');
 
 const app = express();
 const server = http.Server(app);
 const io = socketIO(server);
+const cookieParser = require('cookie-parser');
+const bodyParser = require('body-parser');
 
 //User Router and model for passport
-const userRouter = require('./routes/users');
+const userRouter = require('./routes/users'); //User routing methods
 const userModel = require('./models/index').User;
 //Session for Login using passport, express-session and bcrypt.js
 var session = require("express-session");
@@ -17,31 +19,51 @@ const {comparePassword} = require('./lib/bcrypt');
 var passport = require('passport')
   , LocalStrategy = require('passport-local').Strategy;
 
+  //view engine setup
+app.set('views', path.join(__dirname, '/public'));
+app.engine('html', require('ejs').renderFile);
+app.set('view engine', 'html');
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(cookieParser());
   // passport user setup
 passport.use('local-login', new LocalStrategy(
-    function(username, password, action, done) {
-        userModel.findOne({ where: { userName: username }}).then(function(user, err) { //findOne() ajax call and nodejs called ajax as promise object
-            if(action==sign-up) //do sign-up buttom
-            {
-                if(err){
-                    return done(err);
-                }
-                if(user){
-                    return done(null, false, { message: 'username already exist' });
-                }else{
-                    return done(null,user);
-                }
+    // function(username, password, action, done) {
+    //     userModel.findOne({ where: { userName: username }}).then(function(user, err) { //findOne() ajax call and nodejs called ajax as promise object
+    //         if(action==sign-up) //do sign-up buttom
+    //         {
+    //             if(err){
+    //                 return done(err);
+    //             }
+    //             if(user){
+    //                 return done(null, false, { message: 'username already exist' });
+    //             }else{
+    //                 return done(null,user);
+    //             }
 
-            }else{ //do login buttom
-                if (err) { return done(err); }
-                if (!user) {
-                    return done(null, false, { message: 'Incorrect username.' });
-                }
-                if (!comparePassword(password, user.password)) {
-                    return done(null, false, { message: 'Incorrect password.' });
-                }
-                return done(null, user);
+    //         }else{ //do login buttom
+    //             if (err) { return done(err); }
+    //             if (!user) {
+    //                 return done(null, false, { message: 'Incorrect username.' });
+    //             }
+    //             if (!comparePassword(password, user.password)) {
+    //                 return done(null, false, { message: 'Incorrect password.' });
+    //             }
+    //             return done(null, user);
+    //         }
+    //     });
+    // }
+    function(username, password, done) {
+        userModel.findOne({ where: { userName: username }}).then(function(user, err) { //findOne() ajax call and nodejs called ajax as promise object
+            if (err) { return done(err); }
+            if (!user) {
+                return done(null, false, { message: 'Incorrect username.' });
             }
+            if (!comparePassword(password, user.password)) {
+                return done(null, false, { message: 'Incorrect password.' });
+            }
+            return done(null, user);
         });
     }
 ));
@@ -56,6 +78,11 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 /* Routing */
 // Display index.html
+app.use('/', userRouter);
+app.get('/lobby', function(req, res){
+    res.sendFile(__dirname + '/public/lobby.html');
+});
+
 app.get('/', function(req, res){
     res.sendFile(__dirname + '/public/index.html');
 });
@@ -89,11 +116,8 @@ app.get('/login', function(req, res){
     res.sendFile(__dirname + '/public/login.html');
 });*/
 // Display login.html
-app.get('/lobby', function(req, res){
-    res.sendFile(__dirname + '/public/lobby.html');
-});
 
-app.use('/',userRouter);
+
 
 /* Create database connection */
 var pool = mysql.createPool({
@@ -103,6 +127,7 @@ var pool = mysql.createPool({
     password        : 'password',
     database        : 'chatroom'
 })
+
 
 /* Check for server to database connection */
 pool.getConnection((err) => {
