@@ -79,19 +79,16 @@ form {
     border-radius: 50%;
     display: inline-block;
 }
-h1 {
-  font-weight: lighter;
-  font-size: 50px;
-}
+
 h1.lobbyBanner {
-  font-weight: thin;
+  font-weight: lighter;
   font-size: 40px;
-  text-align: center;
   line-height: 150px;
+  text-align: center;
   text-shadow: 1px 1px black;
   color:white;
-
 }
+
 h2.thin {
   font-weight: lighter;
   text-align: center;
