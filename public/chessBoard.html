@@ -62,12 +62,40 @@
       <!--buttons for game-->
       <div class="well well-sm">
         <br>
-        <button type="button" class=" btn center-block">Submit Move</button><br>
-        <button type="button" class=" btn center-block">Offer Draw</button><br>
-        <button type="button" class=" btn btn-danger center-block">Resign Game</button>
-        <br>
+        <button type="button" class=" btn game center-block">Submit Move</button><br>
+        <button type="button" class=" btn game center-block">Offer Draw</button><br>
+        <button type="button" class=" btn game btn-danger center-block">Resign Game</button><br><br><br>
+           
+                <!-- Button to Open the Modal for History-->
+                <button type="button" class=" btn game btn-default center-block" data-toggle="modal" data-target="#myModal">History</button>
+                <br>
+              
+                <!-- The History Modal -->
+                <div class="modal" id="myModal">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                    
+                      <!-- Modal Header -->
+                      <div class="modal-header">
+                        <h4 class="modal-title text-center">Game History</h4>
+                      </div>
+                      
+                      <!-- Modal body -->
+                      <div class="modal-body">
+                          <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-menu-left"></span></button>
+                          <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-menu-right"></span></button>
+                      </div>
+                      
+                      <!-- Modal footer -->
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
       </div>
-        <br>
+      <br>
 
         <!--text to display time per move, time left, and your move-->
         <h3 class= "gameroom" style="color:white">Time Per Move: 1 Day</h3>
@@ -147,7 +175,6 @@
       <h3 class="text-center" style="color:white">Steve R</h3>
     </div>
 
-   
     <div class="col-md-3" >
 
        <!--gameroom2 class div is needed to give proper height to chat containerr-->
@@ -204,7 +231,7 @@
            <a href="lobby.html"style="color:lightgrey">How to play</a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
            <a href="lobby.html"style="color:lightgrey">About</a></p>  
     </footer>
-    
+
 </body>
 </html>
 
