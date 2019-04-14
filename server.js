@@ -13,6 +13,8 @@ const bodyParser = require('body-parser');
 //User Router and model for passport
 const userRouter = require('./routes/users'); //User routing methods
 const userModel = require('./models/index').User;
+//lobbyChat model
+const lobbyChat = require('./models/index').lobbyChat;
 //Session for Login using passport, express-session and bcrypt.js
 var session = require("express-session");
 const {comparePassword} = require('./lib/bcrypt');
@@ -31,31 +33,6 @@ app.set('port', 8081);
 app.use(express.static(path.join(__dirname, 'public')));
   // passport user setup
 passport.use('local-login', new LocalStrategy(
-    // function(username, password, action, done) {
-    //     userModel.findOne({ where: { userName: username }}).then(function(user, err) { //findOne() ajax call and nodejs called ajax as promise object
-    //         if(action==sign-up) //do sign-up buttom
-    //         {
-    //             if(err){
-    //                 return done(err);
-    //             }
-    //             if(user){
-    //                 return done(null, false, { message: 'username already exist' });
-    //             }else{
-    //                 return done(null,user);
-    //             }
-
-    //         }else{ //do login buttom
-    //             if (err) { return done(err); }
-    //             if (!user) {
-    //                 return done(null, false, { message: 'Incorrect username.' });
-    //             }
-    //             if (!comparePassword(password, user.password)) {
-    //                 return done(null, false, { message: 'Incorrect password.' });
-    //             }
-    //             return done(null, user);
-    //         }
-    //     });
-    // }
     function(username, password, done) {
         userModel.findOne({ where: { userName: username }}).then(function(user, err) { //findOne() ajax call and nodejs called ajax as promise object
             if (err) { return done(err); }
@@ -117,28 +94,6 @@ app.get('/login', function(req, res){
 });*/
 // Display login.html
 
-
-
-/* Create database connection */
-var pool = mysql.createPool({
-    connectionLimit : 100,
-    host            : 'localhost',
-    user            : 'root',
-    password        : 'password',
-    database        : 'chatroom'
-})
-
-
-/* Check for server to database connection */
-pool.getConnection((err) => {
-    if(err){
-        console.log('Error connecting to DB.');
-    }
-    else{
-        console.log('Database connection established.');
-    }
-});
-
 var socketCount = 0;
 
 /* Check for connection between client and server */
@@ -155,30 +110,31 @@ io.on('connection', (socket) => {
         socket.emit('users connected', socketCount);
     });
 
-    // Retrieve messages from DB
-    pool.query('SELECT * FROM lobbyChat', (err, result) => {
-        if(err){
+    lobbyChat.findAndCountAll().then(function(results,err) {
+        if(err)
+        {
             console.log('Error selecting messages from DB.');
         }
-        else{
-            // Iterate over messages obtained from DB and send to client
-            for (let index = 0; index < result.length; index++) {
-                socket.emit('retrieve messages', result[index]);
+        else 
+        {
+            for(var index = 0; index < results.count; index++)
+            {
+                socket.emit('retrieve messages', results.rows[index]);
             }
         }
-    });
+    })
 
     // Store and display messages to connected clients, as well as console
     socket.on('chat message', (msg) => {
-        pool.query('INSERT INTO lobbyChat(user, message) VALUE(?,?)', ['user', msg], (err) => {
-            if(err){
-                console.log('Error inserting message into DB.');
-            }
-            else{
-                console.log('Message from user: ' + msg);
-                io.emit('chat message', msg);
-            }
-        });
+        // pool.query('INSERT INTO lobbyChats(username, message) VALUE(?,?)', ['user', msg], (err) => {
+        //     if(err){
+        //         console.log('Error inserting message into DB.');
+        //     }
+        //     else{
+        //         console.log('Message from user: ' + msg);
+        //         io.emit('chat message', msg);
+        //     }
+        // });
     });
 });
 
@@ -188,7 +144,7 @@ server.listen(app.get('port'), function(){
 });
 
 /* End connection with DB */
-pool.end
+// pool.end
 
 
 
