@@ -27,6 +27,8 @@ app.set('view engine', 'html');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.set('port', 8081);
+app.use(express.static(path.join(__dirname, 'public')));
   // passport user setup
 passport.use('local-login', new LocalStrategy(
     // function(username, password, action, done) {
@@ -73,8 +75,6 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 
-app.set('port', 8081);
-app.use(express.static(path.join(__dirname, 'public')));
 
 /* Routing */
 // Display index.html
