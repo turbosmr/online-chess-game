@@ -2,11 +2,9 @@ body, html {
   height: 100%;
   margin: 0;
 }
-
 .login {
   /* The image used */
   background-image: url("/images/chessbg.jpg");
-
   /* Full height */
   max-height: 100%;
   max-width: 100%;
@@ -20,7 +18,6 @@ body, html {
 .banner {
   /* The image used */
   background-image: url("/images/Chessbg.jpg");
-
   /* Full height */
   max-height: 100%;
   max-width: 100%;
@@ -31,35 +28,28 @@ body, html {
   background-repeat: no-repeat;
   background-size:100%;
 }
-
 * { 
   margin: 0; padding: 0; box-sizing: border-box; 
 }
-
 #users-connected { 
   padding: 5px; 
 }
-
 #messages { 
   list-style-type: none;
   margin: 0;
   padding-top: 0px;
 }
-
 #messages li { 
   padding: 5px 10px; 
 }
-
 #messages li:nth-child(odd) { 
   background: #eee; 
 }
-
 form { 
   padding: 3px;
   bottom: 0;
   width: 100%; 
 }
-
 .footer{
   background-color:rgb(37, 36, 36);
   color: white;
@@ -79,7 +69,6 @@ form {
     border-radius: 50%;
     display: inline-block;
 }
-
 h1.lobbyBanner {
   font-weight: lighter;
   font-size: 50px;
@@ -88,14 +77,14 @@ h1.lobbyBanner {
   text-shadow: 1px 1px black;
   color:white;
 }
-
 h2.thin {
   font-weight: lighter;
   text-align: center;
   color:white;
 }
-h3.gameroom {
+h4.gameroom {
   font-weight: lighter;
+  font-size: 22px;
   color:white;
 }
 h1.thin {
@@ -103,35 +92,27 @@ h1.thin {
   text-align: center;
   color:white;
 }
-
 td {
   font-weight: lighter;
- 
 }
 .navbar-brand {
   font-weight: lighter;
 }
-
 .lobbyWells {
   height:590px;
-
 }
-
 .lobbyChatScroll {
    height:421px;
    overflow-y:scroll;
 }
-
 .lobbyGamesScroll {
   height:174px;
   overflow-y:scroll;
 }
-
 .gameChatScroll {
    height:419px;
    overflow-y:scroll;
 }
-
 .leaderBoardScroll {
   height:456px;
   overflow-y:scroll;
@@ -144,4 +125,11 @@ p.thin{
 }
 .btn.game {
   width: 120px;
+}
+.center-btn { 
+  text-align: center 
+}
+div.modalBoard {
+  display: flex;
+  justify-content: center
 }
