@@ -190,7 +190,7 @@ io.on('connection', (socket) => {
         var gameID = 'room-' + ++rooms;
         var gameRoom = {gameID: gameID, player1: data.name, player2: '', fen: 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1', pgn: ''};
         gameRooms.push(gameRoom);
-        console.log(data.name + ' created Game ID: ' + gameRoom.gameID);
+        console.log(data.name + ' created game: ' + gameRoom.gameID);
         socket.join(gameID);
         socket.emit('newGame', {name: data.name, gameID: gameID, fen: gameRoom.fen});
     });
@@ -202,19 +202,19 @@ io.on('connection', (socket) => {
         var index;
         var gameFound = false;
         for (index = 0; index < gameRooms.length; index++) {
-            if(gameRooms[index].gameID == data.room) {
+            if(gameRooms[index].gameID == data.gameID) {
                 gameFound = true;
                 if(gameRooms[index].player2 != data.name){
                     if(gameRooms[index].player2 == ''){
                         gameRooms[index].player2 = data.name;
-                        socket.join(data.room);
-                        console.log(data.name + ' has joined room: ' + data.room);
-                        socket.broadcast.to(data.room).emit('player1', {name: data.name});
+                        socket.join(data.gameID);
+                        console.log(data.name + ' has joined game: ' + data.gameID);
+                        socket.broadcast.to(data.gameID).emit('player1', {name: data.name});
                         socket.emit('player2', {name: data.name, gameID: gameRooms[index].gameID, fen: gameRooms[index].fen});
                     }
                     else {
-                        console.log(data.room + ' is full.');
-                        socket.emit('err', {message: 'Sorry, The room is full!'});
+                        console.log(data.gameID + ' is full.');
+                        socket.emit('err', {message: 'Sorry, ' + data.gameID + ' is full.'});
                     }
                     break;
                 }

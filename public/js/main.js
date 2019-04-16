@@ -131,12 +131,12 @@ $(function () {
      */ 
     $('#join').on('click', function(){
         var name = $('#nameJoin').val();
-        var roomID = $('#room').val();
-        if(!name || !roomID){
+        var gameID = $('#gameID').val();
+        if(!name || !gameID){
             alert('Please enter your name and game ID.');
             return;
         }
-        socket.emit('joinGame', {name: name, room: roomID});
+        socket.emit('joinGame', {name: name, gameID: gameID});
     });
 
     /** 
