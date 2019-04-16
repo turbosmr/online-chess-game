@@ -140,6 +140,8 @@ pool.getConnection((err) => {
 });
 
 var socketCount = 0;
+var rooms = 0;
+var gameRooms = [];
 
 /* Check for connection between client and server */
 io.on('connection', (socket) => {
@@ -179,6 +181,76 @@ io.on('connection', (socket) => {
                 io.emit('chat message', msg);
             }
         });
+    });
+
+    /**
+     * Create a new game room and notify the creator of game. 
+     */
+    socket.on('createGame', function(data){
+        var gameID = 'room-' + ++rooms;
+        var gameRoom = {gameID: gameID, player1: data.name, player2: '', fen: 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1', pgn: ''};
+        gameRooms.push(gameRoom);
+        console.log(data.name + ' created Game ID: ' + gameRoom.gameID);
+        socket.join(gameID);
+        socket.emit('newGame', {name: data.name, gameID: gameID, fen: gameRoom.fen});
+    });
+    
+    /**
+     * Connect the Player 2 to the room he requested. Show error if room full.
+     */
+    socket.on('joinGame', function(data){
+        var index;
+        var gameFound = false;
+        for (index = 0; index < gameRooms.length; index++) {
+            if(gameRooms[index].gameID == data.room) {
+                gameFound = true;
+                if(gameRooms[index].player2 != data.name){
+                    if(gameRooms[index].player2 == ''){
+                        gameRooms[index].player2 = data.name;
+                        socket.join(data.room);
+                        console.log(data.name + ' has joined room: ' + data.room);
+                        socket.broadcast.to(data.room).emit('player1', {name: data.name});
+                        socket.emit('player2', {name: data.name, gameID: gameRooms[index].gameID, fen: gameRooms[index].fen});
+                    }
+                    else {
+                        console.log(data.room + ' is full.');
+                        socket.emit('err', {message: 'Sorry, The room is full!'});
+                    }
+                    break;
+                }
+                else {
+                    console.log('You are already in this game.');
+                    socket.emit('err', {message: 'You are already in this game.'});
+                }
+                break;
+            }
+        }
+        if(gameFound == false) {
+            console.log('Such game does not exist.');
+            socket.emit('err', {message: 'Such game does not exist.'});
+        }
+    });
+    
+    /**
+     * Handle the turn played by either player and notify the other. 
+     */
+    socket.on('playTurn', function(data){
+        //update gameRoom object with new fen
+        var index;
+        for (index = 0; index < gameRooms.length; index++) {
+            if(gameRooms[index].gameID == data.gameID) {
+                gameRooms[index].fen = data.fen;
+                break;
+            }
+        }
+        socket.broadcast.to(data.gameID).emit('turnPlayed', data);
+    });
+    
+    /**
+     * Notify the players about the victor.
+     */
+    socket.on('gameEnded', function(data){
+        socket.broadcast.to(data.room).emit('gameEnd', data);
     });
 });
 

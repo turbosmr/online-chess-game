@@ -11,35 +11,7 @@
 
 <script src="/socket.io/socket.io.js"></script>
 <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
-<script>
-    $(function () {
-        var socket = io();
-        // To prevent from displaying multiple times during server restarts
-        socket.on('reconnect', () => {
-            $('#users-connected').empty();
-            $('#messages').empty();
-        })
-        // Retrieve number of connected users
-        socket.on('users connected', function(num_users_connected){
-            $('#users-connected').empty();
-            $('#users-connected').append("Users connected: " + num_users_connected);
-        });
-        // Retrieve messages from database upon entering chatroom
-        socket.on('retrieve messages', function(msg){
-          $('#messages').append($('<li>').text(msg.user + ": " + msg.message));
-        });
-        $('form').submit(function(e){
-            e.preventDefault(); // prevents page reloading
-            socket.emit('chat message', $('#m').val());
-            $('#m').val('');
-            return false;
-        });
-        // Display messages on screen
-        socket.on('chat message', function(msg){
-            $('#messages').append($('<li>').text("User: " + msg));
-        });
-    });
-</script>
+<script src="js/main.js"></script>
 
 </head>
 <body  style= "background-color:rgb(56, 52, 52);">
