@@ -1,6 +1,6 @@
 body, html {
   height: 100%;
-  margin: 0 0 100px;
+  margin: 0;
 }
 .login {
   /* The image used */
@@ -62,7 +62,6 @@ form {
 .container{
     justify-content: center;
     align-items: center;
-    min-height: 100%;
 }
 .dot {
     height: 10px;
@@ -138,4 +137,11 @@ div.modalBoard {
 }
 .wrapper {
   min-height: calc(100vh - 89px);
+}
+.navFooter{
+  overflow: hidden;
+  background-color: #333;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
 }
