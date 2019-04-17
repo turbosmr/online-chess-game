@@ -11,76 +11,49 @@
 
 <script src="/socket.io/socket.io.js"></script>
 <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
-<script>
-    $(function () {
-        var socket = io();
-        // To prevent from displaying multiple times during server restarts
-        socket.on('reconnect', () => {
-            $('#users-connected').empty();
-            $('#messages').empty();
-        })
-        // Retrieve number of connected users
-        socket.on('users connected', function(num_users_connected){
-            $('#users-connected').empty();
-            $('#users-connected').append("Users connected: " + num_users_connected);
-        });
-        // Retrieve messages from database upon entering chatroom
-        socket.on('retrieve messages', function(msg){
-          $('#messages').append($('<li>').text(msg.user + ": " + msg.message));
-        });
-        $('form').submit(function(e){
-            e.preventDefault(); // prevents page reloading
-            socket.emit('chat message', $('#m').val());
-            $('#m').val('');
-            return false;
-        });
-        // Display messages on screen
-        socket.on('chat message', function(msg){
-            $('#messages').append($('<li>').text("User: " + msg));
-        });
-    });
-</script>
+<script src="js/main.js"></script>
 
 </head>
-<body  style= "background-color:rgb(56, 52, 52);">
 
-    <!-- nav bar-->
-    <nav class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container-fluid">
-          <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>                        
-            </button>
-            <a class="navbar-brand" href="index.html">TEAM 10 CHESS</a>
-          </div>
-          <div class="collapse navbar-collapse" id="myNavbar">
-            <ul class="nav navbar-nav">
-              <li class="active"><a href="lobby.html">Lobby</a></li>
-              <li><a href="howToPlay.html">How to Play</a></li>
-              <li><a href="about.html">About</a></li>
-            </ul>
-            <ul class="nav navbar-nav navbar-right">
-              <li class="dropdown">
-          <a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-user"></span> Steve R
-          <span class="caret"></span></a>
-          <ul class="dropdown-menu">
-            <li><a href="profile.html"> Profile</a></li>
-            <li><a href="index.html"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
-          </ul>
-        </li>
-            </ul>
-          </div>
-        </div>
-      </nav>
-      
+<!-- nav bar-->
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>                        
+        </button>
+        <a class="navbar-brand" href="index.html">TEAM 10 CHESS</a>
+      </div>
+      <div class="collapse navbar-collapse" id="myNavbar">
+        <ul class="nav navbar-nav">
+          <li class="active"><a href="lobby.html">Lobby</a></li>
+          <li><a href="howToPlay.html">How to Play</a></li>
+          <li><a href="about.html">About</a></li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+          <li class="dropdown">
+      <a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-user"></span> Steve R
+      <span class="caret"></span></a>
+      <ul class="dropdown-menu">
+        <li><a href="profile.html"> Profile</a></li>
+        <li><a href="index.html"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
+      </ul>
+    </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+<body style= "background-color:rgb(56, 52, 52);">
+<div class="wrapper">
 <div class="container">
 <br> <br> <br>
 
         <!-- banner for title of the page -->
         <div class="banner">
-          <h1 class="lobbyBanner">LOBBY</h1>
+          <h1 class="lobbyBanner">TEAM 10 CHESS</h1>
               </div>
               <br>
 
@@ -132,6 +105,7 @@
                 </table>
                   
               </div> 
+              <br>
       
           <h3 class="text-center">Available Games</h2>
            <div class="well lobbyGamesScroll"> <table class="table">
@@ -471,6 +445,7 @@
 <input id="m" autocomplete="off" /><button type="button" class="btn btn-success btn-sm">Send</button>     
 </form>
 <p id="users-connected"></p>
+</div>
 </div>
 </div>
 </div>

@@ -1,12 +1,10 @@
 body, html {
   height: 100%;
-  margin: 0;
+  margin: 0 0 100px;
 }
-
 .login {
   /* The image used */
   background-image: url("/images/chessbg.jpg");
-
   /* Full height */
   max-height: 100%;
   max-width: 100%;
@@ -31,39 +29,33 @@ body, html {
   background-repeat: no-repeat;
   background-size:100%;
 }
-
 * { 
   margin: 0; padding: 0; box-sizing: border-box; 
 }
-
 #users-connected { 
   padding: 5px; 
 }
-
 #messages { 
   list-style-type: none;
   margin: 0;
   padding-top: 0px;
 }
-
 #messages li { 
   padding: 5px 10px; 
 }
-
 #messages li:nth-child(odd) { 
   background: #eee; 
 }
-
 form { 
   padding: 3px;
   bottom: 0;
   width: 100%; 
 }
-
 .footer{
   background-color:rgb(37, 36, 36);
   color: white;
   padding: 30px;
+ 
 }
 .center-block{
     float: none;
@@ -71,6 +63,7 @@ form {
 .container{
     justify-content: center;
     align-items: center;
+    min-height: 100%;
 }
 .dot {
     height: 10px;
@@ -79,26 +72,22 @@ form {
     border-radius: 50%;
     display: inline-block;
 }
-h1 {
+h1.lobbyBanner {
   font-weight: lighter;
   font-size: 50px;
-}
-h1.lobbyBanner {
-  font-weight: thin;
-  font-size: 40px;
-  text-align: center;
   line-height: 150px;
+  text-align: center;
   text-shadow: 1px 1px black;
   color:white;
-
 }
 h2.thin {
   font-weight: lighter;
   text-align: center;
   color:white;
 }
-h3.gameroom {
+h4.gameroom {
   font-weight: lighter;
+  font-size: 22px;
   color:white;
 }
 h1.thin {
@@ -106,32 +95,25 @@ h1.thin {
   text-align: center;
   color:white;
 }
-
 td {
   font-weight: lighter;
- 
 }
 .navbar-brand {
   font-weight: lighter;
 }
-
 .lobbyWells {
   height:590px;
-
 }
-
 .lobbyChatScroll {
    height:421px;
    overflow-y:scroll;
 }
-
 .lobbyGamesScroll {
   height:174px;
   overflow-y:scroll;
 }
-
 .gameChatScroll {
-   height:417px;
+   height:419px;
    overflow-y:scroll;
 }
 .leaderBoardScroll {
@@ -143,4 +125,18 @@ p.thin{
 }
 .gameroom2 {
   min-height: 76px;
+}
+.btn.game {
+  width: 120px;
+}
+.centerButton { 
+  text-align: center;
+  margin-left: 5px;
+}
+div.modalBoard {
+  display: flex;
+  justify-content: center
+}
+.wrapper {
+  min-height: calc(100vh - 89px);
 }
