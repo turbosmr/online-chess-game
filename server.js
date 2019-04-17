@@ -51,12 +51,13 @@ app.use(session({ secret: 'keyboard cat',resave: true, saveUninitialized:true}))
 app.use(passport.initialize());
 app.use(passport.session());
 
-
+var currUser = "";
 
 /* Routing */
 // Display index.html
 app.use('/', userRouter);
 app.get('/lobby', function(req, res){
+    currUser = req.user.userName
     res.sendFile(__dirname + '/public/lobby.html');
 });
 
@@ -126,15 +127,7 @@ io.on('connection', (socket) => {
 
     // Store and display messages to connected clients, as well as console
     socket.on('chat message', (msg) => {
-        // pool.query('INSERT INTO lobbyChats(username, message) VALUE(?,?)', ['user', msg], (err) => {
-        //     if(err){
-        //         console.log('Error inserting message into DB.');
-        //     }
-        //     else{
-        //         console.log('Message from user: ' + msg);
-        //         io.emit('chat message', msg);
-        //     }
-        // });
+        io.emit('chat message', currUser, msg);
     });
 });
 

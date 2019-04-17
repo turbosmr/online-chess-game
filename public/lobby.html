@@ -35,8 +35,8 @@
             return false;
         });
         // Display messages on screen
-        socket.on('chat message', function(msg){
-            $('#messages').append($('<li>').text("User: " + msg));
+        socket.on('chat message', function(currUser, msg){
+            $('#messages').append($('<li>').text(currUser + ": " + msg));
         });
     });
 </script>
