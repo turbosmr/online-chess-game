@@ -3,6 +3,7 @@ const http = require('http');
 const path = require('path');
 const socketIO = require('socket.io');
 const mysql = require('mysql');
+const exphbs = require('express-handlebars');
 
 const app = express();
 const server = http.Server(app);
@@ -21,16 +22,17 @@ const {comparePassword} = require('./lib/bcrypt');
 var passport = require('passport')
   , LocalStrategy = require('passport-local').Strategy;
 
-  //view engine setup
-app.set('views', path.join(__dirname, '/public'));
-app.engine('html', require('ejs').renderFile);
-app.set('view engine', 'html');
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.set('port', 8081);
 app.use(express.static(path.join(__dirname, 'public')));
+  //view engine setup
+  app.engine('.hbs', exphbs({extname: '.hbs'}));
+  app.set('views', path.join(__dirname, '/public'));
+  app.set('view engine', '.hbs');
+
   // passport user setup
 passport.use('local-login', new LocalStrategy(
     function(username, password, done) {
@@ -54,16 +56,42 @@ app.use(passport.session());
 var currUser = "";
 
 /* Routing */
-// Display index.html
 app.use('/', userRouter);
-app.get('/lobby', function(req, res){
-    currUser = req.user.userName
-    res.sendFile(__dirname + '/public/lobby.html');
+app.get('/', function(req, res){
+    res.render('index');
+});
+app.get('/index', function(req, res){
+    res.render('index');
 });
 
-app.get('/', function(req, res){
-    res.sendFile(__dirname + '/public/index.html');
+app.get('/lobby', function(req, res){
+    //currUser = req.user.userName
+    res.render('lobby', { user: req.user, message: undefined });
 });
+
+app.get('/profile', function(req, res){
+    //currUser = req.user.userName
+    res.render('profile', { user: req.user, message: undefined });
+});
+
+app.get('/register', function(req, res){
+    //currUser = req.user.userName
+    res.render('register');
+});
+app.get('/howToPlay', function(req, res){
+    //currUser = req.user.userName
+    res.render('howToPlay', { user: req.user, message: undefined });
+});
+app.get('/chessBoard', function(req, res){
+    //currUser = req.user.userName
+    res.render('chessBoard', { user: req.user, message: undefined });
+});
+app.get('/about', function(req, res){
+    //currUser = req.user.userName
+    res.render('about', { user: req.user, message: undefined });
+});
+
+
 app.post('/', function(req, res, next) {
     passport.authenticate('local-login', {
       successRedirect : '/lobby', // redirect to the secure profile section
@@ -137,7 +165,7 @@ io.on('connection', (socket) => {
      */
     socket.on('createGame', function(data){
         var gameID = 'room-' + ++rooms;
-        var gameRoom = {gameID: gameID, player1: data.name, player2: '', fen: 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1', pgn: ''};
+        var gameRoom = {gameID: gameID, fen: 'rnb1kbnr/pppp1ppp/8/4p2q/5PP1/8/PPPPP2P/RNBQKBNR b KQkq - 1 3', pgn: '', player1: data.name, player2: '', result: ''};
         gameRooms.push(gameRoom);
         console.log(data.name + ' created game: ' + gameRoom.gameID);
         socket.join(gameID);
@@ -184,11 +212,12 @@ io.on('connection', (socket) => {
      * Handle the turn played by either player and notify the other. 
      */
     socket.on('playTurn', function(data){
-        //update gameRoom object with new fen
+        //update gameRoom object with new FEN and PGN
         var index;
         for (index = 0; index < gameRooms.length; index++) {
             if(gameRooms[index].gameID == data.gameID) {
                 gameRooms[index].fen = data.fen;
+                gameRooms[index].pgn = data.pgn;
                 break;
             }
         }
@@ -199,7 +228,16 @@ io.on('connection', (socket) => {
      * Notify the players about the victor.
      */
     socket.on('gameEnded', function(data){
-        socket.broadcast.to(data.room).emit('gameEnd', data);
+        //update gameRoom object with result
+        var index;
+        for (index = 0; index < gameRooms.length; index++) {
+            if(gameRooms[index].gameID == data.gameID) {
+                gameRooms[index].result = data.result;
+                break;
+            }
+        }
+        console.log(gameRooms[index].result);
+        socket.broadcast.to(data.gameID).emit('gameEnd', data);
     });
 });
 
