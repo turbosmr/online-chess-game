@@ -137,7 +137,7 @@ io.on('connection', (socket) => {
      */
     socket.on('createGame', function(data){
         var gameID = 'room-' + ++rooms;
-        var gameRoom = {gameID: gameID, player1: data.name, player2: '', fen: 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1', pgn: ''};
+        var gameRoom = {gameID: gameID, fen: 'rnb1kbnr/pppp1ppp/8/4p2q/5PP1/8/PPPPP2P/RNBQKBNR b KQkq - 1 3', pgn: '', player1: data.name, player2: '', result: ''};
         gameRooms.push(gameRoom);
         console.log(data.name + ' created game: ' + gameRoom.gameID);
         socket.join(gameID);
@@ -184,11 +184,12 @@ io.on('connection', (socket) => {
      * Handle the turn played by either player and notify the other. 
      */
     socket.on('playTurn', function(data){
-        //update gameRoom object with new fen
+        //update gameRoom object with new FEN and PGN
         var index;
         for (index = 0; index < gameRooms.length; index++) {
             if(gameRooms[index].gameID == data.gameID) {
                 gameRooms[index].fen = data.fen;
+                gameRooms[index].pgn = data.pgn;
                 break;
             }
         }
@@ -199,7 +200,16 @@ io.on('connection', (socket) => {
      * Notify the players about the victor.
      */
     socket.on('gameEnded', function(data){
-        socket.broadcast.to(data.room).emit('gameEnd', data);
+        //update gameRoom object with result
+        var index;
+        for (index = 0; index < gameRooms.length; index++) {
+            if(gameRooms[index].gameID == data.gameID) {
+                gameRooms[index].result = data.result;
+                break;
+            }
+        }
+        console.log(gameRooms[index].result);
+        socket.broadcast.to(data.gameID).emit('gameEnd', data);
     });
 });
 
