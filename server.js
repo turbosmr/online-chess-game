@@ -3,6 +3,7 @@ const http = require('http');
 const path = require('path');
 const socketIO = require('socket.io');
 const mysql = require('mysql');
+const exphbs = require('express-handlebars');
 
 const app = express();
 const server = http.Server(app);
@@ -21,16 +22,17 @@ const {comparePassword} = require('./lib/bcrypt');
 var passport = require('passport')
   , LocalStrategy = require('passport-local').Strategy;
 
-  //view engine setup
-app.set('views', path.join(__dirname, '/public'));
-app.engine('html', require('ejs').renderFile);
-app.set('view engine', 'html');
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.set('port', 8081);
 app.use(express.static(path.join(__dirname, 'public')));
+  //view engine setup
+  app.engine('.hbs', exphbs({extname: '.hbs'}));
+  app.set('views', path.join(__dirname, '/public'));
+  app.set('view engine', '.hbs');
+
   // passport user setup
 passport.use('local-login', new LocalStrategy(
     function(username, password, done) {
@@ -54,16 +56,42 @@ app.use(passport.session());
 var currUser = "";
 
 /* Routing */
-// Display index.html
 app.use('/', userRouter);
-app.get('/lobby', function(req, res){
-    currUser = req.user.userName
-    res.sendFile(__dirname + '/public/lobby.html');
+app.get('/', function(req, res){
+    res.render('index');
+});
+app.get('/index', function(req, res){
+    res.render('index');
 });
 
-app.get('/', function(req, res){
-    res.sendFile(__dirname + '/public/index.html');
+app.get('/lobby', function(req, res){
+    //currUser = req.user.userName
+    res.render('lobby', { user: req.user, message: undefined });
 });
+
+app.get('/profile', function(req, res){
+    //currUser = req.user.userName
+    res.render('profile', { user: req.user, message: undefined });
+});
+
+app.get('/register', function(req, res){
+    //currUser = req.user.userName
+    res.render('register');
+});
+app.get('/howToPlay', function(req, res){
+    //currUser = req.user.userName
+    res.render('howToPlay', { user: req.user, message: undefined });
+});
+app.get('/chessBoard', function(req, res){
+    //currUser = req.user.userName
+    res.render('chessBoard', { user: req.user, message: undefined });
+});
+app.get('/about', function(req, res){
+    //currUser = req.user.userName
+    res.render('about', { user: req.user, message: undefined });
+});
+
+
 app.post('/', function(req, res, next) {
     passport.authenticate('local-login', {
       successRedirect : '/lobby', // redirect to the secure profile section

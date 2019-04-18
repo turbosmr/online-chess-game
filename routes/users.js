@@ -8,5 +8,9 @@ router.get('/register', function(req, res){
 router.get('/', function (req, res) {
   res.render('index', { message: undefined });
 });
+router.get('/logout', function(req, res){
+  req.logout();
+  res.redirect('/');
+});
 
 module.exports = router;
