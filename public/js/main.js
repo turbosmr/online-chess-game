@@ -25,7 +25,26 @@ $(function () {
         $('#messages').append($('<li>').text(currUser + ": " + msg));
     });
 
+    var messageList = document.getElementById('messageList');
+
+    function getMessages() {
+        shouldScroll = messagesList.scollTop + messagesList.clientHeight === messagesList.scrollHeight;
+
+        if(!shouldScroll) {
+            scrollToBottom()
+        }
+    }
+
+
+    function scrollToBottom() {
+        messagesList.scrollTop = messagesList.scrollHeight;
+    }
     
+    scrollToBottom();
+    
+    setInterval(getMessages, 100);
+
+
     var board, 
         game, 
         gameID,

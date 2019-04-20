@@ -60,6 +60,7 @@ app.use('/', userRouter);
 app.get('/lobby', function(req, res){
     maxUsers++;
     users.push(req.user.userName);
+    console.log(maxUsers);
     res.sendFile(__dirname + '/public/lobby.html');
 });
 
@@ -109,6 +110,14 @@ io.on('connection', (socket) => {
     console.log('Connected users: ' + socketCount);
     socket.emit('users connected', socketCount);
     socket.on('disconnect', function(){
+        for(i = 0; i < socketCount; i++)
+        {
+            if( socket.username == users[i])
+            {
+                users.splice(i,1);
+            }
+        }
+        maxUsers--;
         socketCount--;
         console.log('User disconnected');
         console.log('Connected users: ' + socketCount);
@@ -136,6 +145,8 @@ io.on('connection', (socket) => {
     socket.on('chat message', (msg) => {
         io.emit('chat message', socket.username, msg);
     });
+
+    //leaderboard stuff
 
     /**
      * Create a new game room and notify the creator of game. 
