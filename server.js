@@ -3,7 +3,6 @@ const http = require('http');
 const path = require('path');
 const socketIO = require('socket.io');
 const mysql = require('mysql');
-const passportSocketIo = require('passport.socketio');
 
 const app = express();
 const server = http.Server(app);
@@ -18,14 +17,6 @@ const userModel = require('./models/index').User;
 const lobbyChat = require('./models/index').lobbyChat;
 //Session for Login using passport, express-session and bcrypt.js
 var session = require("express-session");
-var MySQLStore = require('connect-mysql')(session), // mysql session store
-    options = {
-      config: {
-        user: 'csc667', 
-        password: 'csc667csc',
-        database: 'CSC667' 
-      }
-    }
 const {comparePassword} = require('./lib/bcrypt');
 var passport = require('passport')
   , LocalStrategy = require('passport-local').Strategy;
@@ -55,15 +46,20 @@ passport.use('local-login', new LocalStrategy(
         });
     }
 ));
-app.use(session({ key: 'express.sid', secret: 'keyboard cat',resave: true, saveUninitialized:true})); // session secret
+app.use(session({ secret: 'keyboard cat',resave: true, saveUninitialized:true})); // session secret
 
 app.use(passport.initialize());
 app.use(passport.session());
+
+var users = [];
+var maxUsers = 0;
 
 /* Routing */
 // Display index.html
 app.use('/', userRouter);
 app.get('/lobby', function(req, res){
+    maxUsers++;
+    users.push(req.user.userName);
     res.sendFile(__dirname + '/public/lobby.html');
 });
 
@@ -101,47 +97,6 @@ app.get('/login', function(req, res){
 });*/
 // Display login.html
 
-//With Socket.io >= 1.0
-io.use(passportSocketIo.authorize({
-    cookieParser: cookieParser,       // the same middleware you registrer in express
-    key:          'express.sid',       // the name of the cookie where express/connect stores its session_id
-    secret:       'session_secret',    // the session_secret to parse the cookie
-    store:        new MySQLStore(options),        // we NEED to use a sessionstore. no memorystore please
-    success:      onAuthorizeSuccess,  // *optional* callback on success - read more below
-    fail:         onAuthorizeFail,     // *optional* callback on fail/error - read more below
-  }));
-  
-  function onAuthorizeSuccess(data, accept){
-    console.log('successful connection to socket.io');
-  
-    // The accept-callback still allows us to decide whether to
-    // accept the connection or not.
-    accept(null, true);
-  
-    // OR
-  
-    // If you use socket.io@1.X the callback looks different
-    accept();
-  }
-  
-  function onAuthorizeFail(data, message, error, accept){
-    if(error)
-      throw new Error(message);
-    console.log('failed connection to socket.io:', message);
-  
-    // We use this callback to log all of our failed connections.
-    accept(null, false);
-  
-    // OR
-  
-    // If you use socket.io@1.X the callback looks different
-    // If you don't want to accept the connection
-    if(error)
-      accept(new Error(message));
-    // this error will be sent to the user as a special error-package
-    // see: http://socket.io/docs/client-api/#socket > error-object
-  }
-
 var socketCount = 0;
 var rooms = 0;
 var gameRooms = [];
@@ -160,6 +115,9 @@ io.on('connection', (socket) => {
         socket.emit('users connected', socketCount);
     });
 
+    socket.username = users[socketCount-1];
+    console.log(socket.username);
+
     // lobbyChat.findAndCountAll().then(function(results,err) {
     //     if(err)
     //     {
@@ -176,7 +134,7 @@ io.on('connection', (socket) => {
 
     // Store and display messages to connected clients, as well as console
     socket.on('chat message', (msg) => {
-        io.emit('chat message', currUser, msg);
+        io.emit('chat message', socket.username, msg);
     });
 
     /**
