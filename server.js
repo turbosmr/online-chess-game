@@ -99,7 +99,8 @@ app.post('/', function(req, res, next) {
       failureFlash : true // allow flash messages
       },function(err, user, info) {
           if (err) { return next(err); }
-          if (!user) { return res.redirect(info,'/'); }
+          if (!user) { 
+              return res.render('index',{message: 'cannot find your username or incorrect password'}); }
           req.logIn(user, function(err) {
               if (err) { return next(err); }
               return res.redirect('/lobby');
