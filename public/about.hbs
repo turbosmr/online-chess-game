@@ -34,19 +34,18 @@
           <li class="active"><a href="/about">About</a></li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
+          {{#if user}}
           <li class="dropdown">
             <a class="dropdown-toggle" data-toggle="dropdown" href="#" style="float:right;">
-
             <span class="glyphicon glyphicon-user"> </span>
             <span class="caret"></span>
-            {{#if user}}
             <a style="float:right;">{{user.userName}}</a>
-            {{/if}}
           </a>
             <ul class="dropdown-menu">
               <li><a href="/profile"> Profile</a></li>
               <li><a href="/logout"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
             </ul>
+            {{/if}}
           </li>
         </ul>
       </div>

@@ -38,18 +38,17 @@
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li class="dropdown">
+          {{#if user}}
           <a class="dropdown-toggle" data-toggle="dropdown" href="#" style="float:right;">
-
             <span class="glyphicon glyphicon-user"> </span>
             <span class="caret"></span>
-            {{#if user}}
             <a style="float:right;">{{user.userName}}</a>
-            {{/if}}
           </a>
           <ul class="dropdown-menu">
             <li><a href="/profile"> Profile</a></li>
             <li><a href="/logout"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
           </ul>
+          {{/if}}
         </li>
       </ul>
     </div>
@@ -126,7 +125,6 @@
                     });
                   </script>
                 </div>
-
                 <!-- Modal footer -->
                 <div class="modal-footer">
                   <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
@@ -215,8 +213,8 @@
 <!--footer-->
 <footer class="footer container-fluid text-center">
   <p><a href="/lobby" style="color:lightgrey">Lobby</a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-    <a href="/lobby" style="color:lightgrey">How to play</a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-    <a href="/lobby" style="color:lightgrey">About</a></p>
+    <a href="/howToPlay" style="color:lightgrey">How to play</a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <a href="/about" style="color:lightgrey">About</a></p>
 </footer>
 <script src="js/main.js"></script>
 </body>
