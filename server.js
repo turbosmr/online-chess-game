@@ -112,7 +112,7 @@ io.on('connection', (socket) => {
     socket.on('disconnect', function(){
         for(i = 0; i < socketCount; i++)
         {
-            if( socket.username == users[i])
+            if(socket.username == users[i])
             {
                 users.splice(i,1);
             }
