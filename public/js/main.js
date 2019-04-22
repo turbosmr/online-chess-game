@@ -1,7 +1,7 @@
 $(function () {
 
     var socket = io();
-
+/*
     //History page
     
     // 1. Load a PGN into the game
@@ -47,7 +47,7 @@ $(function () {
         i = history.length;
       });
 
-
+*/
     var imgs = ["http://thumb7.shutterstock.com/photos/thumb_large/253822/156271139.jpg", "http://thumb9.shutterstock.com/photos/thumb_large/554278/132632972.jpg", "http://thumb7.shutterstock.com/photos/thumb_large/101304/133879079.jpg", "http://thumb101.shutterstock.com/photos/thumb_large/422038/422038,1327874090,3.jpg", "http://thumb1.shutterstock.com/photos/thumb_large/975647/149914934.jpg", "http://thumb9.shutterstock.com/photos/thumb_large/195826/148988282.jpg"];
     var id = 0;
     var image = document.getElementById("imgClickAndChange");
