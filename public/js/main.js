@@ -256,11 +256,4 @@ $(function () {
         $('#move').html(data.oppMessage);
         socket.leave(data.gameID);
     })
-
-
-    /*$('#setRuyLopezBtn').on('click', function() {
-        var ruyLopez = 'r1bqkbnr/pppp1ppp/2n5/1B2p3/4P3/5N2/PPPP1PPP/RNBQK2R w KQkq - 0 1';
-        game.load(ruyLopez);
-        board.position(game.fen());
-    });*/
 });

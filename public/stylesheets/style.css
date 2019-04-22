@@ -1,19 +1,15 @@
 body, html {
   height: 100%;
-  margin: 0 0 100px;
+  margin: 0 0;
 }
-.login {
+.reg-login-bg {
   /* The image used */
   background-image: url("/images/chessbg.jpg");
-  /* Full height */
-  max-height: 100%;
-  max-width: 100%;
-  height: 500px; 
-  width: 100%;
   /* Center and scale the image nicely */
-  background-position: 0;
+  background-position: center;
   background-repeat: no-repeat;
-  background-size:100%;
+  background-size:cover;
+  height: 400px;
 }
 .banner {
   /* The image used */
@@ -50,6 +46,14 @@ form {
   padding: 3px;
   bottom: 0;
   width: 100%; 
+}
+input {
+  width: 77%;
+  box-sizing: border-box;
+  border: 2px solid #ccc;
+  border-radius: 4px;
+  background-color: #f8f8f8;
+  resize: none;
 }
 .footer{
   background-color:rgb(37, 36, 36);
@@ -138,5 +142,17 @@ div.modalBoard {
   justify-content: center
 }
 .wrapper {
-  min-height: calc(100vh - 89px);
+  min-height: calc(100% - 89px);
+}
+
+.reg-login-form-header {
+  padding-top: 60px;
+  padding-bottom: 25px;
+  text-align: center;
+}
+
+.reg-login-form {
+  padding-top: 70px;
+  margin: auto;
+  width: 250px;
 }
