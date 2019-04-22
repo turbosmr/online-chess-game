@@ -1,0 +1,13 @@
+h4.shadow {
+    
+ text-align: center;
+  text-shadow: 1px 1px black;
+  color:white;
+
+}
+.welcome-padding {
+    padding-top: 130px;
+    margin: auto;
+    width: 250px;
+  }
+  
