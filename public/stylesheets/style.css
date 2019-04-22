@@ -146,13 +146,13 @@ div.modalBoard {
 }
 
 .reg-login-form-header {
-  padding-top: 60px;
-  padding-bottom: 25px;
+  padding-top: 50px;
+  padding-bottom: 10px;
   text-align: center;
 }
 
 .reg-login-form {
-  padding-top: 70px;
+  padding-top: 80px;
   margin: auto;
   width: 250px;
 }

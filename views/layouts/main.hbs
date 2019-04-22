@@ -47,11 +47,11 @@
                     <li class="{{#if active.HowToPlay}}active{{/if}}"><a href="/howToPlay">How to Play</a></li>
                     <li class="{{#if active.About}}active{{/if}}"><a href="/about">About</a></li>
                 </ul>
-                {{#if username}}
+                {{#if loggedUser}}
                 <ul class="nav navbar-nav navbar-right">
                     <li class="dropdown">
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                            {{username}}
+                            {{loggedUser}}
                             <span class="caret"></span></a>
                         <ul class="dropdown-menu">
                             <li><a href="/profile"><span class="glyphicon glyphicon-user"></span> Profile</a></li>

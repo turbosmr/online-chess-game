@@ -38,11 +38,11 @@ router.post('/register', (req, res) => {
       regErrors.push({ msg: 'Username must be between 5-20 characters' });
     }
     // Check password is between 8-20 characters
-    if (password.length < 8 || password.length > 20) {
+    else if (password.length < 8 || password.length > 20) {
       regErrors.push({ msg: 'Password must be between 8-20 characters' });
     }
     // Check passwords match
-    if (password != password2) {
+    else if (password != password2) {
       regErrors.push({ msg: 'Passwords do not match' });
     }
   }

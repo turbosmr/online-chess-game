@@ -13,7 +13,7 @@ router.get('/', forwardAuthenticated, function (req, res) {
 // Lobby page
 router.get('/lobby', ensureAuthenticated, function (req, res) {
   res.render('lobby', {
-    username: req.user.userName,
+    loggedUser: req.user.userName,
     title: "Lobby - Team 10 Chess",
     active: { Lobby: true }
   })
@@ -22,7 +22,7 @@ router.get('/lobby', ensureAuthenticated, function (req, res) {
 // Chess game page
 router.get('/game', ensureAuthenticated, function (req, res) {
   res.render('chessBoard', {
-    username: req.user.userName,
+    loggedUser: req.user.userName,
     title: "Game - Team 10 Chess",
     active: { Game: true }
   })
@@ -31,7 +31,7 @@ router.get('/game', ensureAuthenticated, function (req, res) {
 // Profile page
 router.get('/profile', ensureAuthenticated, function (req, res) {
   res.render('profile', {
-    username: req.user.userName,
+    loggedUser: req.user.userName,
     title: "Profile - Team 10 Chess",
     active: { Profile: true }
   })
@@ -40,7 +40,7 @@ router.get('/profile', ensureAuthenticated, function (req, res) {
 // How to Play page
 router.get('/howToPlay', function (req, res) {
   res.render('howToPlay', {
-    username: req.user.userName,
+    loggedUser: req.user.userName,
     title: "How to Play - Team 10 Chess",
     active: { HowToPlay: true }
   })
@@ -49,7 +49,7 @@ router.get('/howToPlay', function (req, res) {
 // About page
 router.get('/about', ensureAuthenticated, function (req, res) {
   res.render('about', {
-    username: req.user.userName,
+    loggedUser: req.user.userName,
     title: "About - Team 10 Chess",
     active: { About: true }
   })
