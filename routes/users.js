@@ -11,7 +11,8 @@ const { forwardAuthenticated } = require('../config/auth');
 // Login page
 router.get('/login', forwardAuthenticated, function (req, res) {
   res.render('login', {
-    title: "Login - Team 10 Chess"
+    title: "Login - Team 10 Chess",
+    active: {Login: true}
   });
 });
 
@@ -19,6 +20,7 @@ router.get('/login', forwardAuthenticated, function (req, res) {
 router.get('/register', forwardAuthenticated, function (req, res) {
   res.render('register', {
     title: "Register - Team 10 Chess",
+    active: {Register: true}
   });
 });
 

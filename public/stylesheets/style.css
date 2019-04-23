@@ -154,7 +154,13 @@ div.modalBoard {
 }
 
 .reg-login-form {
-  padding-top: 80px;
+  padding-top: 100px;
   margin: auto;
   width: 250px;
+}
+h5.reg-login-shadow {
+  font-size: 17px;
+  text-align: center;
+  text-shadow: 1px 1px black;
+  color:white;
 }
