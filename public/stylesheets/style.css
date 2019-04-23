@@ -11,6 +11,9 @@ body, html {
   background-size:cover;
   height: 400px;
 }
+.topSpace{
+  padding-top: 60px;
+}
 .banner {
   /* The image used */
   background-image: url("/images/chessbg.jpg");
@@ -134,7 +137,7 @@ p.thin{
 }
 .centerButton { 
   text-align: center;
-  margin-left: 5px;
+  margin-left: 50px;
 }
 div.modalBoard {
   display: flex;

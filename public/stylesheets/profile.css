@@ -1,5 +1,13 @@
-.profile-padding {
-    padding-top: 130px;
-    margin: auto;
-    width: 250px;
+
+  .img-responsive {
+    display: block;
+    max-width: 100%;
+    height: auto;
   }
+  label{
+    color: aliceblue;
+    
+  }
+ .btn.padding{
+    padding:5px;
+ }
