@@ -31,6 +31,11 @@ body, html {
 #users-connected { 
   padding: 5px; 
 }
+
+#messageList {
+  overflow-y:auto;
+}
+
 #messages { 
   list-style-type: none;
   margin: 0;

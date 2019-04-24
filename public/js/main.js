@@ -18,7 +18,7 @@ $(function () {
     $('form').submit(function (e) {
         e.preventDefault(); // prevents page reloading
         if ($('#m').val() != '') {
-            socket.emit('chat message', { username: loggedUser, msg: $('#m').val() });
+            socket.emit('chat message', loggedUser, $('#m').val());
         }
         $('#m').val('');
         return false;
@@ -28,6 +28,25 @@ $(function () {
         $('#messages').append($('<li>').text(data.username + ": " + data.msg));
     });
 
+    //message scroll
+    var messageList = document.getElementById('messagesList');
+
+    function getMessages() {
+        shouldScroll = messagesList.scollTop + messagesList.clientHeight === messagesList.scrollHeight;
+
+        if(!shouldScroll) {
+            scrollToBottom()
+        }
+    }
+
+    function scrollToBottom() {
+        messagesList.scrollTop = messagesList.scrollHeight;
+    }
+    
+    scrollToBottom();
+    
+    setInterval(getMessages, 100);
+    //end of message scroll
 
     var board,
         game,

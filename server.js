@@ -93,9 +93,11 @@ io.on('connection', (socket) => {
     // })
 
     // Store and display messages to connected clients, as well as console
-    socket.on('chat message', (data) => {
-        io.emit('chat message', data);
+    socket.on('chat message', (loggedUser, msg) => {
+        io.emit('chat message', loggedUser, msg);
     });
+
+    //leaderboard stuff
 
     /**
      * Create a new game room and notify the creator of game. 
