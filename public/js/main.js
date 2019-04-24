@@ -1,5 +1,6 @@
 $(function () {
     var socket = io();
+
     // To prevent from displaying multiple times during server restarts
     socket.on('reconnect', () => {
         $('#users-connected').empty();
@@ -16,13 +17,15 @@ $(function () {
     });
     $('form').submit(function (e) {
         e.preventDefault(); // prevents page reloading
-        socket.emit('chat message', $('#m').val());
+        if ($('#m').val() != '') {
+            socket.emit('chat message', { username: loggedUser, msg: $('#m').val() });
+        }
         $('#m').val('');
         return false;
     });
     // Display messages on screen
-    socket.on('chat message', function (currUser, msg) {
-        $('#messages').append($('<li>').text(currUser + ": " + msg));
+    socket.on('chat message', function (data) {
+        $('#messages').append($('<li>').text(data.username + ": " + data.msg));
     });
 
 

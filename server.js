@@ -93,8 +93,8 @@ io.on('connection', (socket) => {
     // })
 
     // Store and display messages to connected clients, as well as console
-    socket.on('chat message', (msg) => {
-        io.emit('chat message', currUser, msg);
+    socket.on('chat message', (data) => {
+        io.emit('chat message', data);
     });
 
     /**

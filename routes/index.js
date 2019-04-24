@@ -1,3 +1,5 @@
+/* This file handles routing except for registration and login */
+
 const express = require('express');
 const router = express.Router();
 const { ensureAuthenticated, forwardAuthenticated } = require('../config/auth');
@@ -47,7 +49,7 @@ router.get('/howToPlay', function (req, res) {
 });
 
 // About page
-router.get('/about', ensureAuthenticated, function (req, res) {
+router.get('/about', function (req, res) {
   res.render('about', {
     loggedUser: req.user.userName,
     title: "About - Team 10 Chess",
