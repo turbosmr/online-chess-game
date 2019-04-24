@@ -45,23 +45,8 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
-<<<<<<< HEAD
-var users = [];
-var maxUsers = 0;
-
-/* Routing */
-// Display index.html
-app.use('/', userRouter);
-app.get('/lobby', function(req, res){
-    maxUsers++;
-    users.push(req.user.userName);
-    console.log(maxUsers);
-    res.sendFile(__dirname + '/public/lobby.html');
-});
-=======
 // Connect flash
 app.use(flash());
->>>>>>> johnson
 
 // Global variables
 app.use(function (req, res, next) {
@@ -86,27 +71,12 @@ io.on('connection', (socket) => {
     console.log('User connected');
     console.log('Connected users: ' + socketCount);
     socket.emit('users connected', socketCount);
-<<<<<<< HEAD
-    socket.on('disconnect', function(){
-        for(i = 0; i < socketCount; i++)
-        {
-            if(socket.username == users[i])
-            {
-                users.splice(i,1);
-            }
-        }
-        maxUsers--;
-=======
     socket.on('disconnect', function () {
->>>>>>> johnson
         socketCount--;
         console.log('User disconnected');
         console.log('Connected users: ' + socketCount);
         socket.emit('users connected', socketCount);
     });
-
-    socket.username = users[socketCount-1];
-    console.log(socket.username);
 
     // lobbyChat.findAndCountAll().then(function(results,err) {
     //     if(err)
@@ -124,7 +94,7 @@ io.on('connection', (socket) => {
 
     // Store and display messages to connected clients, as well as console
     socket.on('chat message', (msg) => {
-        io.emit('chat message', socket.username, msg);
+        io.emit('chat message', msg);
     });
 
     //leaderboard stuff

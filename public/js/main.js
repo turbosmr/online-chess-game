@@ -21,12 +21,15 @@ $(function () {
         return false;
     });
     // Display messages on screen
-    socket.on('chat message', function (currUser, msg) {
-        $('#messages').append($('<li>').text(currUser + ": " + msg));
+    socket.on('chat message', function (msg) {
+        if(msg != '')
+        {
+            $('#messages').append($('<li>').text(loggedUser + ": " + msg));
+        }
     });
 
-<<<<<<< HEAD
-    var messageList = document.getElementById('messageList');
+    //message scroll
+    var messageList = document.getElementById('messagesList');
 
     function getMessages() {
         shouldScroll = messagesList.scollTop + messagesList.clientHeight === messagesList.scrollHeight;
@@ -36,7 +39,6 @@ $(function () {
         }
     }
 
-
     function scrollToBottom() {
         messagesList.scrollTop = messagesList.scrollHeight;
     }
@@ -44,15 +46,10 @@ $(function () {
     scrollToBottom();
     
     setInterval(getMessages, 100);
-
-
-    var board, 
-        game, 
-=======
+    //end of message scroll
 
     var board,
         game,
->>>>>>> johnson
         gameID,
         player1 = false,
         player2 = false;
