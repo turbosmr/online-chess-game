@@ -16,12 +16,12 @@ $(function () {
     });
     $('form').submit(function (e) {
         e.preventDefault(); // prevents page reloading
-        socket.emit('chat message', $('#m').val());
+        socket.emit('chat message', loggedUser, $('#m').val());
         $('#m').val('');
         return false;
     });
     // Display messages on screen
-    socket.on('chat message', function (msg) {
+    socket.on('chat message', function (loggedUser, msg) {
         if(msg != '')
         {
             $('#messages').append($('<li>').text(loggedUser + ": " + msg));
