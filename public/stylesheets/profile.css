@@ -1,12 +1,16 @@
 .friendsScroll {
-    height:174px;
-    overflow-y:scroll;
+  height:174px;
+  overflow-y:scroll;
 }
+.friendsSearchScroll {
+    height:60px;
+    overflow-y:scroll;
+  }
 .profileWells {
-    height:320px;
+  height:400px;
 }
 td {
-    font-weight: lighter;
+  font-weight: lighter;
 }
 .topnav {
   overflow: hidden;

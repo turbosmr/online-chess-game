@@ -78,7 +78,6 @@ h5.welcome-login-reg-shadow {
 * { 
   margin: 0; padding: 0; box-sizing: border-box; 
 }
-
 #users-connected { 
   padding: 5px; 
 }
@@ -109,6 +108,9 @@ input {
 .chatScroll {
   height:421px;
   overflow-y:scroll;
+}
+.well {
+  background-color:whitesmoke;
 }
 
 .center-block{
