@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <title>TEAM 10 CHESS Game</title>
   <meta charset="utf-8">
@@ -25,190 +26,276 @@
       <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
-        <span class="icon-bar"></span>                        
+        <span class="icon-bar"></span>
       </button>
-        <a class="navbar-brand" href="index.html">TEAM 10 CHESS</a>
-      </div>
-      <div class="collapse navbar-collapse" id="myNavbar">
-        <ul class="nav navbar-nav">
-          <li><a href="lobby.html">Lobby</a></li>
-          <li><a href="howToPlay.html">How to Play</a></li>
-          <li><a href="about.html">About</a></li>
-        </ul>
-        <ul class="nav navbar-nav navbar-right">
-        <li class="dropdown">
-      <a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-user"></span> Steve R
-      <span class="caret"></span></a>
-      <ul class="dropdown-menu">
-        <li><a href="profile.html"> Profile</a></li>
-        <li><a href="index.html"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
-      </ul>
-        </li>
-        </ul>
-      </div>
+      <a class="navbar-brand" href="index.html">TEAM 10 CHESS</a>
     </div>
-  </nav>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav">
+        <li><a href="lobby.html">Lobby</a></li>
+        <li><a href="howToPlay.html">How to Play</a></li>
+        <li><a href="about.html">About</a></li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li class="dropdown">
+          <a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-user"></span>
+            Steve R
+            <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="profile.html"> Profile</a></li>
+            <li><a href="index.html"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
 <br><br><br>
 
-<body style= "background-color:rgb(56, 52, 52);"></body>
-<div class="wrapper">
-<div class="container">
-  <div class="row">
+<body style="background-color:rgb(56, 52, 52);">
+  <div class="wrapper">
+    <div class="container">
+      <div class="row">
 
-    <div class="col-md-3">
+        <div class="col-md-3">
 
-      <!--gameroom2 class div is needed to give proper height to buttons container-->
-      <div class= "gameroom2">
-      </div>
+          <!--gameroom2 class div is needed to give proper height to buttons container-->
+          <div class="gameroom2">
+          </div>
 
-      <!--buttons for game-->
-      <div class="well well-md">
-        <br>   
-        <h4>Create a new Game</h4>
-        <input type="text" name="name" id="nameNew" placeholder="Enter your name" required>
-        <button id="new">New Game</button>
-        <br><br>
-        <h4>Join an existing game</h4>
-        <input type="text" name="name" id="nameJoin" placeholder="Enter your name" required>
-        <input type="text" name="gameID" id="gameID" placeholder="Enter Game ID" required>
-        <button id="join">Join Game</button>
-        <br>
-        <br>
-        <button type="button" class=" btn game center-block">Submit Move</button><br>
-        <button type="button" class=" btn game center-block">Offer Draw</button><br>
-        <button type="button" class=" btn game btn-danger center-block">Resign Game</button><br><br><br>
-           
-                <!-- Button to Open the Modal for History-->
-                <button type="button" class=" btn game btn-default center-block" data-toggle="modal" data-target="#myModal">Game History</button>
-                <br>
-              
-                <!-- The History Modal -->
-                <div class="modal" id="myModal">
-                  <div class="modal-dialog">
-                    <div class="modal-content">
-                    
-                      <!-- Modal Header -->
-                      <div class="modal-header">
-                        <h4 class="modal-title text-center">Game History</h4>
+          <!--buttons for game-->
+          <div class="well well-sm">
+            <br>
+            <h4>Create a new Game</h4>
+            <input type="text" name="name" id="nameNew" placeholder="Enter your name" required>
+            <button id="new">New Game</button>
+            <br><br>
+            <h4>Join an existing game</h4>
+            <input type="text" name="name" id="nameJoin" placeholder="Enter your name" required>
+            <input type="text" name="gameID" id="gameID" placeholder="Enter Game ID" required>
+            <button id="join">Join Game</button>
+            <br>
+            <br>
+            <button type="button" class=" btn game center-block">Submit Move</button><br>
+            <button type="button" class=" btn game center-block">Offer Draw</button><br>
+            <button type="button" class=" btn game btn-danger center-block">Resign Game</button><br><br><br>
+
+            <!-- Button to Open the Modal for History-->
+            <button type="button" class=" btn game btn-default center-block" data-toggle="modal"
+              data-target="#myModal">Game History</button>
+            <br>
+
+            <!-- The History Modal -->
+            <div class="modal" id="myModal">
+              <div class="modal-dialog">
+                <div class="modal-content">
+
+                  <!-- Modal Header -->
+                  <div class="modal-header">
+                    <h4 class="modal-title text-center">Game History</h4>
+                  </div>
+
+                  <!-- Modal body -->
+                  <div class="modal-body">
+
+                    <!--buttons for game-->
+                    <div class="well well-md">
+                      <br>
+                      <h4>Create a new Game</h4>
+                      <input type="text" name="name" id="nameNew" placeholder="Enter your name" required>
+                      <button id="new">New Game</button>
+                      <br><br>
+                      <h4>Join an existing game</h4>
+                      <input type="text" name="name" id="nameJoin" placeholder="Enter your name" required>
+                      <input type="text" name="gameID" id="gameID" placeholder="Enter Game ID" required>
+                      <button id="join">Join Game</button>
+                      <br>
+                      <br>
+                      <button type="button" class=" btn game center-block">Submit Move</button><br>
+                      <button type="button" class=" btn game center-block">Offer Draw</button><br>
+                      <button type="button" class=" btn game btn-danger center-block">Resign Game</button><br><br><br>
+
+                      <!-- Button to Open the Modal for History-->
+                      <button type="button" class=" btn game btn-default center-block" data-toggle="modal"
+                        data-target="#myModal">Game History</button>
+                      <br>
+
+                      <!-- The History Modal -->
+                      <div class="modal" id="myModal">
+                        <div class="modal-dialog">
+                          <div class="modal-content">
+
+                            <!-- Modal Header -->
+                            <div class="modal-header">
+                              <h4 class="modal-title text-center">Game History</h4>
+                            </div>
+
+                            <!-- Modal body -->
+                            <div class="modal-body">
+
+                            </div>
+                            <div style="margin: 5px auto; width: 400px;">
+                              <input type="button" id="startPositionBtn5" value="|<" />
+                              <input type="button" id="prevBtn5" value="<" />
+                              <input type="button" id="nextBtn5" value=">" />
+                              <input type="button" id="endPositionBtn5" value=">|" />
+                              <p><span id="pgn5"></span></p>
+                            </div>
+
+                          </div>
+                          <br>
+
+                          <!-- Modal foward and back buttons -->
+                          <div class="centerButton">
+                            <button id="prevBtn5" class="btn btn-default"><span
+                                class="glyphicon glyphicon-menu-left"></span></button>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <button id="nextBtn5" class="btn btn-default"><span
+                                class="glyphicon glyphicon-menu-right"></span></button>
+                          </div>
+                        </div>
+
+                        <!-- Modal footer -->
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                        </div>
                       </div>
-                      
-                      <!-- Modal body -->
-                      <div class="modal-body">
+                      <br>
 
-                        </div>
-                        <div style="margin: 5px auto; width: 400px;">
-                        <input type="button" id="startPositionBtn5" value="|<" />
-                        <input type="button" id="prevBtn5" value="<" />
-                        <input type="button" id="nextBtn5" value=">" />
-                        <input type="button" id="endPositionBtn5" value=">|" />
-                        <p><span id="pgn5"></span></p>
-                        </div>
-                         
-                        </div>
-                        <br>
+                      <!-- Modal foward and back buttons -->
+                      <div class="centerButton">
+                        <button id="" class="btn btn-default"><span
+                            class="glyphicon glyphicon-menu-left"></span></button>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <button id="nextImage" class="btn btn-default"><span
+                            class="glyphicon glyphicon-menu-right"></span></button>
+                      </div>
+                      <script>
+                        var imgs = ["http://thumb7.shutterstock.com/photos/thumb_large/253822/156271139.jpg", "http://thumb9.shutterstock.com/photos/thumb_large/554278/132632972.jpg", "http://thumb7.shutterstock.com/photos/thumb_large/101304/133879079.jpg", "http://thumb101.shutterstock.com/photos/thumb_large/422038/422038,1327874090,3.jpg", "http://thumb1.shutterstock.com/photos/thumb_large/975647/149914934.jpg", "http://thumb9.shutterstock.com/photos/thumb_large/195826/148988282.jpg"];
+                        var id = 0;
+                        var image = document.getElementById("imgClickAndChange");
+                        $('#nextImage').on('click', function () {
+                          id++;
+                          image.src = imgs[id];
+                        });
+                      </script>
+                    </div>
 
-                        <!-- Modal foward and back buttons -->
-                        <div class="centerButton">
-                          <button id="prevBtn5" class="btn btn-default"><span class="glyphicon glyphicon-menu-left"></span></button>
-                          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                          <button id="nextBtn5" class="btn btn-default"><span class="glyphicon glyphicon-menu-right"></span></button>
-                        </div>
-                      </div>
-                      
-                      <!-- Modal footer -->
-                      <div class="modal-footer">
-                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                      </div>
+                    <!-- Modal footer -->
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
                     </div>
                   </div>
                 </div>
+              </div>
 
-      </div>
-      <br>
+            </div>
+            <br>
 
-        <!--text to display time per move, time left, and your move-->
-        <h3 class="gameroom" style="color:white">Time Per Move: 1 Day</h3>
-        <h3 class="gameroom" style="color:white">Time Left: 12:54</h3>  
-        <h3 id="move" style="color:greenyellow"></h3>
-    </div>
+            <!--text to display time per move, time left, and your move-->
+            <h3 class="gameroom" style="color:white">Time Per Move: 1 Day</h3>
+            <h3 class="gameroom" style="color:white">Time Left: 12:54</h3>
+            <h3 id="move" style="color:greenyellow"></h3>
+          </div>
 
-   
-    <div class="col-md-6">   
 
-      <!--text for person you are playing-->
-      <h3 class="text-center" style="color:white">Johnson W</h3>
-      <br>
-    
-      <!--chessboard and pieces-->
-      <div class="well chessboard well-sm"> 
-        <div id="board" style="width: 100%"></div>
-        <!-- <h2 id="userHello"></h2> -->
-      </div>
+          <div class="col-md-6">
 
-      <!--text for person you are playing-->
-      <h3 id="userHello"class="text-center" style="color:white"><span class="dot"></span></h3>
-    </div>
+            <!--text for person you are playing-->
+            <h3 class="text-center" style="color:white">Johnson W</h3>
+            <br>
 
-    <div class="col-md-3" >
+            <!--chessboard and pieces-->
+            <div class="well chessboard well-sm">
+              <div id="board" style="width: 100%"></div>
+              <!-- <h2 id="userHello"></h2> -->
+            </div>
 
-      <!--gameroom2 class div is needed to give proper height to chat container-->
-      <div class= "gameroom2">
-      </div>
+            <!--text for person you are playing-->
+            <h3 id="userHello" class="text-center" style="color:white"><span class="dot"></span></h3>
+          </div>
 
-      <!--Chat-->
-      <div class="well well-sm"> 
-        <h4 class="text-center">Chat with Johnson W</h4>
-        <div class="well gameChatScroll">
-          Johnson W: This is my first time, take it easy on me.<br>
-          Steve R: Not a Chance!!!<br>
-          Johnson: Hey, I got it to scolllll!!<br>
-          Johnson: Hey, I got it to scolllll!!<br>
-          Johnson: Hey, I got it to scolllll!!<br>
-          Johnson: Hey, I got it to scolllll!!<br>
-          Johnson: Hey, I got it to scolllll!!<br>
-          Johnson: Hey, I got it to scolllll!!<br>
-          Johnson: Hey, I got it to scolllll!!<br>
-          Johnson: Hey, I got it to scolllll!!<br>
-          Johnson: Hey, I got it to scolllll!!<br>
-          Johnson: Hey, I got it to scolllll!!<br>
-          Johnson: Hey, I got it to scolllll!!<br>
-          Johnson: Hey, I got it to scolllll!!<br>
-          Johnson: Hey, I got it to scolllll!!<br>
-          Johnson: Hey, I got it to scolllll!!<br>
-          Johnson: Hey, I got it to scolllll!!<br>
-          Johnson: Hey, I got it to scolllll!!<br>
-          Johnson: Hey, I got it to scolllll!!<br>
-          Johnson: Hey, I got it to scolllll!!<br>
-          Johnson: Hey, I got it to scolllll!!<br>
-          Johnson: Hey, I got it to scolllll!!<br>
-          Johnson: Hey, I got it to scolllll!!<br>
-          Johnson: Hey, I got it to scolllll!!<br>
-          Johnson: Hey, I got it to scolllll!!<br>
-          Johnson: Hey, I got it to scolllll!!<br>
-          Johnson: Hey, I got it to scolllll!!<br>
-          Johnson: Hey, I got it to scolllll!!<br>
-          <ul id="messages"></ul>
+          <!--text for person you are playing-->
+          <h3 class="text-center" style="color:white">Johnson W</h3>
+          <br>
+
+          <!--chessboard and pieces-->
+          <div class="well chessboard well-sm">
+            <div id="board" style="width: 100%"></div>
+            <h2 id="userHello"></h2>
+            <h3 id="turn"></h3>
+          </div>
+
+          <!--text for person you are playing-->
+          <h3 class="text-center" style="color:white">Steve R <span class="dot"></span></h3>
+        </div>
+
+        <div class="col-md-3">
+
+          <!--gameroom2 class div is needed to give proper height to chat container-->
+          <div class="gameroom2">
+          </div>
+
+          <!--Chat-->
+          <div class="well well-sm">
+            <h4 class="text-center">Chat with Johnson W</h4>
+            <div class="well gameChatScroll">
+              Johnson W: This is my first time, take it easy on me.<br>
+              Steve R: Not a Chance!!!<br>
+              Johnson: Hey, I got it to scolllll!!<br>
+              Johnson: Hey, I got it to scolllll!!<br>
+              Johnson: Hey, I got it to scolllll!!<br>
+              Johnson: Hey, I got it to scolllll!!<br>
+              Johnson: Hey, I got it to scolllll!!<br>
+              Johnson: Hey, I got it to scolllll!!<br>
+              Johnson: Hey, I got it to scolllll!!<br>
+              Johnson: Hey, I got it to scolllll!!<br>
+              Johnson: Hey, I got it to scolllll!!<br>
+              Johnson: Hey, I got it to scolllll!!<br>
+              Johnson: Hey, I got it to scolllll!!<br>
+              Johnson: Hey, I got it to scolllll!!<br>
+              Johnson: Hey, I got it to scolllll!!<br>
+              Johnson: Hey, I got it to scolllll!!<br>
+              Johnson: Hey, I got it to scolllll!!<br>
+              Johnson: Hey, I got it to scolllll!!<br>
+              Johnson: Hey, I got it to scolllll!!<br>
+              Johnson: Hey, I got it to scolllll!!<br>
+              Johnson: Hey, I got it to scolllll!!<br>
+              Johnson: Hey, I got it to scolllll!!<br>
+              Johnson: Hey, I got it to scolllll!!<br>
+              Johnson: Hey, I got it to scolllll!!<br>
+              Johnson: Hey, I got it to scolllll!!<br>
+              Johnson: Hey, I got it to scolllll!!<br>
+              Johnson: Hey, I got it to scolllll!!<br>
+              Johnson: Hey, I got it to scolllll!!<br>
+              <ul id="messages"></ul>
+            </div>
+            <form action="">
+              <input id="m" autocomplete="off" /><button type="button" class="btn btn-success btn-sm">Send</button>
+            </form>
+            <br>
+          </div>
         </div>
         <form action="">
-        <input id="m" autocomplete="off" /> &nbsp; <button type="button" class="btn btn-success btn-sm">Send</button>
+          <input id="m" autocomplete="off" /> &nbsp; <button type="button" class="btn btn-success btn-sm">Send</button>
         </form>
         <br>
       </div>
-     </div>
     </div>
   </div>
-</div>
+  </div>
 
-    <!--footer-->
-    <footer class = "footer container-fluid text-center">
-        <p> 
-          <a href="lobby.html"style="color:lightgrey">Lobby</a> &nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp;
-          <a href="lobby.html"style="color:lightgrey">How to play</a> &nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp;
-          <a href="lobby.html"style="color:lightgrey">About</a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-          Copyright © 2019 Team 10 Chess Inc. All rights reserved.
-        </p>
-    </footer>
-    <script src="js/main.js"></script>
+  <!--footer-->
+  <footer class="footer container-fluid text-center">
+    <p>
+      <a href="lobby.html" style="color:lightgrey">Lobby</a> &nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp;
+      <a href="lobby.html" style="color:lightgrey">How to play</a> &nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp;
+      <a href="lobby.html" style="color:lightgrey">About</a>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      Copyright © 2019 Team 10 Chess Inc. All rights reserved.
+    </p>
+  </footer>
+  <script src="js/main.js"></script>
 </body>
-</html>
 
+</html>
