@@ -27,58 +27,66 @@
               <li><a href="lobby.html">Lobby</a></li>
               <li><a href="howToPlay.html">How to Play</a></li>
               <li><a href="about.html">About</a></li>
-              <li><a href="/register">Register</a></li>
+              <li class="active"><a href="register.html">Register</a></li>
             </ul>
           </div>
         </div>
       </nav>
   
 <body  style= "background-color:rgb(56, 52, 52);">
+<div class="wrapper">
 <div class="container">
   <br><br><br>
 
- 
-  <h2 class="thin">Login to start playing</h2>
+  <h2 class="thin">Registration </h2>
   <br>
 
       <div class="login">
        <div class="row">
-          <br><br><br><br><br><br>
+          <br><br><br><br><br><br><br><br>
 
            <!-- empty container for spacing login in middle-->
-          <div class="col-md-4"> 
+          <div class="col-sm-4"> 
            </div>
-           <!-- Login form -->
-           <div class="col-md-4">
-            <form action="/" method="post">
-            <br><br>  
-            <div class="form-group">
-              <label for="username">User Name:</label>
-              <input type="text" class="form-control" name="username" id="email">
-            </div>
-            <div class="form-group">
-              <label for="pwd">Password:</label>
-              <input type="password" class="form-control" name="password" id="pwd">
-            </div>
-            <div class="checkbox">
-              <label><input type="checkbox"> Remember me</label>
-            </div>
-            <button type="submit" class="btn btn-default">Login</button>
+
+           <!-- Register form -->
+           <div class="col-sm-4">
+            <form action="/register" method="post">  
+              <div class="form-group">
+                <input type="text" class="form-control" placeholder="Choose a user name" name="username" id="username">
+              </div>
+
+              <div class="form-group">
+                <input type="password"class="form-control" placeholder="Choose a password" name="password" id="pwd">
+              </div>
+
+              <div class="form-groupnp">
+                <input type="password" class="form-control" placeholder="Confirm password" name="confirmPassword" id="confirmpwd">
+              </div>
+              <br>
+
+              <button type="submit" class="btn btn-default">Register</button>
             </form>
-            </div>
+           </div>
+        
           <!-- empty container for spacing login in middle-->
-          <div class="col-md-4" >  
+          <div class="col-sm-4" >  
            </div>
            
          </div>
         </div>
       </div>
-        <br><br>
+      </div>
+      <br>
 
         <!-- footer -->
         <footer class = "footer container-fluid text-center">
-            <p><a href="lobby.html"style="color:lightgrey">How to play </a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-               <a href="lobby.html"style="color:lightgrey">About</a></p>  
-        </footer>
+                <p> 
+                  <a href="lobby.html"style="color:lightgrey">Lobby</a> &nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp;
+                  <a href="lobby.html"style="color:lightgrey">How to play</a> &nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp;
+                  <a href="lobby.html"style="color:lightgrey">About</a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                  Copyright © 2019 Team 10 Chess Inc. All rights reserved.
+                </p>
+            </footer>
 </body>
 </html>

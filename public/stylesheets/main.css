@@ -1,0 +1,131 @@
+
+/* General webpage layout*/
+
+body, html {
+  height: 100%;
+  margin: 0 0;
+}
+.navbar-brand {
+  font-weight: lighter;
+}
+.reg-login-bg {
+  /* The image used */
+  background-image: url("/images/chessbg.jpg");
+  /* Center and scale the image nicely */
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size:cover;
+  height: 400px;
+}
+.topSpace{
+  padding-top: 60px;
+}
+.banner, h1.bannerHeader {
+  /* The image used */
+  background-image: url("/images/chessbg.jpg");
+  /* Full height */
+  max-height: 100%;
+  max-width: 100%;
+  height: 150px; 
+  width: 100%;
+  /* Center and scale the image nicely */
+  background-position: 0;
+  background-repeat: no-repeat;
+  background-size:100%;
+  /* CSS for banner header text */
+  font-weight: lighter;
+  font-size: 50px;
+  line-height: 150px;
+  text-align: center;
+  text-shadow: 1px 1px black;
+  color:white;
+}
+.container{
+  justify-content: center;
+  align-items: center;
+}
+.footer{
+  background-color:rgb(37, 36, 36);
+  color: white;
+  padding: 30px;
+}
+.footer-pushdown {
+  min-height: calc(100% - 89px);
+}
+h2.welcome-login-reg-header {
+  font-weight: lighter;
+  text-align: center;
+  color:white;
+}
+.welcome-login-reg-form-header, h2.welcome-login-reg-header {
+  padding-top: 60px;
+  padding-bottom: 20px;
+  text-align: center;
+  font-weight: lighter;
+  color:white;
+}
+.reg-login-form {
+  padding-top: 100px;
+  margin: auto;
+  width: 250px;
+}
+h5.welcome-login-reg-shadow {
+  font-size: 17px;
+  text-align: center;
+  text-shadow: 1px 1px black;
+  color:white;
+}
+* { 
+  margin: 0; padding: 0; box-sizing: border-box; 
+}
+#users-connected { 
+  padding: 5px; 
+}
+#messages { 
+  list-style-type: none;
+  margin: 0;
+  padding-top: 0px;
+}
+#messages li { 
+  padding: 5px 10px; 
+}
+#messages li:nth-child(odd) { 
+  background: #eee; 
+}
+form { 
+  padding: 3px;
+  bottom: 0;
+  width: 100%; 
+}
+input {
+  width: 77%;
+  box-sizing: border-box;
+  border: 2px solid #ccc;
+  border-radius: 4px;
+  background-color: #f8f8f8;
+  resize: none;
+}
+.chatScroll {
+  height:421px;
+  overflow-y:scroll;
+}
+.well {
+  background-color:whitesmoke;
+}
+
+.center-block{
+    float: none;
+}
+.dot {
+    height: 10px;
+    width: 10px;
+    background-color:lawngreen;
+    border-radius: 50%;
+    display: inline-block;
+}
+.centerButton { 
+  text-align: center;
+  margin-left: 5px;
+}
+
+
