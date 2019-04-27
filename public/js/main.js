@@ -1,5 +1,6 @@
 $(function () {
     var socket = io();
+
     // To prevent from displaying multiple times during server restarts
     socket.on('reconnect', () => {
         $('#users-connected').empty();
@@ -16,15 +17,36 @@ $(function () {
     });
     $('form').submit(function (e) {
         e.preventDefault(); // prevents page reloading
-        socket.emit('chat message', $('#m').val());
+        if ($('#m').val() != '') {
+            socket.emit('chat message', loggedUser, $('#m').val());
+        }
         $('#m').val('');
         return false;
     });
     // Display messages on screen
-    socket.on('chat message', function (currUser, msg) {
-        $('#messages').append($('<li>').text(currUser + ": " + msg));
+    socket.on('chat message', function (data) {
+        $('#messages').append($('<li>').text(data.username + ": " + data.msg));
     });
 
+    //message scroll
+    var messageList = document.getElementById('messagesList');
+
+    function getMessages() {
+        shouldScroll = messagesList.scollTop + messagesList.clientHeight === messagesList.scrollHeight;
+
+        if(!shouldScroll) {
+            scrollToBottom()
+        }
+    }
+
+    function scrollToBottom() {
+        messagesList.scrollTop = messagesList.scrollHeight;
+    }
+    
+    scrollToBottom();
+    
+    setInterval(getMessages, 100);
+    //end of message scroll
 
     var board,
         game,
@@ -242,9 +264,6 @@ $(function () {
             }
             socket.emit('gameEnded', { gameID: gameID, result: result, oppMessage: oppMessage });
         }
-        else if (game.in_check() == true) {
-            console.log('check!');
-        }
         else {
             message = 'Your move!';
         }
@@ -259,11 +278,4 @@ $(function () {
         $('#move').html(data.oppMessage);
         socket.leave(data.gameID);
     })
-
-
-    /*$('#setRuyLopezBtn').on('click', function() {
-        var ruyLopez = 'r1bqkbnr/pppp1ppp/2n5/1B2p3/4P3/5N2/PPPP1PPP/RNBQK2R w KQkq - 0 1';
-        game.load(ruyLopez);
-        board.position(game.fen());
-    });*/
 });
