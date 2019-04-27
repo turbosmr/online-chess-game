@@ -1,64 +1,6 @@
 $(function () {
 
     var socket = io();
-/*
-    //History page
-    
-    // 1. Load a PGN into the game
-    var pgn = '1.e4 e5 2.Nf3 Nf6 3.Nc3 d5 4.exd5 Nxd5 5.Bc4 Nf4 6.O-O e4 7.Re1 Kd7 8.Rxe4 Qg5 9.Nxg5 f6 10.Qg4+ Ne6 11.Qxe6+ Kd8 12.Qe8#  1-0';
-    game.load_pgn(pgn);
-    $('#pgn5').html(pgn);
-
-    // 2. Get the full move history
-    var history = game.history();
-    game.reset();
-    var i = 0;
-
-    // 3. If Next button clicked, move forward one
-    $('#nextBtn5').on('click', function() {
-        game.move(history[i]);
-        board.position(game.fen());
-        i += 1;
-        if (i > history.length) {
-          i = history.length;
-        }
-      });
-
-      // 4. If Prev button clicked, move backward one
-      $('#prevBtn5').on('click', function() {
-        game.undo();
-        board.position(game.fen());
-        i -= 1;
-        if (i < 0) {
-          i = 0;
-        }
-      });
-      // 5. If Start button clicked, go to start position
-      $('#startPositionBtn5').on('click', function() {
-        game.reset();
-        board.start();
-        i = 0;
-      });
-    
-      // 6. If End button clicked, go to end position
-      $('#endPositionBtn5').on('click', function() {
-        game.load_pgn(pgn);
-        board.position(game.fen());
-        i = history.length;
-      });
-
-*/
-    var imgs = ["http://thumb7.shutterstock.com/photos/thumb_large/253822/156271139.jpg", "http://thumb9.shutterstock.com/photos/thumb_large/554278/132632972.jpg", "http://thumb7.shutterstock.com/photos/thumb_large/101304/133879079.jpg", "http://thumb101.shutterstock.com/photos/thumb_large/422038/422038,1327874090,3.jpg", "http://thumb1.shutterstock.com/photos/thumb_large/975647/149914934.jpg", "http://thumb9.shutterstock.com/photos/thumb_large/195826/148988282.jpg"];
-    var id = 0;
-    var image = document.getElementById("imgClickAndChange");
-    $('#nextImage').on('click', function() {
-      id++;
-      image.src = imgs[id];
-    });
-    $('#lastImage').on('click', function() {
-      id--;
-      image.src = imgs[id];
-    });
 
     // To prevent from displaying multiple times during server restarts
     socket.on('reconnect', () => {
@@ -76,15 +18,36 @@ $(function () {
     });
     $('form').submit(function (e) {
         e.preventDefault(); // prevents page reloading
-        socket.emit('chat message', $('#m').val());
+        if ($('#m').val() != '') {
+            socket.emit('chat message', loggedUser, $('#m').val());
+        }
         $('#m').val('');
         return false;
     });
     // Display messages on screen
-    socket.on('chat message', function (currUser, msg) {
-        $('#messages').append($('<li>').text(currUser + ": " + msg));
+    socket.on('chat message', function (data) {
+        $('#messages').append($('<li>').text(data.username + ": " + data.msg));
     });
 
+    //message scroll
+    var messageList = document.getElementById('messagesList');
+
+    function getMessages() {
+        shouldScroll = messagesList.scollTop + messagesList.clientHeight === messagesList.scrollHeight;
+
+        if(!shouldScroll) {
+            scrollToBottom()
+        }
+    }
+
+    function scrollToBottom() {
+        messagesList.scrollTop = messagesList.scrollHeight;
+    }
+    
+    scrollToBottom();
+    
+    setInterval(getMessages, 100);
+    //end of message scroll
 
     var board,
         game,

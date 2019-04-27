@@ -81,6 +81,11 @@ h5.welcome-login-reg-shadow {
 #users-connected { 
   padding: 5px; 
 }
+
+#messageList {
+  overflow-y:auto;
+}
+
 #messages { 
   list-style-type: none;
   margin: 0;
