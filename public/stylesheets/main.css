@@ -1,6 +1,12 @@
+
+/* General webpage layout*/
+
 body, html {
   height: 100%;
   margin: 0 0;
+}
+.navbar-brand {
+  font-weight: lighter;
 }
 .reg-login-bg {
   /* The image used */
@@ -11,10 +17,12 @@ body, html {
   background-size:cover;
   height: 400px;
 }
-.banner {
+.topSpace{
+  padding-top: 60px;
+}
+.banner, h1.bannerHeader {
   /* The image used */
   background-image: url("/images/chessbg.jpg");
-
   /* Full height */
   max-height: 100%;
   max-width: 100%;
@@ -24,6 +32,48 @@ body, html {
   background-position: 0;
   background-repeat: no-repeat;
   background-size:100%;
+  /* CSS for banner header text */
+  font-weight: lighter;
+  font-size: 50px;
+  line-height: 150px;
+  text-align: center;
+  text-shadow: 1px 1px black;
+  color:white;
+}
+.container{
+  justify-content: center;
+  align-items: center;
+}
+.footer{
+  background-color:rgb(37, 36, 36);
+  color: white;
+  padding: 30px;
+}
+.footer-pushdown {
+  min-height: calc(100% - 89px);
+}
+h2.welcome-login-reg-header {
+  font-weight: lighter;
+  text-align: center;
+  color:white;
+}
+.welcome-login-reg-form-header, h2.welcome-login-reg-header {
+  padding-top: 60px;
+  padding-bottom: 20px;
+  text-align: center;
+  font-weight: lighter;
+  color:white;
+}
+.reg-login-form {
+  padding-top: 100px;
+  margin: auto;
+  width: 250px;
+}
+h5.welcome-login-reg-shadow {
+  font-size: 17px;
+  text-align: center;
+  text-shadow: 1px 1px black;
+  color:white;
 }
 * { 
   margin: 0; padding: 0; box-sizing: border-box; 
@@ -60,19 +110,16 @@ input {
   background-color: #f8f8f8;
   resize: none;
 }
-.footer{
-  background-color:rgb(37, 36, 36);
-  color: white;
-  padding: 30px;
- 
+.chatScroll {
+  height:421px;
+  overflow-y:scroll;
 }
+.well {
+  background-color:whitesmoke;
+}
+
 .center-block{
     float: none;
-}
-.container{
-    justify-content: center;
-    align-items: center;
-    min-height: 100%;
 }
 .dot {
     height: 10px;
@@ -81,83 +128,9 @@ input {
     border-radius: 50%;
     display: inline-block;
 }
-h1.lobbyBanner {
-  font-weight: lighter;
-  font-size: 50px;
-  line-height: 150px;
-  text-align: center;
-  text-shadow: 1px 1px black;
-  color:white;
-}
-h2.thin {
-  font-weight: lighter;
-  text-align: center;
-  color:white;
-}
-h4.gameroom {
-  font-weight: lighter;
-  font-size: 22px;
-  color:white;
-}
-h1.thin {
-  font-weight: lighter;
-  text-align: center;
-  color:white;
-}
-td {
-  font-weight: lighter;
-}
-.navbar-brand {
-  font-weight: lighter;
-}
-.lobbyWells {
-  height:590px;
-}
-.lobbyChatScroll {
-   height:421px;
-   overflow-y:scroll;
-}
-.lobbyGamesScroll {
-  height:174px;
-  overflow-y:scroll;
-}
-.gameChatScroll {
-   height:419px;
-   overflow-y:scroll;
-}
-.leaderBoardScroll {
-  height:456px;
-  overflow-y:scroll;
-}
-p.thin{
-  font-weight: lighter;
-}
-.gameroom2 {
-  min-height: 76px;
-}
-.btn.game {
-  width: 120px;
-}
 .centerButton { 
   text-align: center;
   margin-left: 5px;
 }
-div.modalBoard {
-  display: flex;
-  justify-content: center
-}
-.wrapper {
-  min-height: calc(100% - 89px);
-}
 
-.reg-login-form-header {
-  padding-top: 50px;
-  padding-bottom: 10px;
-  text-align: center;
-}
 
-.reg-login-form {
-  padding-top: 80px;
-  margin: auto;
-  width: 250px;
-}
