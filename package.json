@@ -9,10 +9,10 @@
     "start": "nodemon server.js"
   },
   "dependencies": {
-    "bcrypt": "^3.0.5",
+    "bcryptjs": "^2.4.3",
     "body-parser": "^1.18.3",
+    "connect-flash": "^0.1.1",
     "cookie-parser": "^1.4.4",
-    "ejs": "^2.6.1",
     "express": "^4.16.4",
     "express-handlebars": "^3.0.2",
     "express-session": "^1.15.6",
@@ -23,6 +23,7 @@
     "nodemon": "^1.18.11",
     "passport": "^0.4.0",
     "passport-local": "^1.0.0",
+    "req-flash": "0.0.3",
     "sequelize": "^5.2.13",
     "sequelize-cli": "^5.4.0",
     "socket.io": "^2.2.0"

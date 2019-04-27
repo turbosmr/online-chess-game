@@ -1,0 +1,10 @@
+div.modalBoard {
+    display: flex;
+    justify-content: center
+}
+.gameroom-height-adjust {
+    min-height: 76px;
+}
+.btn.gameroom {
+    width: 120px;
+}
