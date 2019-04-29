@@ -21,7 +21,7 @@ leaderboardModel.findAndCountAll({
   {
     for(var i = 0; i < results.count; i++)
     {
-      if(i < 5)
+      if(i < 10)
       {
         top10[i] = results.rows[i];
         rankings[i] = results.rows[i];

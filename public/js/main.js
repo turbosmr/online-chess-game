@@ -29,30 +29,6 @@ $(function () {
         }
     });
 
-    // //retrieve top 10 from database
-    // socket.on('retrieve top 10', function(data) {
-    //     $('#top10').remove(":contains('<tr>')");
-
-    //     $('#top10').append($('<tr>'));
-    //     $('#top10').append($('<td>').text(data.rank));
-    //     $('#top10').append($('<td>').text(data.userName));
-    //     $('#top10').append($('<td>').text(data.winCount));
-    //     $('#top10').append($('<td>').text(data.loseCount));
-    //     $('#top10').append($('<td>').text(data.drawCount));
-    // });
-
-    // //retrieve rankings from database
-    // socket.on('retrieve rankings', function(data) {
-    //     $('#rankings').remove(":contains('<tr>')");
-
-    //     $('#rankings').append($('<tr>'));
-    //     $('#rankings').append($('<td>').text(data.rank));
-    //     $('#rankings').append($('<td>').text(data.userName));
-    //     $('#rankings').append($('<td>').text(data.winCount));
-    //     $('#rankings').append($('<td>').text(data.loseCount));
-    //     $('#rankings').append($('<td>').text(data.drawCount));
-    // });
-
     //message scroll
     var messageList = document.getElementById('messagesList');
 

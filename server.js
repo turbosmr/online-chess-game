@@ -63,50 +63,6 @@ app.use(function (req, res, next) {
 app.use('/', require('./routes/index.js'));
 app.use('/users', require('./routes/users.js'));
 
-//when the server starts find all users and store them into Leaderboard
-// userModel.findAndCountAll().then(function(results,err){
-//     if(err)
-//     {
-//         console.log('Error selecting messages from DB.');
-//     }
-//     else 
-//     {
-//         for(var index = 0; index < results.count; index++)
-//         {
-//             console.log(results.rows[index]);
-//         }
-//     }
-// });
-
-// userModel.findAndCountAll({
-//     order: [
-//         ['winCount','DESC']
-//     ]
-// }).then(function(results,err) {
-//     if(err)
-//         {
-//             console.log('Error selecting messages from DB.');
-//         }
-//         else 
-//         {
-//             leaderboardModel.destroy({
-//                 where: {},
-//                 truncate: true
-//             });
-
-//             for(var index = 0; index < results.count; index++)
-//             {
-//                 leaderboardModel.create({
-//                     rank: index+1, 
-//                     userName: results.rows[index].userName, 
-//                     winCount: results.rows[index].winCount, 
-//                     loseCount: results.rows[index].loseCount, 
-//                     drawCount: results.rows[index].drawCount
-//                 });
-//             }
-//         }
-// });
-
 var socketCount = 0;
 var rooms = 0;
 var gameRooms = [];
@@ -124,51 +80,6 @@ io.on('connection', (socket) => {
         console.log('Connected users: ' + socketCount);
         socket.emit('users connected', socketCount);
     });
-
-    // //retrieve game chat message from database
-    // gameChatModel.findAndCountAll().then(function(results,err) {
-    //     if(err)
-    //     {
-    //         console.log('Error selecting messages from DB.');
-    //     }
-    //     else 
-    //     {
-    //         for(var index = 0; index < results.count; index++)
-    //         {
-    //             socket.emit('retrieve messages', results.rows[index]);
-    //         }
-    //     }
-    // });
-
-    // //get top 10
-    // leaderboardModel.findAndCountAll().then(function(results,err) {
-    //     if(err)
-    //     {
-    //         console.log('Error selecting messages from DB.');
-    //     }
-    //     else 
-    //     {
-    //         for(var index = 0; index < 10; index++)
-    //         {
-    //             socket.emit('retrieve top 10', results.rows[index]);
-    //         }
-    //     }
-    // });
-
-    // //get ranking
-    // leaderboardModel.findAndCountAll().then(function(results,err) {
-    //     if(err)
-    //     {
-    //         console.log('Error selecting messages from DB.');
-    //     }
-    //     else 
-    //     {
-    //         for(var index = 0; index < results.count; index++)
-    //         {
-    //             socket.emit('retrieve rankings', results.rows[index]);
-    //         }
-    //     }
-    // });
 
     // Store and display messages to connected clients, as well as console
     socket.on('chat message', (loggedUser, msg) => {
