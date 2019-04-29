@@ -16,8 +16,9 @@ $(function () {
     socket.on('retrieve messages', function (msg) {
         $('#messages').append($('<li>').text(msg.username + ": " + msg.message));
     });
-    $('form').submit(function (e) {
+    $('#submit-msg').submit(function (e) {
         e.preventDefault(); // prevents page reloading
+        console.log('submit method iinside mainjs');
         if ($('#m').val() != '') {
             socket.emit('chat message', loggedUser, $('#m').val());
         }
@@ -29,24 +30,24 @@ $(function () {
         $('#messages').append($('<li>').text(data.username + ": " + data.msg));
     });
 
-    //message scroll
-    var messageList = document.getElementById('messagesList');
+    // //message scroll
+    // var messageList = document.getElementById('messagesList');
 
-    function getMessages() {
-        shouldScroll = messagesList.scollTop + messagesList.clientHeight === messagesList.scrollHeight;
+    // function getMessages() {
+    //     shouldScroll = messagesList.scollTop + messagesList.clientHeight === messagesList.scrollHeight;
 
-        if(!shouldScroll) {
-            scrollToBottom()
-        }
-    }
+    //     if(!shouldScroll) {
+    //         scrollToBottom()
+    //     }
+    // }
 
-    function scrollToBottom() {
-        messagesList.scrollTop = messagesList.scrollHeight;
-    }
+    // function scrollToBottom() {
+    //     messagesList.scrollTop = messagesList.scrollHeight;
+    // }
     
-    scrollToBottom();
+    // scrollToBottom();
     
-    setInterval(getMessages, 100);
+    // setInterval(getMessages, 100);
     //end of message scroll
 
     var board,

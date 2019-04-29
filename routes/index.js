@@ -3,6 +3,7 @@
 const express = require('express');
 const router = express.Router();
 const { ensureAuthenticated, forwardAuthenticated } = require('../config/auth');
+const searchController = require('../controllers/search');
 
 // Welcome page
 router.get('/', forwardAuthenticated, function (req, res) {
@@ -29,7 +30,27 @@ router.get('/game', ensureAuthenticated, function (req, res) {
     active: { Game: true }
   })
 });
+const userModel = require('../models/index').User;
+const Op = require('sequelize').Op;
 
+//search request searchController.search do the function callback at search controller
+router.get('/search', ensureAuthenticated, function(req, res){
+  if(req.xhr || req.accepts('json, html')==='json'){
+    userModel.findAll({where: {userName:{[Op.like]: '%'+req.query.search+'%'}}}).then(function(users){
+      console.log('users = ', users);
+      if (users){
+        res.send({users: users});
+      } else {
+        res.send({users: undefined});
+      }
+    });
+    
+  } else {
+    //Do something else by reloading the page.
+    console.log('not ajax byebye');
+    res.send({users: undefined});
+  }
+});
 // Profile page
 router.get('/profile', ensureAuthenticated, function (req, res) {
   res.render('profile', {

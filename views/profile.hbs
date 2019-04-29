@@ -4,6 +4,7 @@
 </div>
 <br>
 
+
 <div class="row">
 
     <div class="col-md-8">
@@ -19,36 +20,20 @@
 
                 <div class="topnav">
                     <div class="search-container">
-                        <form action="/action_page.php">
-                            <input type="text" placeholder="Search.." name="search">
-                            <button type="submit"><i class="fa fa-search"></i></button>
-                        </form>
+
+                            <input type="text" placeholder="search username" name="search">
+                            <button type="submit" class="btn btn-default" onclick="loadDoc()">Search</button>
+
                     </div>
                 </div>
                 <br>
                 <div class="well friendsSearchScroll">
                     <table class="table">
-                        <tbody>
-                            <tr>
-                                <td>Johnson <span class="dot"></span> </td>
-                                <td><a type="button" href="/game" class="btn btn-success btn-xs">Add Friend</a></td>
-                            </tr>
-                            <tr>
-                                <td>Anthony</td>
-                                <td><a type="button" href="/game" class="btn btn-success btn-xs">Add Friend</a></td>
-                            </tr>
-                            <tr>
-                                <td>Anthony</td>
-                                <td><a type="button" href="/game" class="btn btn-success btn-xs">Add Friend</a></td>
-                            </tr>
-                            <tr>
-                                <td>Johnson <span class="dot"></span> </td>
-                                <td><a type="button" href="/game" class="btn btn-success btn-xs">Add Friend</a></td>
-                            </tr>
+                        <tbody id="search-results">
                         </tbody>
                     </table>
                 </div>
-                 <div class="well friendsScroll">
+                <div class="well friendsScroll">
                     <table class="table">
                         <thead>
                             <tr>
@@ -80,3 +65,25 @@
         </div>
     </div>
 </div>
+<script>
+    var loadDoc = function(){
+        $.ajax({
+            url: '/search',
+            type: 'GET',
+            data: { search: $('input')[0].value, },
+            success: function (data) {
+                let html = '';
+                data.users.forEach(user => {
+                    html += '<tr> \
+                    <td>'+ user.userName + '<span class="dot"></span> </td>\
+                    <td><a type="button" href="/game" class="btn btn-success btn-xs">Add Friend</a></td>\
+                </tr>';
+                });
+                $('#search-results').html(html);
+            },
+            error: function () {
+                console.log('error');
+            }
+        });
+    };
+</script>
