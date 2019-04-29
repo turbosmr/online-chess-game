@@ -2,6 +2,38 @@ const express = require('express');
 const router = express.Router();
 const { ensureAuthenticated, forwardAuthenticated } = require('../config/auth');
 
+const leaderboardModel = require('../models').Leaderboard;
+
+var top10 = [];
+var rankings = [];
+
+//get top 10
+leaderboardModel.findAndCountAll({
+  order: [
+    ['winCount','DESC']
+  ]
+}).then(function(results,err) {
+  if(err)
+  {
+      console.log('Error selecting messages from DB.');
+  }
+  else 
+  {
+    for(var i = 0; i < results.count; i++)
+    {
+      if(i < 5)
+      {
+        top10[i] = results.rows[i];
+        rankings[i] = results.rows[i];
+      }
+      else
+      {
+        rankings[i] = results.rows[i];
+      }
+    }
+  }
+});
+
 // Welcome page
 router.get('/', forwardAuthenticated, function (req, res) {
   res.render('welcome', {
@@ -15,7 +47,9 @@ router.get('/lobby', ensureAuthenticated, function (req, res) {
   res.render('lobby', {
     loggedUser: req.user.userName,
     title: "Lobby - Team 10 Chess",
-    active: { Lobby: true }
+    active: { Lobby: true },
+    top10,
+    rankings
   })
 });
 
