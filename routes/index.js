@@ -3,7 +3,8 @@
 const express = require('express');
 const router = express.Router();
 const { ensureAuthenticated, forwardAuthenticated } = require('../config/auth');
-const searchController = require('../controllers/search');
+const userModel = require('../models/index').User;
+const Op = require('sequelize').Op;
 
 // Welcome page
 router.get('/', forwardAuthenticated, function (req, res) {
@@ -30,8 +31,7 @@ router.get('/game', ensureAuthenticated, function (req, res) {
     active: { Game: true }
   })
 });
-const userModel = require('../models/index').User;
-const Op = require('sequelize').Op;
+
 
 //search request searchController.search do the function callback at search controller
 router.get('/search', ensureAuthenticated, function(req, res){
