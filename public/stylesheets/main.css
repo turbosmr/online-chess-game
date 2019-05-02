@@ -108,6 +108,10 @@ input {
 .chatScroll {
   height:421px;
   overflow-y:scroll;
+  background-color: white;
+  border: 1px solid lightgray;
+  border-radius: 5px;
+  padding: 10px;
 }
 .well {
   background-color:whitesmoke;
