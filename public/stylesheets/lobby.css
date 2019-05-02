@@ -1,6 +1,6 @@
 .lobbyGamesScroll {
     height:174px;
-    overflow-y:scroll;
+    overflow-y: auto;
 }
 .leaderBoardScroll {
     height:456px;
@@ -10,5 +10,31 @@ td {
     font-weight: lighter;
 }
 .lobbyWells {
-    height:590px;
+    height:620px;
+}
+.center {
+  text-align: center;
+}
+.table-fixed thead {
+  width: 97%;
+}
+#games {
+  height: 118px;
+  overflow-y: auto;
+  width: 100%;
+}
+#leaderBoard {
+  height: 300px;
+  overflow-y: auto;
+  width: 100%;
+}
+.well {
+  background-color: white;
+}
+.table-fixed thead, .table-fixed tbody, .table-fixed tr, .table-fixed td, .table-fixed th {
+  display: block;
+}
+.table-fixed tbody td, .table-fixed thead > tr> th {
+  float: left;
+  border-bottom-width: 0;
 }
