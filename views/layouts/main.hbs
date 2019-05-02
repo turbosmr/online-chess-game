@@ -9,8 +9,8 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css"
         integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
-    <link rel="stylesheet" href="../../stylesheets/style.css">
-    <link rel="stylesheet" href="stylesheets/chessboard-0.3.0.css">
+    <link rel="stylesheet" href="/stylesheets/style.css">
+    <link rel="stylesheet" href="/stylesheets/chessboard-0.3.0.css">
 
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
         integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
@@ -23,10 +23,10 @@
         crossorigin="anonymous"></script>
     <script src="/socket.io/socket.io.js"></script>
     <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
-    <script src="js/chessboard-0.3.0.min.js"></script>
-    <script src="js/chess.min.js"></script>
-    <script src="js/chessboard-0.3.0.js"></script>
-    <script src="js/chess.js"></script>
+    <script src="/js/chessboard-0.3.0.min.js"></script>
+    <script src="/js/chess.min.js"></script>
+    <script src="/js/chessboard-0.3.0.js"></script>
+    <script src="/js/chess.js"></script>
 </head>
 
 <body style="background-color:rgb(56, 52, 52);">
@@ -47,11 +47,11 @@
                     <li class="{{#if active.HowToPlay}}active{{/if}}"><a href="/howToPlay">How to Play</a></li>
                     <li class="{{#if active.About}}active{{/if}}"><a href="/about">About</a></li>
                 </ul>
-                {{#if loggedUser}}
+                {{#if currUser}}
                 <ul class="nav navbar-nav navbar-right">
                     <li class="dropdown">
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                            {{loggedUser}}
+                            {{currUser}}
                             <span class="caret"></span></a>
                         <ul class="dropdown-menu">
                             <li><a href="/profile"><span class="glyphicon glyphicon-user"></span> Profile</a></li>
@@ -77,8 +77,21 @@
             Copyright © 2019 Team 10 Chess Inc. All rights reserved.
         </p>
     </footer>
-    <script>var loggedUser = "{{loggedUser}}"</script>
-    <script src="js/main.js"></script>
+
+    <script>
+        var currUser = "{{currUser}}";
+    </script>
+
+    {{#if active.Lobby}}
+    <script src="/js/main.js"></script>
+    {{/if}}
+
+    {{#if active.Game}}
+    <script>
+        var gameID = "{{gameID}}";
+    </script>
+    <script src="/js/game.js"></script>
+    {{/if}}
 </body>
 
 </html>

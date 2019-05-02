@@ -5,11 +5,13 @@
 <br>
 
 <!-- text to explain how the lobby page works -->
-<h5 class="text" style="color:white"> Welcome to the Team 10 Chess Lobby. Here you can join a chess game or create
+<h5 class="text" style="color:white">
+  Welcome to the Team 10 Chess Lobby. Here you can join a chess game or create
   your own.
   To join a game, select the player's game you'd like to join and click on "Join Game". To create your own game,
   click on the
-  "Create Game" button.</h5>
+  "Create Game" button.
+</h5>
 <br>
 
 <div class="row">
@@ -21,36 +23,20 @@
           <table class="table">
             <thead>
               <tr>
-                <th>Player</th>
+                <th>Opponent</th>
                 <th>Time</th>
                 <th>Move</th>
               </tr>
             </thead>
             <tbody>
+              {{#each currGames}}
               <tr>
-                <td>Johnson <span class="dot"></span> </td>
+                <td>{{this.oppName}} {{#if this.oppActive}}<span class="dot"></span>{{/if}} </td>
                 <td>23:45</td>
-                <td>Theirs</td>
-                <td><a type="button" href="/game" class="btn btn-success btn-xs">Rejoin Game</a></td>
+                <td>fucker1234</td>
+                <td><a type="button" href="/game/{{this.gameId}}" class="btn btn-success btn-xs" id="">Rejoin Game</a></td>
               </tr>
-              <tr>
-                <td>Anthony</td>
-                <td>1 day</td>
-                <td>Yours</td>
-                <td><a type="button" href="/game" class="btn btn-success btn-xs">Rejoin Game</a></td>
-              </tr>
-              <tr>
-                <td>Anthony</td>
-                <td>1 day</td>
-                <td>Yours</td>
-                <td><a type="button" href="/game" class="btn btn-success btn-xs">Rejoin Game</a></td>
-              </tr>
-              <tr>
-                <td>Johnson <span class="dot"></span> </td>
-                <td>23:45</td>
-                <td>Theirs</td>
-                <td><a type="button" href="/game" class="btn btn-success btn-xs">Rejoin Game</a></td>
-              </tr>
+              {{/each}}
             </tbody>
           </table>
 
@@ -68,30 +54,14 @@
                 </tr>
               </thead>
               <tbody>
+                {{#each availGames}}
                 <tr>
-                  <td>John</td>
+                  <td>{{this.player1}}</td>
                   <td>3 days</td>
                   <td>15</td>
-                  <td><button type="button" class="btn btn-xs">Join Game</button></td>
+                  <td><a type="button" href="/game/{{this.gameId}}" class="btn btn-success btn-xs" id="">Join Game</a></td>
                 </tr>
-                <tr>
-                  <td>Mary</td>
-                  <td>1 day</td>
-                  <td>23</td>
-                  <td><button type="button" class="btn btn-xs">Join Game</button></td>
-                </tr>
-                <tr>
-                  <td>John</td>
-                  <td>3 days</td>
-                  <td>15</td>
-                  <td><button type="button" class="btn btn-xs">Join Game</button></td>
-                </tr>
-                <tr>
-                  <td>Mary</td>
-                  <td>1 day</td>
-                  <td>23</td>
-                  <td><button type="button" class="btn btn-xs">Join Game</button></td>
-                </tr>
+                {{/each}}
               </tbody>
             </table>
           </div>
@@ -141,7 +111,7 @@
 
                   <!-- Modal footer -->
                   <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" data-dismiss="modal">Create Game</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" id="new">Create Game</button>
                     <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
                   </div>
                 </div>
@@ -357,16 +327,16 @@
   </div>
   <div class="col-lg-3 center-text">
     <div class="lobbyWells well well-sm">
-      <h3 class="text-center">Online Chat</h3>
+      <h3 class="text-center">Chat</h3>
       <div class="well lobbyChatScroll" id="messagesList">
-
         <ul class="thin" id="messages"></ul>
-
       </div>
       <form action="">
-        <input id="m" autocomplete="off"></input> <button class="btn btn-success btn-sm">Send</button>
+        <input id="m" autocomplete="off"></input>
+        <button class="btn btn-success btn-sm">Send</button>
       </form>
-      <p id="users-connected"></p>
+      <div id="users-connected">
+        </p>
+      </div>
     </div>
   </div>
-</div>

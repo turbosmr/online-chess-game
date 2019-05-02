@@ -7,16 +7,6 @@
   <!--buttons for game-->
   <div class="well well-sm">
     <br>
-    <h4>Create a new Game</h4>
-    <input type="text" name="name" id="nameNew" placeholder="Enter your name" required>
-    <button id="new">New Game</button>
-    <br><br>
-    <h4>Join an existing game</h4>
-    <input type="text" name="name" id="nameJoin" placeholder="Enter your name" required>
-    <input type="text" name="gameID" id="gameID" placeholder="Enter Game ID" required>
-    <button id="join">Join Game</button>
-    <br>
-    <br>
     <button type="button" class=" btn game center-block">Submit Move</button><br>
     <button type="button" class=" btn game center-block">Offer Draw</button><br>
     <button type="button" class=" btn game btn-danger center-block">Resign Game</button><br><br><br>
@@ -76,25 +66,24 @@
   <!--text to display time per move, time left, and your move-->
   <h3 class="gameroom" style="color:white">Time Per Move: 1 Day</h3>
   <h3 class="gameroom" style="color:white">Time Left: 12:54</h3>
-  <h3 id="move" style="color:red"></h3>
+  <h3 id="gameStatus" style="color:red"></h3>
 </div>
 
 
 <div class="col-md-6">
 
   <!--text for person you are playing-->
-  <h3 class="text-center" style="color:white">Johnson W</h3>
+  <h3 class="text-center" style="color:white" id="oppName"></h3>
   <br>
 
   <!--chessboard and pieces-->
   <div class="well chessboard well-sm">
     <div id="board" style="width: 100%"></div>
     <h2 id="userHello"></h2>
-    <h3 id="turn"></h3>
   </div>
 
   <!--text for person you are playing-->
-  <h3 class="text-center" style="color:white">Steve R <span class="dot"></span></h3>
+  <h3 class="text-center" style="color:white">{{currUser}} <span class="dot"></span></h3>
 </div>
 
 <div class="col-md-3">
@@ -105,12 +94,13 @@
 
   <!--Chat-->
   <div class="well well-sm">
-    <h4 class="text-center">Chat with Johnson W</h4>
-    <div class="well gameChatScroll">
+    <h4 class="text-center">Chat</h4>
+    <div class="well lobbyChatScroll" id="messagesList">
       <ul class="thin" id="messages"></ul>
     </div>
     <form action="">
-      <input id="m" autocomplete="off" /><button type="button" class="btn btn-success btn-sm">Send</button>
+        <input id="m" autocomplete="off"></input>
+        <button class="btn btn-success btn-sm">Send</button>
     </form>
     <br>
   </div>

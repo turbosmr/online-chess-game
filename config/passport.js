@@ -1,7 +1,7 @@
 const LocalStrategy = require('passport-local').Strategy;
 const bcrypt = require('bcryptjs');
 
-// Load userModel
+// Load Users Model
 const User = require('../models').User;
 
 // passport user setup
