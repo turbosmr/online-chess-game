@@ -1,0 +1,13 @@
+h5.shadow {
+    font-size: 17px;
+    text-align: center;
+    text-shadow: 1px 1px black;
+    color:white;
+    padding-bottom: 10px;
+}
+.welcome-padding {
+    padding-top: 110px;
+    margin: auto;
+    width: 250px;
+  }
+  

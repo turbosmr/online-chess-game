@@ -1,67 +1,93 @@
+<script src="https://cdnjs.cloudflare.com/ajax/libs/chess.js/0.10.2/chess.js"></script>
+<div class="topSpace"></div>
+
 <div class="col-md-3">
 
   <!--gameroom2 class div is needed to give proper height to buttons container-->
-  <div class="gameroom2">
+  <div class="gameroom-height-adjust">
   </div>
 
   <!--buttons for game-->
   <div class="well well-sm">
     <br>
-    <button type="button" class=" btn game center-block">Submit Move</button><br>
-    <button type="button" class=" btn game center-block">Offer Draw</button><br>
-    <button type="button" class=" btn game btn-danger center-block">Resign Game</button><br><br><br>
+    <button type="button" class=" btn gameroom center-block">Submit Move</button><br>
+    <button type="button" class=" btn gameroom center-block">Offer Draw</button><br>
+    <button type="button" class=" btn gameroom btn-danger center-block">Resign Game</button><br>
 
-    <!-- Button to Open the Modal for History-->
-    <button type="button" class=" btn game btn-default center-block" data-toggle="modal" data-target="#myModal">Game
-      History</button>
-    <br>
-
-    <!-- The History Modal -->
-    <div class="modal" id="myModal">
-      <div class="modal-dialog">
-        <div class="modal-content">
-
-          <!-- Modal Header -->
-          <div class="modal-header">
-            <h4 class="modal-title text-center">Game History</h4>
-          </div>
-
-          <!-- Modal body -->
-          <div class="modal-body">
-
-            <div class="modalBoard">
-              <img id="imgClickAndChange" src="http://thumb7.shutterstock.com/photos/thumb_large/253822/156271139.jpg">
-            </div>
-            <br>
-
-            <!-- Modal foward and back buttons -->
-            <div class="centerButton">
-              <button id="" class="btn btn-default"><span class="glyphicon glyphicon-menu-left"></span></button>
-              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-              <button id="nextImage" class="btn btn-default"><span
-                  class="glyphicon glyphicon-menu-right"></span></button>
-            </div>
-            <script>
-              var imgs = ["http://thumb7.shutterstock.com/photos/thumb_large/253822/156271139.jpg", "http://thumb9.shutterstock.com/photos/thumb_large/554278/132632972.jpg", "http://thumb7.shutterstock.com/photos/thumb_large/101304/133879079.jpg", "http://thumb101.shutterstock.com/photos/thumb_large/422038/422038,1327874090,3.jpg", "http://thumb1.shutterstock.com/photos/thumb_large/975647/149914934.jpg", "http://thumb9.shutterstock.com/photos/thumb_large/195826/148988282.jpg"];
-              var id = 0;
-              var image = document.getElementById("imgClickAndChange");
-              $('#nextImage').on('click', function () {
-                id++;
-                image.src = imgs[id];
-              });
-            </script>
-          </div>
-
-          <!-- Modal footer -->
-          <div class="modal-footer">
-            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-          </div>
-        </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/chess.js/0.10.2/chess.js"></script>
+    <div class="chessboard" id="board5" style="margin: 0 auto; width: 400px;">
+    </div>
+    <div class="center">
+      <div class="btn-group">
+        <button class="btn" type="button" id="startPositionBtn5"><span class="glyphicon glyphicon-step-backward"></span></button>
+        <button class="btn" type="button" id="prevBtn5"><span class="glyphicon glyphicon-backward"></span></button>
+        <button class="btn" type="button" id="nextBtn5"><span class="glyphicon glyphicon-forward"></span></button>
+        <button class="btn" type="button" id="endPositionBtn5"><span class="glyphicon glyphicon-step-forward"></span></button>
       </div>
     </div>
+    <br>
+    <script type="text/javascript">
+      $(function () {
+        var cfg = {
+          pieceTheme: 'https://koblenski.github.io/javascript/chessboardjs-0.3.0/img/chesspieces/wikipedia/{piece}.png',
+          position: 'start'
+        };
+        var board = ChessBoard('board', cfg);
+        var game = new Chess();
 
+        // 1. Load a PGN into the game
+        // 2. Get the full move history
+        // 3. If Next button clicked, move forward one
+        // 4. If Prev button clicked, move backward one
+        // 5. If Start button clicked, go to start position
+        // 6. If End button clicked, go to end position
+
+        // 1. Load a PGN into the game
+        var pgn = '1.e4 e5 2.Nf3 Nf6 3.Nc3 d5 4.exd5 Nxd5 5.Bc4 Nf4 6.O-O e4 7.Re1 Kd7 8.Rxe4 Qg5 9.Nxg5 f6 10.Qg4+ Ne6 11.Qxe6+ Kd8 12.Qe8#  1-0';
+        game.load_pgn(pgn);
+        $('#pgn5').html(pgn);
+
+        // 2. Get the full move history
+        var history = game.history();
+        game.reset();
+        var i = 0;
+
+        // 3. If Next button clicked, move forward one
+        $('#nextBtn5').on('click', function () {
+          game.move(history[i]);
+          board.position(game.fen());
+          i += 1;
+          if (i > history.length) {
+            i = history.length;
+          }
+        });
+
+        // 4. If Prev button clicked, move backward one
+        $('#prevBtn5').on('click', function () {
+          game.undo();
+          board.position(game.fen());
+          i -= 1;
+          if (i < 0) {
+            i = 0;
+          }
+        });
+
+        // 5. If Start button clicked, go to start position
+        $('#startPositionBtn5').on('click', function () {
+          game.reset();
+          board.start();
+          i = 0;
+        });
+
+        // 6. If End button clicked, go to end position
+        $('#endPositionBtn5').on('click', function () {
+          game.load_pgn(pgn);
+          board.position(game.fen());
+          i = history.length;
+        });
+      });
+    </script>
   </div>
-  <br>
 
   <!--text to display time per move, time left, and your move-->
   <h3 class="gameroom" style="color:white">Time Per Move: 1 Day</h3>
@@ -88,19 +114,18 @@
 
 <div class="col-md-3">
 
-  <!--gameroom2 class div is needed to give proper height to chat container-->
-  <div class="gameroom2">
+  <!--gameroom-chat-height-adjust class div is needed to give proper height to chat container-->
+  <div class="gameroom-height-adjust">
   </div>
 
   <!--Chat-->
   <div class="well well-sm">
     <h4 class="text-center">Chat</h4>
-    <div class="well lobbyChatScroll" id="messagesList">
+    <div class="well chatScroll" id="messagesList">
       <ul class="thin" id="messages"></ul>
     </div>
     <form action="">
-        <input id="m" autocomplete="off"></input>
-        <button class="btn btn-success btn-sm">Send</button>
+      <input id="m" autocomplete="off"></input> <button class="btn btn-success btn-xs">Send</button>
     </form>
     <br>
   </div>

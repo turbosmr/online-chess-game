@@ -17,7 +17,7 @@ const io = socketIO(server);
 // Passport config
 require('./config/passport')(passport);
 
-//
+// Handling anything socket-related
 require('./socket')(io);
 
 // Static files

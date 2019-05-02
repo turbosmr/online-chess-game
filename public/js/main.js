@@ -1,4 +1,5 @@
 $(function () {
+
     var socket = io();
 
     // To prevent from displaying multiple times during server restarts
