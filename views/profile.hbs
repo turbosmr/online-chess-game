@@ -4,12 +4,17 @@
 </div>
 <br>
 
-
 <div class="row">
 
     <div class="col-md-8">
         <div class="well profileWells well-sm">
             <h3 class="text-center">Choose Board and Pieces</h3>
+            <select title="Select your chess board" class="selectpicker">
+                <option>Select...</option>
+                <option data-thumbnail="public/images/black-marble-sq.jpg">black marble</option>
+            <option value="volvo" style="background-image:url(public/images/black-marble-sq.jpg);">Volvo</option>
+            <option data-content='<img src="http://upload.wikimedia.org/wikipedia/commons/thumb/5/54/Gota07.svg/120px-Gota07.svg.png">'>Teardrop</option>
+            </select>
         </div>
     </div>
 
@@ -20,16 +25,32 @@
 
                 <div class="topnav">
                     <div class="search-container">
-
-                            <input type="text" placeholder="search username" name="search">
-                            <button type="submit" class="btn btn-default" onclick="loadDoc()">Search</button>
-
+                        <form action="/action_page.php">
+                            <input type="text" placeholder="Search.." name="search">
+                            <button type="submit"><i class="fa fa-search"></i></button>
+                        </form>
                     </div>
                 </div>
                 <br>
                 <div class="well friendsSearchScroll">
                     <table class="table">
-                        <tbody id="search-results">
+                        <tbody>
+                            <tr>
+                                <td>Johnson <span class="dot"></span> </td>
+                                <td><a type="button" href="/game" class="btn btn-success btn-xs">Add Friend</a></td>
+                            </tr>
+                            <tr>
+                                <td>Anthony</td>
+                                <td><a type="button" href="/game" class="btn btn-success btn-xs">Add Friend</a></td>
+                            </tr>
+                            <tr>
+                                <td>Anthony</td>
+                                <td><a type="button" href="/game" class="btn btn-success btn-xs">Add Friend</a></td>
+                            </tr>
+                            <tr>
+                                <td>Johnson <span class="dot"></span> </td>
+                                <td><a type="button" href="/game" class="btn btn-success btn-xs">Add Friend</a></td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>
@@ -65,25 +86,3 @@
         </div>
     </div>
 </div>
-<script>
-    var loadDoc = function(){
-        $.ajax({
-            url: '/search',
-            type: 'GET',
-            data: { search: $('input')[0].value, },
-            success: function (data) {
-                let html = '';
-                data.users.forEach(user => {
-                    html += '<tr> \
-                    <td>'+ user.userName + '<span class="dot"></span> </td>\
-                    <td><a type="button" href="/game" class="btn btn-success btn-xs">Add Friend</a></td>\
-                </tr>';
-                });
-                $('#search-results').html(html);
-            },
-            error: function () {
-                console.log('error');
-            }
-        });
-    };
-</script>
