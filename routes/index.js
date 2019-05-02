@@ -9,6 +9,7 @@ const Op = Sequelize.Op;
 // Load Games Model
 const Game = require('../models').Game;
 
+// Load User Model
 const User = require('../models').User;
 
 var findCurrGames = function (req, res, next) {

@@ -3,7 +3,7 @@ div.modalBoard {
     justify-content: center
 }
 .gameroom-height-adjust {
-    min-height: 76px;
+    min-height: 65px;
 }
 .btn.gameroom {
     width: 120px;

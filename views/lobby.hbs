@@ -33,9 +33,9 @@
             <tbody id="games">
               {{#each currGames}}
               <tr>
-                <td>{{this.oppName}} {{#if this.oppActive}}<span class="dot"></span>{{/if}}</td>
+                <td class="col-xs-4">{{this.oppName}} {{#if this.oppActive}}<span class="dot"></span>{{/if}}</td>
                 <td class="col-xs-2">1 day</td>
-                <td class="col-xs-2">Yours</td>
+                <td class="col-xs-2">{{this.move}}</td>
                 <td class="col-xs-4"><a type="button" href="/game/{{this.gameId}}" class="btn btn-success btn-xs">Rejoin
                     Game</a></td>
               </tr>
@@ -61,7 +61,7 @@
                 <tr>
                   <td class="col-xs-4">{{this.player1}}</td>
                   <td class="col-xs-2">1 day</td>
-                  <td class="col-xs-2">24 hours</td>
+                  <td class="col-xs-2">100th</td>
                   <td class="col-xs-4"><a type="button" href="/game/{{this.gameId}}" class="btn btn-success btn-xs">Join
                       Game</a></td>
                 </tr>
@@ -125,7 +125,7 @@
   </div>
   <div class="col-md-5">
     <div class="lobbyWells well well-sm">
-      <h3 class="text-center">Leader Board</h3>
+      <h3 class="text-center">Leaderboard</h3>
       <div class="steveWell">
         <div class="panel-group">
           <table class="table table-fixed">
@@ -217,8 +217,7 @@
       <br>
 
       <!-- Button to Open the Modal -->
-      <button type="button" class="btn btn-sm" data-toggle="modal" data-target="#myModal-2">See Full
-        Leader Board</button>
+      <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#myModal-2">See Full Leaderboard</button>
 
       <!-- The Modal -->
       <div class="modal" id="myModal-2">
@@ -227,7 +226,7 @@
 
             <!-- Modal Header -->
             <div class="modal-header">
-              <h3 class="text-center">Leader Board</h3>
+              <h3 class="text-center">Leaderboard</h3>
             </div>
 
             <!-- Modal body -->
@@ -348,7 +347,7 @@
   <div class="col-md-3 center-text">
     <div class="lobbyWells well well-sm">
       <h3 class="text-center">Online Chat</h3>
-      <div class="well chatScroll" id="messagesList">
+      <div class="well lobbyChatScroll" id="messagesList">
 
         <ul class="thin" id="messages"></ul>
       </div>

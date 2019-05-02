@@ -243,7 +243,7 @@ $(function () {
      */
     var checkMove = function (game) {
         if (gameStart == false) {
-            return 'Waiting for an opponent to join...';
+            return '';
         }
         else if ((player1 == true && game.turn() == 'w') || (player2 == true && game.turn() == 'b')) {
             return 'Your move!';

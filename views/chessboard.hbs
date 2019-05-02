@@ -32,7 +32,7 @@
           pieceTheme: 'https://koblenski.github.io/javascript/chessboardjs-0.3.0/img/chesspieces/wikipedia/{piece}.png',
           position: 'start'
         };
-        var board = ChessBoard('board', cfg);
+        var board = ChessBoard('board2', cfg);
         var game = new Chess();
 
         // 1. Load a PGN into the game
@@ -92,7 +92,8 @@
   <!--text to display time per move, time left, and your move-->
   <h3 class="gameroom" style="color:white">Time Per Move: 1 Day</h3>
   <h3 class="gameroom" style="color:white">Time Left: 12:54</h3>
-  <h3 id="gameStatus" style="color:red"></h3>
+  <h3 id="gameStatus" style="color:rgb(58, 153, 58)"></h3>
+  <h3 id="userHello" style="color:rgb(58, 153, 58)"></h3>
 </div>
 
 
@@ -100,16 +101,14 @@
 
   <!--text for person you are playing-->
   <h3 class="text-center" style="color:white" id="oppName"></h3>
-  <br>
-
   <!--chessboard and pieces-->
-  <div class="well chessboard well-sm">
+  <div class="chessboard well-sm">
     <div id="board" style="width: 100%"></div>
-    <h2 id="userHello"></h2>
   </div>
 
   <!--text for person you are playing-->
   <h3 class="text-center" style="color:white">{{currUser}} <span class="dot"></span></h3>
+  <br>
 </div>
 
 <div class="col-md-3">
@@ -121,7 +120,7 @@
   <!--Chat-->
   <div class="well well-sm">
     <h4 class="text-center">Chat</h4>
-    <div class="well chatScroll" id="messagesList">
+    <div class="well gameChatScroll" id="messagesList">
       <ul class="thin" id="messages"></ul>
     </div>
     <form action="">

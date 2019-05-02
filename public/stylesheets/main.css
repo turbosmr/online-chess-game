@@ -18,7 +18,7 @@ body, html {
   height: 400px;
 }
 .topSpace{
-  padding-top: 60px;
+  padding-top: 50px;
 }
 .banner, h1.bannerHeader {
   /* The image used */
@@ -110,8 +110,16 @@ input {
   background-color: #f8f8f8;
   resize: none;
 }
-.chatScroll {
+.lobbyChatScroll {
   height:421px;
+  overflow-y:scroll;
+  background-color: white;
+  border: 1px solid lightgray;
+  border-radius: 5px;
+  padding: 10px;
+}
+.gameChatScroll {
+  height:396px;
   overflow-y:scroll;
   background-color: white;
   border: 1px solid lightgray;
