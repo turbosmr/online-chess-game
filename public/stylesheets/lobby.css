@@ -31,6 +31,10 @@ td {
 .well {
   background-color: white;
 }
+.button.button-default {
+background-color: blue;
+
+}
 .table-fixed thead, .table-fixed tbody, .table-fixed tr, .table-fixed td, .table-fixed th {
   display: block;
 }
