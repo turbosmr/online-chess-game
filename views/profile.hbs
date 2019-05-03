@@ -39,6 +39,15 @@
                                     white marble board
                                 </label>
                             </div>
+                            <select id="color">
+                                <option selected disabled>Pick a color</option>
+                                <option>Red</option>
+                                <option>Blue</option>
+                                <option>Green</option>
+                                <option>Purple</option>
+                                <option>Orange</option>
+                                <option>Black</option>
+                            </select>
                         </div>
                     </div>
                 </div>
@@ -149,3 +158,10 @@
         </div>
     </div>
 </div>
+<script>
+    $("#color").on("change", function () {
+        var c = $(this).val();
+        $("public/stylesheets/chessboard-0.3.0.css").css("background-color", c);
+    });
+
+</script>
