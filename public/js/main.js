@@ -34,26 +34,6 @@ $(function () {
         $('#messages').append($('<li>').text(data.username + ": " + data.msg));
     });
 
-<<<<<<< HEAD
-    // //message scroll
-    // var messageList = document.getElementById('messagesList');
-
-    // function getMessages() {
-    //     shouldScroll = messagesList.scollTop + messagesList.clientHeight === messagesList.scrollHeight;
-
-    //     if(!shouldScroll) {
-    //         scrollToBottom()
-    //     }
-    // }
-
-    // function scrollToBottom() {
-    //     messagesList.scrollTop = messagesList.scrollHeight;
-    // }
-    
-    // scrollToBottom();
-    
-    // setInterval(getMessages, 100);
-=======
     //message scroll
     function getMessages() {
         shouldScroll = messagesList.scollTop + messagesList.clientHeight === messagesList.scrollHeight;
@@ -70,7 +50,6 @@ $(function () {
     scrollToBottom();
 
     setInterval(getMessages, 100);
->>>>>>> 2db62f870809be10da9abb4ae6e96e75b026343d
     //end of message scroll
 
 
