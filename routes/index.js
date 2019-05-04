@@ -65,6 +65,38 @@ var findAvailGames = function (req, res, next) {
   });
 }
 
+const leaderboardModel = require('../models').Leaderboard;
+
+var top10 = [];
+var rankings = [];
+
+//get top 10
+leaderboardModel.findAndCountAll({
+  order: [
+    ['winCount','DESC']
+  ]
+}).then(function(results,err) {
+  if(err)
+  {
+      console.log('Error selecting messages from DB.');
+  }
+  else 
+  {
+    for(var i = 0; i < results.count; i++)
+    {
+      if(i < 10)
+      {
+        top10[i] = results.rows[i];
+        rankings[i] = results.rows[i];
+      }
+      else
+      {
+        rankings[i] = results.rows[i];
+      }
+    }
+  }
+});
+
 // Welcome page
 router.get('/', forwardAuthenticated, function (req, res) {
   res.render('welcome', {

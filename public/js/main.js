@@ -14,7 +14,7 @@ $(function () {
 
     // Retrieve messages from database upon entering chatroom
     socket.on('retrieve messages', function (msg) {
-        $('#messages').append($('<li>').text(msg.username + ": " + msg.message));
+        $('#messages').append($('<li>').text(msg.userName + ": " + msg.message));
     });
 
     $('form').submit(function (e) {

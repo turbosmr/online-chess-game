@@ -9,6 +9,9 @@ const bodyParser = require('body-parser');
 const passport = require('passport')
 const flash = require('connect-flash');
 const session = require("express-session");
+const gameChatModel = require('./models/index').GameChats;
+const leaderboardModel = require('./models/index').Leaderboard;
+const userModel = require('./models/index').User;
 
 const app = express();
 const server = http.Server(app);
