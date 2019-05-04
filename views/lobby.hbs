@@ -6,11 +6,13 @@
 <br>
 
 <!-- text to explain how the lobby page works -->
-<h5 class="text" style="color:white"> Welcome to the Team 10 Chess Lobby. Here you can join a chess game or create
+<h5 class="text" style="color:white">
+  Welcome to the Team 10 Chess Lobby. Here you can join a chess game or create
   your own.
   To join a game, select the player's game you'd like to join and click on "Join Game". To create your own game,
   click on the
-  "Create Game" button.</h5>
+  "Create Game" button.
+</h5>
 <br>
 
 <div class="row">
@@ -18,326 +20,314 @@
     <div class="well lobbyWells well-sm">
       <h3 class="text-center">Current Games</h3>
       <div class="panel-group">
-        <div class="well lobbyGamesScroll">
-          <table class="table">
+        <div class="steveWell">
+          <table class="table table-fixed">
             <thead>
               <tr>
-                <th>Player</th>
-                <th>Time</th>
-                <th>Move</th>
+                <th class="col-xs-4">Opponent</th>
+                <th class="col-xs-2">Time</th>
+                <th class="col-xs-2">Move</th>
+                <th class="col-xs-4"></th>
               </tr>
             </thead>
-            <tbody>
+            <tbody id="games">
+              {{#each currGames}}
               <tr>
-                <td>Johnson <span class="dot"></span> </td>
-                <td>23:45</td>
-                <td>Theirs</td>
-                <td><a type="button" href="/game" class="btn btn-success btn-xs">Rejoin Game</a></td>
+                <td class="col-xs-4">{{this.oppName}} {{#if this.oppActive}}<span class="dot"></span>{{/if}}</td>
+                <td class="col-xs-2">1 day</td>
+                <td class="col-xs-2">{{this.move}}</td>
+                <td class="col-xs-4"><a type="button" href="/game/{{this.gameId}}" class="btn btn-success btn-xs">Rejoin
+                    Game</a></td>
               </tr>
-              <tr>
-                <td>Anthony</td>
-                <td>1 day</td>
-                <td>Yours</td>
-                <td><a type="button" href="/game" class="btn btn-success btn-xs">Rejoin Game</a></td>
-              </tr>
-              <tr>
-                <td>Anthony</td>
-                <td>1 day</td>
-                <td>Yours</td>
-                <td><a type="button" href="/game" class="btn btn-success btn-xs">Rejoin Game</a></td>
-              </tr>
-              <tr>
-                <td>Johnson <span class="dot"></span> </td>
-                <td>23:45</td>
-                <td>Theirs</td>
-                <td><a type="button" href="/game" class="btn btn-success btn-xs">Rejoin Game</a></td>
-              </tr>
+              {{/each}}
             </tbody>
           </table>
-
         </div>
-        <br>
 
         <h3 class="text-center">Available Games</h3>
-          <div class="well lobbyGamesScroll">
-            <table class="table">
+        <div class="panel-group">
+          <div class="steveWell">
+            <table class="table table-fixed">
               <thead>
                 <tr>
-                  <th>Player</th>
-                  <th>Time</th>
-                  <th>Rank</th>
+                  <th class="col-xs-4">Host</th>
+                  <th class="col-xs-2">Time</th>
+                  <th class="col-xs-2">Rank</th>
+                  <th class="col-xs-4"></th>
                 </tr>
               </thead>
-              <tbody>
+              <tbody id="games">
+                {{#each availGames}}
                 <tr>
-                  <td>John</td>
-                  <td>3 days</td>
-                  <td>15</td>
-                  <td><button type="button" class="btn btn-xs">Join Game</button></td>
+                  <td class="col-xs-4">{{this.player1}}</td>
+                  <td class="col-xs-2">1 day</td>
+                  <td class="col-xs-2">100th</td>
+                  <td class="col-xs-4"><a type="button" href="/game/{{this.gameId}}" class="btn btn-success btn-xs">Join
+                      Game</a></td>
                 </tr>
-                <tr>
-                  <td>Mary</td>
-                  <td>1 day</td>
-                  <td>23</td>
-                  <td><button type="button" class="btn btn-xs">Join Game</button></td>
-                </tr>
-                <tr>
-                  <td>John</td>
-                  <td>3 days</td>
-                  <td>15</td>
-                  <td><button type="button" class="btn btn-xs">Join Game</button></td>
-                </tr>
-                <tr>
-                  <td>Mary</td>
-                  <td>1 day</td>
-                  <td>23</td>
-                  <td><button type="button" class="btn btn-xs">Join Game</button></td>
-                </tr>
+                {{/each}}
               </tbody>
             </table>
           </div>
-
-          <div class="container">
-
-            <!-- Button to Open the Modal -->
-            <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#myModal">Create
-              Game</button>
-
-            <!-- The Modal -->
-            <div class="modal" id="myModal">
-              <div class="modal-dialog">
-                <div class="modal-content">
-
-                  <!-- Modal Header -->
-                  <div class="modal-header">
-                    <h4 class="modal-title">Create New Game</h4>
-                  </div>
-
-                  <!-- Modal body -->
-                  <div class="modal-body">
-                    Select time per move
-                    <select class="browser-default custom-select">
-                      <option selected>Select one</option>
-                      <option value="1">1 min</option>
-                      <option value="2">3 min</option>
-                      <option value="3">5 min</option>
-                      <option value="4">1 day</option>
-                      <option value="5">3 days</option>
-                    </select>
-                    <div class="radio">
-                      <p>Timed Game</p>
-                      <label><input type="radio" name="optradio" checked>Yes</label>
-                    </div>
-                    <div class="radio">
-                      <label><input type="radio" name="optradio">No</label>
-                    </div>
-                    Select time per game
-                    <select class="browser-default custom-select">
-                      <option selected>Select one</option>
-                      <option value="1">10 min</option>
-                      <option value="2">20 min</option>
-                      <option value="3">1 hour</option>
-                    </select>
-                  </div>
-
-                  <!-- Modal footer -->
-                  <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" data-dismiss="modal">Create Game</button>
-                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-      </div>
-    </div>
-  </div>
-  <div class="col-md-5">
-    <div class="lobbyWells well well-sm">
-      <h3 class="text-center">Leader Board</h3>
-      <div class="well">
-        <table class="table">
-          <thead>
-            <tr>
-              <th>Rank</th>
-              <th>Player</th>
-              <th>Wins</th>
-              <th>Loss</th>
-              <th>Draw</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>1</td>
-              <td>Anthony</td>
-              <td>1054</td>
-              <td>5</td>
-              <td>2</td>
-            </tr>
-            <tr>
-              <td>2</td>
-              <td>Steve</td>
-              <td>204</td>
-              <td>68</td>
-              <td>1</td>
-            </tr>
-            <tr>
-              <td>3</td>
-              <td>Leo</td>
-              <td>308</td>
-              <td>206</td>
-              <td>4</td>
-            </tr>
-            <tr>
-              <td>4</td>
-              <td>Kurtis</td>
-              <td>209</td>
-              <td>206</td>
-              <td>9</td>
-            </tr>
-            <tr>
-              <td>5</td>
-              <td>Dave</td>
-              <td>309</td>
-              <td>503</td>
-              <td>3</td>
-            </tr>
-            <tr>
-              <td>6</td>
-              <td>Johnson</td>
-              <td>205</td>
-              <td>503</td>
-              <td>3</td>
-            </tr>
-            <tr>
-              <td>7</td>
-              <td>Kathy</td>
-              <td>109</td>
-              <td>530</td>
-              <td>3</td>
-            </tr>
-            <tr>
-              <td>8</td>
-              <td>Betty</td>
-              <td>30</td>
-              <td>609</td>
-              <td>3</td>
-            </tr>
-            <tr>
-              <td>9</td>
-              <td>Al</td>
-              <td>3</td>
-              <td>509</td>
-              <td>3</td>
-            </tr>
-            <tr>
-              <td>10</td>
-              <td>Rose</td>
-              <td>2</td>
-              <td>1209</td>
-              <td>3</td>
-            </tr>
-          </tbody>
-        </table>
+        </div>
 
         <!-- Button to Open the Modal -->
-        <button type="button" class="btn btn-sm btn-defalt" data-toggle="modal" data-target="#myModal-2">See Full
-          Leader Board</button>
+        <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#myModal">Create
+          Game</button>
 
         <!-- The Modal -->
-        <div class="modal" id="myModal-2">
+        <div class="modal" id="myModal">
           <div class="modal-dialog">
             <div class="modal-content">
 
               <!-- Modal Header -->
               <div class="modal-header">
-                <h3 class="text-center">Leader Board</h3>
+                <h4 class="modal-title">Create New Game</h4>
               </div>
 
               <!-- Modal body -->
               <div class="modal-body">
-                <div class="well leaderBoardScroll">
-                  <table class="table">
+                Select time per move
+                <select class="browser-default custom-select">
+                  <option selected>Select one</option>
+                  <option value="1">1 min</option>
+                  <option value="2">3 min</option>
+                  <option value="3">5 min</option>
+                  <option value="4">1 day</option>
+                  <option value="5">3 days</option>
+                </select>
+                <div class="radio">
+                  <p>Timed Game</p>
+                  <label><input type="radio" name="optradio" checked>Yes</label>
+                </div>
+                <div class="radio">
+                  <label><input type="radio" name="optradio">No</label>
+                </div>
+                Select time per game
+                <select class="browser-default custom-select">
+                  <option selected>Select one</option>
+                  <option value="1">10 min</option>
+                  <option value="2">20 min</option>
+                  <option value="3">1 hour</option>
+                </select>
+              </div>
+
+              <!-- Modal footer -->
+              <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal" id="new">Create Game</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-5">
+    <div class="lobbyWells well well-sm">
+      <h3 class="text-center">Leaderboard</h3>
+      <div class="steveWell">
+        <div class="panel-group">
+          <table class="table table-fixed">
+            <thead>
+              <tr>
+                <th class="col-xs-2">Rank</th>
+                <th class="col-xs-4">Player</th>
+                <th class="col-xs-2">Wins</th>
+                <th class="col-xs-2">Loses</th>
+                <th class="col-xs-2">Draws</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="col-xs-2">1</td>
+                <td class="col-xs-4">Mike</td>
+                <td class="col-xs-2">90</td>
+                <td class="col-xs-2">80</td>
+                <td class="col-xs-2">3</td>
+
+              </tr>
+              <tr id="line">
+                <td class="col-xs-2">1</td>
+                <td class="col-xs-4">Mike</td>
+                <td class="col-xs-2">90</td>
+                <td class="col-xs-2">80</td>
+                <td class="col-xs-2">3</td>
+              </tr>
+              <tr id="line">
+                <td class="col-xs-2">1</td>
+                <td class="col-xs-4">Mike</td>
+                <td class="col-xs-2">90</td>
+                <td class="col-xs-2">80</td>
+                <td class="col-xs-2">3</td>
+              </tr>
+              <tr>
+                <td class="col-xs-2">1</td>
+                <td class="col-xs-4">Mike</td>
+                <td class="col-xs-2">90</td>
+                <td class="col-xs-2">80</td>
+                <td class="col-xs-2">3</td>
+              </tr>
+              <tr>
+                <td class="col-xs-2">1</td>
+                <td class="col-xs-4">Mike</td>
+                <td class="col-xs-2">90</td>
+                <td class="col-xs-2">80</td>
+                <td class="col-xs-2">3</td>
+              </tr>
+              <tr>
+                <td class="col-xs-2">1</td>
+                <td class="col-xs-4">Mike</td>
+                <td class="col-xs-2">90</td>
+                <td class="col-xs-2">80</td>
+                <td class="col-xs-2">3</td>
+              </tr>
+              <tr>
+                <td class="col-xs-2">1</td>
+                <td class="col-xs-4">Mike</td>
+                <td class="col-xs-2">90</td>
+                <td class="col-xs-2">80</td>
+                <td class="col-xs-2">3</td>
+              </tr>
+              <tr>
+                <td class="col-xs-2">1</td>
+                <td class="col-xs-4">Mike</td>
+                <td class="col-xs-2">90</td>
+                <td class="col-xs-2">80</td>
+                <td class="col-xs-2">3</td>
+              </tr>
+              <tr>
+                <td class="col-xs-2">1</td>
+                <td class="col-xs-4">Mike</td>
+                <td class="col-xs-2">90</td>
+                <td class="col-xs-2">80</td>
+                <td class="col-xs-2">3</td>
+              </tr>
+              <tr>
+                <td class="col-xs-2">1</td>
+                <td class="col-xs-4">Mike</td>
+                <td class="col-xs-2">90</td>
+                <td class="col-xs-2">80</td>
+                <td class="col-xs-2">3</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <br>
+
+      <!-- Button to Open the Modal -->
+      <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#myModal-2">See Full Leaderboard</button>
+
+      <!-- The Modal -->
+      <div class="modal" id="myModal-2">
+        <div class="modal-dialog">
+          <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+              <h3 class="text-center">Leaderboard</h3>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+              <div class="panel-group">
+                <div class="steveWell">
+                  <table class="table table-fixed">
                     <thead>
                       <tr>
-                        <th>Rank</th>
-                        <th>Player</th>
-                        <th>Wins</th>
-                        <th>Losses</th>
-                        <th>Draw</th>
+                        <th class="col-xs-2">Rank</th>
+                        <th class="col-xs-4">Player</th>
+                        <th class="col-xs-2">Wins</th>
+                        <th class="col-xs-2">Loses</th>
+                        <th class="col-xs-2">Draws</th>
                       </tr>
                     </thead>
-                    <tbody>
+                    <tbody id="leaderBoard">
                       <tr>
-                        <td>1</td>
-                        <td>Anthony</td>
-                        <td>1054</td>
-                        <td>5</td>
-                        <td>2</td>
+                        <td class="col-xs-2">1</td>
+                        <td class="col-xs-4">Mike</td>
+                        <td class="col-xs-2">90</td>
+                        <td class="col-xs-2">80</td>
+                        <td class="col-xs-2">3</td>
+
+                      </tr>
+                      <tr id="line">
+                        <td class="col-xs-2">1</td>
+                        <td class="col-xs-4">Mike</td>
+                        <td class="col-xs-2">90</td>
+                        <td class="col-xs-2">80</td>
+                        <td class="col-xs-2">3</td>
+                      </tr>
+                      <tr id="line">
+                        <td class="col-xs-2">1</td>
+                        <td class="col-xs-4">Mike</td>
+                        <td class="col-xs-2">90</td>
+                        <td class="col-xs-2">80</td>
+                        <td class="col-xs-2">3</td>
                       </tr>
                       <tr>
-                        <td>2</td>
-                        <td>Steve</td>
-                        <td>204</td>
-                        <td>68</td>
-                        <td>1</td>
+                        <td class="col-xs-2">1</td>
+                        <td class="col-xs-4">Mike</td>
+                        <td class="col-xs-2">90</td>
+                        <td class="col-xs-2">80</td>
+                        <td class="col-xs-2">3</td>
                       </tr>
                       <tr>
-                        <td>3</td>
-                        <td>Leo</td>
-                        <td>308</td>
-                        <td>206</td>
-                        <td>4</td>
+                        <td class="col-xs-2">1</td>
+                        <td class="col-xs-4">Mike</td>
+                        <td class="col-xs-2">90</td>
+                        <td class="col-xs-2">80</td>
+                        <td class="col-xs-2">3</td>
                       </tr>
                       <tr>
-                        <td>4</td>
-                        <td>Kurtis</td>
-                        <td>209</td>
-                        <td>206</td>
-                        <td>9</td>
+                        <td class="col-xs-2">1</td>
+                        <td class="col-xs-4">Mike</td>
+                        <td class="col-xs-2">90</td>
+                        <td class="col-xs-2">80</td>
+                        <td class="col-xs-2">3</td>
                       </tr>
                       <tr>
-                        <td>5</td>
-                        <td>Dave</td>
-                        <td>309</td>
-                        <td>503</td>
-                        <td>3</td>
+                        <td class="col-xs-2">1</td>
+                        <td class="col-xs-4">Mike</td>
+                        <td class="col-xs-2">90</td>
+                        <td class="col-xs-2">80</td>
+                        <td class="col-xs-2">3</td>
                       </tr>
                       <tr>
-                        <td>6</td>
-                        <td>Johnson</td>
-                        <td>205</td>
-                        <td>503</td>
-                        <td>3</td>
+                        <td class="col-xs-2">1</td>
+                        <td class="col-xs-4">Mike</td>
+                        <td class="col-xs-2">90</td>
+                        <td class="col-xs-2">80</td>
+                        <td class="col-xs-2">3</td>
                       </tr>
                       <tr>
-                        <td>7</td>
-                        <td>Kathy</td>
-                        <td>109</td>
-                        <td>530</td>
-                        <td>3</td>
+                        <td class="col-xs-2">1</td>
+                        <td class="col-xs-4">Mike</td>
+                        <td class="col-xs-2">90</td>
+                        <td class="col-xs-2">80</td>
+                        <td class="col-xs-2">3</td>
                       </tr>
                       <tr>
-                        <td>8</td>
-                        <td>Betty</td>
-                        <td>30</td>
-                        <td>609</td>
-                        <td>3</td>
+                        <td class="col-xs-2">1</td>
+                        <td class="col-xs-4">Mike</td>
+                        <td class="col-xs-2">90</td>
+                        <td class="col-xs-2">80</td>
+                        <td class="col-xs-2">3</td>
                       </tr>
                       <tr>
-                        <td>9</td>
-                        <td>Al</td>
-                        <td>3</td>
-                        <td>509</td>
-                        <td>3</td>
+                        <td class="col-xs-2">1</td>
+                        <td class="col-xs-4">Mike</td>
+                        <td class="col-xs-2">90</td>
+                        <td class="col-xs-2">80</td>
+                        <td class="col-xs-2">3</td>
                       </tr>
                       <tr>
-                        <td>10</td>
-                        <td>Rose</td>
-                        <td>2</td>
-                        <td>1209</td>
-                        <td>3</td>
+                        <td class="col-xs-2">1</td>
+                        <td class="col-xs-4">Mike</td>
+                        <td class="col-xs-2">90</td>
+                        <td class="col-xs-2">80</td>
+                        <td class="col-xs-2">3</td>
                       </tr>
                     </tbody>
                   </table>
@@ -351,9 +341,7 @@
             </div>
           </div>
         </div>
-
       </div>
-
     </div>
   </div>
   <div class="col-md-3 center-text">
@@ -362,12 +350,12 @@
       <div class="well lobbyChatScroll" id="messagesList">
 
         <ul class="thin" id="messages"></ul>
-
       </div>
       <form id="submit-msg" action="">
         <input id="m" autocomplete="off"></input> <button type="submit" class="btn btn-success btn-xs">Send</button>
       </form>
-      <p id="users-connected"></p>
+      <div id="users-connected">
+        </p>
+      </div>
     </div>
   </div>
-</div>
