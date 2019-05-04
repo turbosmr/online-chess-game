@@ -212,6 +212,7 @@ $(function () {
             }
             else {
                 $('#oppName').html(data.player2);
+                $('#currUser').html(data.player1);
             }
         }
         // Check if current user is P2
@@ -219,10 +220,27 @@ $(function () {
             player2 = true;
             board.flip();
             $('#oppName').html(data.player1);
+            $('#currUser').html(data.player2);
         }
 
         // Check game status
         $('#gameStatus').html(checkGameStatus(game));
+    });
+
+    /**
+     * Case where game does not exist, redirect user to lobby page.
+     */
+    socket.on('dneGame', function (data) {
+        alert(data.message);
+        location.replace("/");
+    });
+
+    /**
+     * Case where game is full, redirect user to lobby page.
+     */
+    socket.on('fullGame', function (data) {
+        alert(data.message);
+        location.replace("/");
     });
 
     /**
@@ -269,7 +287,7 @@ $(function () {
      * Check the game status, and render the result. 
      */
     var checkGameStatus = function () {
-        var result;
+        var result, winner;
         if (game.game_over() == true) {
             if (game.in_checkmate() == true) {
                 if (game.turn() == 'b') {

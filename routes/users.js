@@ -6,7 +6,7 @@ const passport = require('passport');
 // Load Users Model
 const User = require('../models').User;
 
-const { forwardAuthenticated } = require('../config/auth');
+const { ensureAuthenticated, forwardAuthenticated } = require('../config/auth');
 
 // Login page
 router.get('/login', forwardAuthenticated, function (req, res) {
@@ -88,12 +88,13 @@ router.post('/login', (req, res, next) => {
   passport.authenticate('local-login', {
     successRedirect: '/lobby',
     failureRedirect: '/users/login',
+    badRequestMessage: 'Please enter all fields',
     failureFlash: true
   })(req, res, next);
 });
 
 // Logout
-router.get('/logout', (req, res) => {
+router.get('/logout', ensureAuthenticated, (req, res) => {
   User.findOne({ where: { userName: req.user.userName }}).then(function (user, err) {
     user.update({ isActive: false });
   });
@@ -101,10 +102,6 @@ router.get('/logout', (req, res) => {
   req.logout();
   req.flash('success', 'You are logged out');
   res.redirect('/users/login');
-});
-router.get('/logout', function(req, res){
-  req.logout();
-  res.redirect('/');
 });
 
 module.exports = router;

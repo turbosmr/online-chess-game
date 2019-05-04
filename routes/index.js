@@ -12,7 +12,9 @@ const Game = require('../models').Game;
 // Load User Model
 const User = require('../models').User;
 
-var findCurrGames = function (req, res, next) {
+const Leaderboard = require('../models').Leaderboard;
+
+var getCurrGames = function (req, res, next) {
   var currGames = [];
 
   Game.findAndCountAll({
@@ -22,9 +24,8 @@ var findCurrGames = function (req, res, next) {
       result: null
     }
   }).then(function (results, err) {
-    if (!results) {
-      console.log('Error finding current games.');
-      return next();
+    if (err) {
+      console.log('Error retrieving current games.');
     }
     else {
       for (var i = 0; i < results.count; i++) {
@@ -35,14 +36,32 @@ var findCurrGames = function (req, res, next) {
         else {
           currGames[i].oppName = currGames[i].player1;
         }
+        /*User.findOne({
+          where: {
+            userName: currGames[i].oppName
+          }
+        }).then(function (result, err) {
+          if (err) {
+            console.log('Error retrieving user.');
+          }
+          else {
+            if (result.isActive) {
+              console.log(currGames[i].oppName)
+            }
+            else {
+              console.log(currGames[i].oppName)
+            }
+          }
+        });*/
       }
       req.currGames = currGames;
-      return next();
     }
   });
+
+  return next();
 }
 
-var findAvailGames = function (req, res, next) {
+var getAvailGames = function (req, res, next) {
   var availGames = [];
 
   Game.findAndCountAll({
@@ -52,50 +71,53 @@ var findAvailGames = function (req, res, next) {
     }
   }).then(function (results, err) {
     if (err) {
-      console.log('Error finding available games.');
-      return next();
+      console.log('Error retrieving available games.');
     }
     else {
       for (var i = 0; i < results.count; i++) {
         availGames[i] = results.rows[i];
       }
       req.availGames = availGames;
+    }
+  });
+
+  return next();
+}
+
+var getLeaderboard = function (req, res, next) {
+  var lbTop10 = [];
+  var lbAll = [];
+  
+  Leaderboard.findAndCountAll({
+    order: [
+      ['winCount', 'DESC'],
+      ['loseCount', 'ASC'],
+      ['drawCount', 'DESC']
+    ]
+  }).then(function (results, err) {
+    if (err) {
+        console.log('Error retrieving leaderboard.');
+        return next();
+    }
+    else {
+      for (var i = 0; i < results.count; i++) {
+        if (i < 10) {
+          lbTop10[i] = results.rows[i];
+          lbTop10[i].rank = i+1;
+          lbAll[i] = results.rows[i];
+          lbAll[i].rank = i+1;
+        }
+        else {
+          lbAll[i] = results.rows[i];
+          lbAll[i].rank = i+1;
+        }
+      }
+      req.lbTop10 = lbTop10;
+      req.lbAll = lbAll;
       return next();
     }
   });
 }
-
-const leaderboardModel = require('../models').Leaderboard;
-
-var top10 = [];
-var rankings = [];
-
-//get top 10
-leaderboardModel.findAndCountAll({
-  order: [
-    ['winCount','DESC']
-  ]
-}).then(function(results,err) {
-  if(err)
-  {
-      console.log('Error selecting messages from DB.');
-  }
-  else 
-  {
-    for(var i = 0; i < results.count; i++)
-    {
-      if(i < 10)
-      {
-        top10[i] = results.rows[i];
-        rankings[i] = results.rows[i];
-      }
-      else
-      {
-        rankings[i] = results.rows[i];
-      }
-    }
-  }
-});
 
 // Welcome page
 router.get('/', forwardAuthenticated, function (req, res) {
@@ -106,13 +128,15 @@ router.get('/', forwardAuthenticated, function (req, res) {
 });
 
 // Lobby page
-router.get('/lobby', ensureAuthenticated, findCurrGames, findAvailGames, function (req, res) {
+router.get('/lobby', ensureAuthenticated, getCurrGames, getAvailGames, getLeaderboard, function (req, res) {
   res.render('lobby', {
     currUser: req.user.userName,
     title: "Lobby - Team 10 Chess",
     active: { Lobby: true },
     currGames: req.currGames,
-    availGames: req.availGames
+    availGames: req.availGames,
+    lbTop10: req.lbTop10,
+    lbAll: req.lbAll
   });
 });
 

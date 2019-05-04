@@ -98,12 +98,14 @@ module.exports = function (io) {
                     }
                     // Game is full
                     else {
+                        socket.emit('fullGame', {message: 'Game "' + game.gameId + '" is full.'});
                         console.log('Game "' + game.gameId + '" is full.');
                     }
                 }
+                // Game does not exist
                 else {
+                    socket.emit('dneGame', {message: 'Such game does not exist.'});
                     console.log('Game "' + data.gameID + '" does not exist.');
-                    socket.emit('err', { message: 'Such game does not exist.' });
                 }
             });
         });
@@ -158,7 +160,6 @@ module.exports = function (io) {
     });
 
     function IDGenerator() {
-
         this.length = 8;
         this.timestamp = +new Date;
 
