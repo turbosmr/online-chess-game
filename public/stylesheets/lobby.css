@@ -18,24 +18,31 @@ td {
 .table-fixed thead {
   width: 97%;
 }
-#games {
+.gamesWell {
+    background-color: white;
+    border: 1px solid lightgray;
+    border-radius: 5px;
+    padding: 10px;
+}
+#gamesScroll {
   height: 118px;
   overflow-y: auto;
   width: 100%;
 }
-#leaderBoard {
+.lbTop10Well {
+    background-color: white;
+    border: 1px solid lightgray;
+    border-radius: 5px;
+    padding: 10px;
+    height: 450px;
+}
+#lbAllScroll {
   height: 300px;
   overflow-y: auto;
   width: 100%;
 }
 .well {
   background-color: white;
-}
-.steveWell {
-    background-color: white;
-    border: 1px solid lightgray;
-    border-radius: 5px;
-    padding: 10px;
 }
 .table-fixed thead, .table-fixed tbody, .table-fixed tr, .table-fixed td, .table-fixed th {
   display: block;
