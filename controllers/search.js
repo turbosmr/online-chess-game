@@ -1,13 +1,6 @@
 const userModel = require('../models/index').User;
+
+const Op = require('sequelize').Op;
 exports.search = function (req, res) {
-    var body = req.body;
-    console.log(body);
-    const search = body.search;
-    if (search) {
-        userModel.findOne({ where: { userName: search } }).then(function (users) {
-            if (users) {
-                render();
-            }
-        });
-    }
-}
+    userModel.findAll({where: {userName:{[Op.like]: '%'+req.query.search+'%'}}});
+};
