@@ -27,7 +27,7 @@ $(function () {
         $('#m').val('');
         return false;
     });
-    
+
     // Display messages on screen
     socket.on('chat message', function (data) {
         $('#messages').append($('<li>').text(data.username + ": " + data.msg));
@@ -55,8 +55,11 @@ $(function () {
     var board,
         game,
         player1 = false,
-        player2 = false;
-        gameStart = true;
+        player2 = false,
+        gameStart = true,
+        game2 = new Chess(), // used for game history
+        history,
+        hist_index;
 
     var removeGreySquares = function () {
         $('#board .square-55d63').css('background', '');
@@ -81,7 +84,7 @@ $(function () {
             (player2 === true && game.turn() === 'w') ||
             (player1 === true && game.turn() === 'b') ||
             (player1 === true && piece.search(/^b/) !== -1) ||
-            (player2 === true && piece.search(/^w/) !== -1) || 
+            (player2 === true && piece.search(/^w/) !== -1) ||
             gameStart == false) {
             return false;
         }
@@ -127,6 +130,7 @@ $(function () {
     var onSnapEnd = function () {
         board.position(game.fen());
         socket.emit('playTurn', { gameID: gameID, fen: game.fen(), pgn: game.pgn(), turn: game.turn() });
+        $('#userHello').remove();
         $('#gameStatus').html(checkGameStatus(game));
     };
 
@@ -143,7 +147,7 @@ $(function () {
 
 
     /* Implementation of P2P functionality using sockets */
-    
+
     /* Join user to the game with game ID from URL path */
     socket.emit('joinGame', { currUser: currUser, gameID: gameID });
 
@@ -194,6 +198,10 @@ $(function () {
         cfg.position = data.fen;
         board = ChessBoard('board', cfg);
 
+        game2.load_pgn(game.pgn());
+        history = game2.history();
+        hist_index = history.length;
+
         // Check if current user is P1
         if (data.player1 == currUser) {
             player1 = true;
@@ -225,6 +233,10 @@ $(function () {
         game.load(data.fen);
         game.load_pgn(data.pgn);
         board.position(data.fen);
+
+        game2.load_pgn(game.pgn());
+        history = game2.history();
+        hist_index = history.length;
 
         // Check game status
         $('#gameStatus').html(checkGameStatus(game));
@@ -304,4 +316,46 @@ $(function () {
             return checkMove(game);
         }
     }
+
+    /**
+     * Game history, previous move. 
+     */
+    $('#prevBtn5').on('click', function () {
+        game2.undo();
+        board.position(game2.fen());
+        hist_index -= 1;
+        if (hist_index < 0) {
+            hist_index = 0;
+        }
+    });
+
+    /**
+     * Game history, next move. 
+     */
+    $('#nextBtn5').on('click', function () {
+        game2.move(history[hist_index]);
+        board.position(game2.fen());
+        hist_index += 1;
+        if (hist_index > history.length) {
+            hist_index = history.length;
+        }
+    });
+
+    /**
+     * Game history, starting position of board. 
+     */
+    $('#startPositionBtn5').on('click', function () {
+        game2.reset();
+        board.start();
+        hist_index = 0;
+    });
+
+    /**
+     * Game history, current state of game. 
+     */
+    $('#endPositionBtn5').on('click', function () {
+        game2.load_pgn(game.pgn());
+        board.position(game2.fen());
+        hist_index = history.length;
+    });
 });
