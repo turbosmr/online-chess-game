@@ -10,7 +10,7 @@ const Op = Sequelize.Op;
 const Game = require('../models').Game;
 
 // Load User Model
-const User = require('../models').User;
+const userModel = require('../models').User;
 
 const Leaderboard = require('../models').Leaderboard;
 
