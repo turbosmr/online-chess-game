@@ -88,7 +88,23 @@
                 </div>
             </div>
         </div>
+            <h3 class="text-center">Choose Board and Pieces</h3>
+       
+<div class="dropdown">
+    <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Dropdown Example
+    <span class="caret"></span></button>
+    <ul class="dropdown-menu">
+      <li>
+
+         
+          
+          </li>
+      <li><a href="#">CSS</a></li>
+      <li><a href="#">JavaScript</a></li>
+    </ul>
+  </div>
     </div>
+     </div>
 
     <div class="col-md-4">
         <div class="well profileWells well-sm">
@@ -164,4 +180,26 @@
         $("public/stylesheets/chessboard-0.3.0.css").css("background-color", c);
     });
 
+</script>
+<script>
+    var loadDoc = function(){
+        $.ajax({
+            url: '/search',
+            type: 'GET',
+            data: { search: $('input')[0].value, },
+            success: function (data) {
+                let html = '';
+                data.users.forEach(user => {
+                    html += '<tr> \
+                    <td>'+ user.userName + '<span class="dot"></span> </td>\
+                    <td><a type="button" href="/game" class="btn btn-success btn-xs">Add Friend</a></td>\
+                </tr>';
+                });
+                $('#search-results').html(html);
+            },
+            error: function () {
+                console.log('error');
+            }
+        });
+    };
 </script>
