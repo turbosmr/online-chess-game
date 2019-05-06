@@ -10,7 +10,7 @@ const Op = Sequelize.Op;
 const Game = require('../models').Game;
 
 // Load User Model
-const userModel = require('../models').User;
+const User = require('../models').User;
 
 var getCurrGames = function (req, res, next) {
   var currGames = [];
