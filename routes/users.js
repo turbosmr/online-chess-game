@@ -3,10 +3,10 @@ const router = express.Router();
 const bcrypt = require('bcryptjs');
 const passport = require('passport');
 
-// User model
+// Load Users Model
 const User = require('../models').User;
 
-const { forwardAuthenticated } = require('../config/auth');
+const { ensureAuthenticated, forwardAuthenticated } = require('../config/auth');
 
 // Login page
 router.get('/login', forwardAuthenticated, function (req, res) {
@@ -35,9 +35,9 @@ router.post('/register', (req, res) => {
     regErrors.push({ msg: 'Please enter all fields' });
   }
   else {
-    // Check password is between 5-20 characters
-    if (username.length < 5 || username.length > 20) {
-      regErrors.push({ msg: 'Username must be between 5-20 characters' });
+    // Check password is between 5-10 characters
+    if (username.length < 5 || username.length > 10) {
+      regErrors.push({ msg: 'Username must be between 5-10 characters' });
     }
     // Check password is between 8-20 characters
     else if (password.length < 8 || password.length > 20) {
@@ -88,12 +88,18 @@ router.post('/login', (req, res, next) => {
   passport.authenticate('local-login', {
     successRedirect: '/lobby',
     failureRedirect: '/users/login',
+    badRequestMessage: 'Please enter all fields',
     failureFlash: true
   })(req, res, next);
 });
 
+
 // Logout
-router.get('/logout', (req, res) => {
+router.get('/logout', ensureAuthenticated, (req, res) => {
+  User.findOne({ where: { userName: req.user.userName }}).then(function (user, err) {
+    user.update({ isActive: false });
+  });
+  
   req.logout();
   req.flash('success', 'You are logged out');
   res.redirect('/users/login');

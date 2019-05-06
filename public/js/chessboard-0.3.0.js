@@ -202,7 +202,8 @@ var MINIMUM_JQUERY_VERSION = '1.7.0',
 // and simplify selectors
 var CSS = {
   alpha: 'alpha-d2270',
-  black: 'black-3c85d',
+  //black: 'black-3c85d',
+  black: 'orange',
   board: 'board-b72b1',
   chessboard: 'chessboard-63f37',
   clearfix: 'clearfix-7da63',
@@ -442,7 +443,7 @@ function expandConfig() {
   if (cfg.hasOwnProperty('pieceTheme') !== true ||
       (typeof cfg.pieceTheme !== 'string' &&
        typeof cfg.pieceTheme !== 'function')) {
-    cfg.pieceTheme = 'images/chesspieces/wikipedia/{piece}.png';
+    cfg.pieceTheme = '/images/chesspieces/wikipedia/{piece}.png';
   }
 
   // animation speeds
