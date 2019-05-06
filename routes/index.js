@@ -12,8 +12,6 @@ const Game = require('../models').Game;
 // Load User Model
 const User = require('../models').User;
 
-const Leaderboard = require('../models').Leaderboard;
-
 var getCurrGames = function (req, res, next) {
   var currGames = [];
 
@@ -56,9 +54,8 @@ var getCurrGames = function (req, res, next) {
       }
       req.currGames = currGames;
     }
+    return next();
   });
-
-  return next();
 }
 
 var getAvailGames = function (req, res, next) {
@@ -79,16 +76,16 @@ var getAvailGames = function (req, res, next) {
       }
       req.availGames = availGames;
     }
+    return next();
   });
 
-  return next();
 }
 
 var getLeaderboard = function (req, res, next) {
   var lbTop10 = [];
   var lbAll = [];
   
-  Leaderboard.findAndCountAll({
+  User.findAndCountAll({
     order: [
       ['winCount', 'DESC'],
       ['loseCount', 'ASC'],

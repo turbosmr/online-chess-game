@@ -59,7 +59,8 @@ $(function () {
         gameStart = true,
         game2 = new Chess(), // used for game history
         history,
-        hist_index;
+        hist_index,
+        result;
 
     var removeGreySquares = function () {
         $('#board .square-55d63').css('background', '');
@@ -104,6 +105,21 @@ $(function () {
         if (move === null) return 'snapback';
     };
 
+    var onSnapEnd = function () {
+        board.position(game.fen());
+        game2.load_pgn(game.pgn());
+        
+        history = game2.history();
+        hist_index = history.length;
+
+        $('#userHello').remove();
+
+        // Check move status
+        $('#moveStatus').html(checkMove());
+
+        socket.emit('playTurn', { gameID: gameID, fen: game.fen(), pgn: game.pgn(), turn: game.turn() });
+    };
+
     var onMouseoverSquare = function (square, piece) {
         // get list of possible moves for this square
         var moves = game.moves({
@@ -127,13 +143,6 @@ $(function () {
         removeGreySquares();
     };
 
-    var onSnapEnd = function () {
-        board.position(game.fen());
-        socket.emit('playTurn', { gameID: gameID, fen: game.fen(), pgn: game.pgn(), turn: game.turn() });
-        $('#userHello').remove();
-        $('#gameStatus').html(checkGameStatus(game));
-    };
-
     var cfg = {
         showNotation: false,
         draggable: true,
@@ -152,15 +161,34 @@ $(function () {
     socket.emit('joinGame', { currUser: currUser, gameID: gameID });
 
     /**
+     * Case where game does not exist, redirect user to lobby page.
+     */
+    socket.on('dneGame', function (data) {
+        alert(data.message);
+        location.replace("/");
+    });
+
+    /**
+     * Case where game is full, redirect user to lobby page.
+     */
+    socket.on('fullGame', function (data) {
+        alert(data.message);
+        location.replace("/");
+    });
+
+    /**
      * Opponent joined the game, alert current user.
      * This event is received when opponent successfully joins the game. 
      */
     socket.on('oppJoined', function (data) {
-        gameStart = true;
         var message = 'Your opponent, ' + data.oppName + ' has joined the match.';
         $('#userHello').html(message);
         $('#oppName').html(data.oppName);
-        $('#gameStatus').html(checkGameStatus(game));
+
+        // Check move status
+        $('#moveStatus').html(checkMove());
+
+        gameStart = true;
     });
 
     /**
@@ -208,6 +236,7 @@ $(function () {
             if (data.player2 == null) {
                 // P1 has created new game
                 $('#oppName').html('Waiting for an opponent to join...');
+                $('#currUser').html(data.player1);
                 gameStart = false;
             }
             else {
@@ -223,24 +252,8 @@ $(function () {
             $('#currUser').html(data.player2);
         }
 
-        // Check game status
-        $('#gameStatus').html(checkGameStatus(game));
-    });
-
-    /**
-     * Case where game does not exist, redirect user to lobby page.
-     */
-    socket.on('dneGame', function (data) {
-        alert(data.message);
-        location.replace("/");
-    });
-
-    /**
-     * Case where game is full, redirect user to lobby page.
-     */
-    socket.on('fullGame', function (data) {
-        alert(data.message);
-        location.replace("/");
+        // Check move status
+        $('#moveStatus').html(checkMove());
     });
 
     /**
@@ -249,15 +262,20 @@ $(function () {
      */
     socket.on('turnPlayed', function (data) {
         game.load(data.fen);
-        game.load_pgn(data.pgn);
+        //game.load_pgn(data.pgn);
         board.position(data.fen);
 
         game2.load_pgn(game.pgn());
         history = game2.history();
         hist_index = history.length;
 
-        // Check game status
-        $('#gameStatus').html(checkGameStatus(game));
+        // Check move status
+        $('#moveStatus').html(checkMove());
+
+        if (game.game_over() == true) {
+            alert(checkGameStatus());
+            socket.emit('gameEnded', { gameID: gameID, fen: game.fen(), pgn: game.pgn(), result: result });
+        }
     });
 
     /**
@@ -265,74 +283,73 @@ $(function () {
      * Notify the user about either scenario and end the game. 
      */
     socket.on('gameEnd', function (data) {
-        socket.leave(data.gameID);
-    })
+        alert(checkGameStatus());
+    });
 
     /**
      * Check who has the current move, and render the message. 
      */
-    var checkMove = function (game) {
-        if (gameStart == false) {
-            return '';
-        }
-        else if ((player1 == true && game.turn() == 'w') || (player2 == true && game.turn() == 'b')) {
-            return 'Your move!';
-        }
-        else {
-            return 'Opponent\'s move.';
+    var checkMove = function () {
+        if (game.game_over() != true) {
+            if (gameStart == false) {
+                return '';
+            }
+            else if ((player1 == true && game.turn() == 'w') || (player2 == true && game.turn() == 'b')) {
+                return 'Your move!';
+            }
+            else {
+                return 'Opponent\'s move.';
+            }
         }
     }
 
     /**
      * Check the game status, and render the result. 
      */
-    var checkGameStatus = function () {
-        var result, winner;
+    var checkGameStatus = function (done) {
+        var message;
         if (game.game_over() == true) {
             if (game.in_checkmate() == true) {
+                result = 'Checkmate';
                 if (game.turn() == 'b') {
-                    result = 'Checkmate - Player 1 Won';
                     if (player1 == true) {
-                        return 'Checkmate, you win!';
+                        message = 'Checkmate, you win!';
                     }
                     else {
-                        return 'Checkmate, you lost!';
+                        message = 'Checkmate, you lost!';
                     }
                 }
                 else {
-                    result = 'Checkmate - Player 2 Won';
                     if (player2 == true) {
-                        return 'Checkmate, you win!';
+                        message = 'Checkmate, you win!';
                     }
                     else {
-                        return 'Checkmate, you lost!';
+                        message = 'Checkmate, you lost!';
                     }
                 }
             }
             // returns true if insufficient material or 50-move rule
             else if (game.in_draw() == true) {
+                result = 'Draw';
                 if (game.insufficient_material() == true) {
-                    result = 'Draw - insufficient material';
-                    return result;
+                    message = 'Draw - insufficient material';
                 }
                 else {
-                    result = 'Draw - 50-move rule';
-                    return result;
+                    message = 'Draw - 50-move rule';
                 }
             }
             else if (game.in_stalemate() == true) {
-                result = 'Draw - stalemate';
-                return result;
+                result = 'Draw';
+                message = 'Draw - stalemate';
             }
             else if (game.in_threefold() == true) {
-                result = 'Draw - threefold repetition';
-                return result;
+                result = 'Draw';
+                message = 'Draw - threefold repetition';
             }
-            socket.emit('gameEnded', { gameID: gameID, result: result });
         }
-        else {
-            return checkMove(game);
-        }
+        $('#moveStatus').remove();
+        $('#userHello').remove();
+        return message;
     }
 
     /**
