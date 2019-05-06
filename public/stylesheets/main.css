@@ -72,11 +72,9 @@ h5.welcome-login-reg-shadow {
 #users-connected { 
   padding: 5px; 
 }
-
 #messageList {
   overflow-y:auto;
 }
-
 #messages { 
   list-style-type: none;
   margin: 0;
@@ -120,7 +118,6 @@ input {
 .well {
   background-color:white;
 }
-
 .center-block{
     float: none;
 }
