@@ -376,4 +376,20 @@ $(function () {
         board.position(game2.fen());
         hist_index = history.length;
     });
+
+    // toggle chat and history / login and register
+    $('#login-form-link').click(function (e) {
+        $("#login-form").delay(0).fadeIn(0);
+        $("#register-form").fadeOut(0);
+        $('#register-form-link').removeClass('active');
+        $(this).addClass('active');
+        e.preventDefault();
+      });
+      $('#register-form-link').click(function (e) {
+        $("#register-form").delay(0).fadeIn(0);
+        $("#login-form").fadeOut(0);
+        $('#login-form-link').removeClass('active');
+        $(this).addClass('active');
+        e.preventDefault();
+      });
 });

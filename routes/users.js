@@ -87,12 +87,11 @@ router.post('/register', (req, res) => {
 router.post('/login', (req, res, next) => {
   passport.authenticate('local-login', {
     successRedirect: '/lobby',
-    failureRedirect: '/users/login',
+    failureRedirect: '/',
     badRequestMessage: 'Please enter all fields',
     failureFlash: true
   })(req, res, next);
 });
-
 
 // Logout
 router.get('/logout', ensureAuthenticated, (req, res) => {

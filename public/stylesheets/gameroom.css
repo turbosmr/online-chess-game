@@ -20,4 +20,25 @@ div.modalBoard {
 .col-md-3 {
     padding-top: 65px;
 }
+.panel-login>.panel-heading {
+    text-align:center;
+}
+.panel-login>.panel-heading a{
+    font-family:Arial, Helvetica, sans-serif;
+	text-decoration: none;
+	color: gray;
+	font-size: 24px;
+	-webkit-transition: all 0.1s linear;
+	-moz-transition: all 0.1s linear;
+    transition: all 0.1s linear;
+}
+.panel-login>.panel-heading a.active{
+    font-family:Arial, Helvetica, sans-serif;
+	color: black;
+	font-size: 24px;
+}
+.gameWell {
+    height:526px;
+    padding:8px;
+}
 

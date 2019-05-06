@@ -10,9 +10,7 @@ const Op = Sequelize.Op;
 const Game = require('../models').Game;
 
 // Load User Model
-const userModel = require('../models').User;
-
-const Leaderboard = require('../models').Leaderboard;
+const User = require('../models').User;
 
 var getCurrGames = function (req, res, next) {
   var currGames = [];
@@ -88,7 +86,7 @@ var getLeaderboard = function (req, res, next) {
   var lbTop10 = [];
   var lbAll = [];
   
-  Leaderboard.findAndCountAll({
+  User.findAndCountAll({
     order: [
       ['winCount', 'DESC'],
       ['loseCount', 'ASC'],
