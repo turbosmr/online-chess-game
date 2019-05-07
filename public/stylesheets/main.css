@@ -12,6 +12,47 @@ body, html {
 .topSpace{
   padding-top: 50px;
 }
+h2.welcome-login-reg-header {
+  font-weight: lighter;
+  text-align: center;
+  color:white;
+}
+.welcome-login-reg-form-header, h2.welcome-login-reg-header {
+  padding-bottom: 20px;
+  text-align: center;
+  font-weight: lighter;
+  color:white;
+}
+h5.welcome-login-reg-shadow {
+  font-size: 17px;
+  text-align: center;
+  text-shadow: 1px 1px black;
+  color:white;
+}
+.reg-login-bg {
+  /* The image used */
+  background-image: url("/images/chessbg.jpg");
+  /* Center and scale the image nicely */
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size:cover;
+  height: 400px;
+}
+.reg-login-messages {
+  padding-top: 80px;
+  min-height: 52px;
+  width: 250px;
+  margin: auto;
+}
+.alert {
+  margin-bottom: 0px;
+}
+.reg-login-form {
+  padding-top: 20px;
+  max-height: 100px;
+  margin: auto;
+  width: 250px;
+}
 .banner, h1.bannerHeader {
   /* The image used */
   background-image: url("/images/chessbg.jpg");
@@ -43,28 +84,6 @@ body, html {
 }
 .footer-pushdown {
   min-height: calc(100% - 89px);
-}
-h2.welcome-login-reg-header {
-  font-weight: lighter;
-  text-align: center;
-  color:white;
-}
-.welcome-login-reg-form-header, h2.welcome-login-reg-header {
-  padding-bottom: 20px;
-  text-align: center;
-  font-weight: lighter;
-  color:white;
-}
-.reg-login-form {
-  padding-top: 100px;
-  margin: auto;
-  width: 250px;
-}
-h5.welcome-login-reg-shadow {
-  font-size: 17px;
-  text-align: center;
-  text-shadow: 1px 1px black;
-  color:white;
 }
 * { 
   margin: 0; padding: 0; box-sizing: border-box; 

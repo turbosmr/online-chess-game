@@ -87,7 +87,7 @@ router.post('/register', (req, res) => {
 router.post('/login', (req, res, next) => {
   passport.authenticate('local-login', {
     successRedirect: '/lobby',
-    failureRedirect: '/',
+    failureRedirect: '/users/login',
     badRequestMessage: 'Please enter all fields',
     failureFlash: true
   })(req, res, next);
