@@ -9,7 +9,7 @@ $(function () {
 
     // Retrieve number of connected users
     socket.on('users connected', function (num_users_connected) {
-        $('#users-connected').html("Users connected: " + num_users_connected);
+        $('#players-online').html("Players online: " + num_users_connected);
     });
 
     // Retrieve messages from database upon entering chatroom
