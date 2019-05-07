@@ -1,13 +1,6 @@
-<script src="https://cdnjs.cloudflare.com/ajax/libs/chess.js/0.10.2/chess.js"></script>
-<div class="topSpace"></div>
 
+<!--buttons for game-->
 <div class="col-md-3">
-
-  <!--gameroom2 class div is needed to give proper height to buttons container-->
-  <div class="gameroom-height-adjust">
-  </div>
-
-  <!--buttons for game-->
   <div class="well well-sm">
     <br>
     <button type="button" class=" btn gameroom center-block">Submit Move</button><br>
@@ -39,7 +32,9 @@
 
 <div class="col-md-6">
   <!--text for person you are playing-->
-  <h3 class="text-center" style="color:white" id="oppName"></h3>
+  <div class="oppName">
+    <h3 id="oppName"></h3>
+  </div>
 
   <!--chessboard and pieces-->
   <div class="chessboard well-sm">
@@ -47,25 +42,38 @@
   </div>
 
   <!--text for person you are playing-->
-  <h3 class="text-center" style="color:white" id="currUser"></h3>
-  <br>
+  <div class="currUser">
+    <h3 id="currUser"></h3>
+  </div>
 </div>
 
+ <!--Chat/ Hisory tabs-->
 <div class="col-md-3">
-
-  <!--gameroom-chat-height-adjust class div is needed to give proper height to chat container-->
-  <div class="gameroom-height-adjust">
-  </div>
-
-  <!--Chat-->
-  <div class="well well-sm">
-    <h4 class="text-center">Chat</h4>
-    <div class="well gameChatScroll" id="messagesList">
-      <ul class="thin" id="messages"></ul>
+  <div class="well gameWell">
+    <div class="panel-login">
+      <div class="panel-heading">
+        <div class="row">
+          <div class="col-xs-6">
+            <a href="#" class="active" id="login-form-link">Chat</a>
+          </div>
+          <div class="col-xs-6">
+            <a href="#" id="register-form-link">History</a>
+          </div>
+        </div>
+      </div>
     </div>
-    <form id="submit-msg" action="">
-      <input id="m" autocomplete="off"></input> <button type="submit" class="btn btn-success btn-xs">Send</button>
-    </form>
-    <br>
+    <div id="login-form">
+      <div class="well gameChatScroll" id="messagesList">
+        <ul class="thin" id="messages"></ul>
+      </div>
+      <form id="submit-msg" action="">
+        <input id="m" autocomplete="off"></input>
+        <button type="submit" class="btn btn-success pull-right btn-xs">Send</button>
+      </form>
+    </div>
+    <div id="register-form" style="display: none;">
+      <div class="well gameChatScroll" id="messagesList">
+        <ul class="thin" id="messages"></ul>
+      </div>
+    </div>
   </div>
-</div>
