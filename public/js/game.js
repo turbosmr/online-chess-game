@@ -34,21 +34,17 @@ $(function () {
     });
 
     //message scroll
-    function getMessages() {
-        shouldScroll = messagesList.scollTop + messagesList.clientHeight === messagesList.scrollHeight;
-
-        if (!shouldScroll) {
-            scrollToBottom()
-        }
+    var $el = $("#messagesList");
+    function anim() {
+        var st = $el.scrollTop();
+        var sb = $el.prop("scrollHeight")-$el.innerHeight();
+        $el.animate({scrollTop: sb}, "fast",anim);
     }
-
-    function scrollToBottom() {
-        messagesList.scrollTop = messagesList.scrollHeight;
+    function stop(){
+        $el.stop();
     }
-
-    scrollToBottom();
-
-    setInterval(getMessages, 100);
+    anim();
+    $el.hover(stop, anim);
     //end of message scroll
 
     /* Begin chessboard configuration */
@@ -393,4 +389,20 @@ $(function () {
         board.position(game2.fen());
         hist_index = history.length;
     });
+
+    // toggle chat and history / login and register
+    $('#login-form-link').click(function (e) {
+        $("#login-form").delay(0).fadeIn(0);
+        $("#register-form").fadeOut(0);
+        $('#register-form-link').removeClass('active');
+        $(this).addClass('active');
+        e.preventDefault();
+      });
+      $('#register-form-link').click(function (e) {
+        $("#register-form").delay(0).fadeIn(0);
+        $("#login-form").fadeOut(0);
+        $('#login-form-link').removeClass('active');
+        $(this).addClass('active');
+        e.preventDefault();
+      });
 });

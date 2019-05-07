@@ -35,21 +35,17 @@ $(function () {
     });
 
     //message scroll
-    function getMessages() {
-        shouldScroll = messagesList.scollTop + messagesList.clientHeight === messagesList.scrollHeight;
-
-        if (!shouldScroll) {
-            scrollToBottom()
-        }
+    var $el = $("#messagesList");
+    function anim() {
+        var st = $el.scrollTop();
+        var sb = $el.prop("scrollHeight")-$el.innerHeight();
+        $el.animate({scrollTop: sb}, "fast",anim);
     }
-
-    function scrollToBottom() {
-        messagesList.scrollTop = messagesList.scrollHeight;
+    function stop(){
+        $el.stop();
     }
-
-    scrollToBottom();
-
-    setInterval(getMessages, 100);
+    anim();
+    $el.hover(stop, anim);
     //end of message scroll
 
 

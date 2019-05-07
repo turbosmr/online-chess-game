@@ -4,18 +4,10 @@
 body, html {
   height: 100%;
   margin: 0 0;
+  padding-top: 30px;
 }
 .navbar-brand {
   font-weight: lighter;
-}
-.reg-login-bg {
-  /* The image used */
-  background-image: url("/images/chessbg.jpg");
-  /* Center and scale the image nicely */
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size:cover;
-  height: 400px;
 }
 .topSpace{
   padding-top: 50px;
@@ -58,7 +50,6 @@ h2.welcome-login-reg-header {
   color:white;
 }
 .welcome-login-reg-form-header, h2.welcome-login-reg-header {
-  padding-top: 60px;
   padding-bottom: 20px;
   text-align: center;
   font-weight: lighter;
@@ -81,11 +72,9 @@ h5.welcome-login-reg-shadow {
 #users-connected { 
   padding: 5px; 
 }
-
 #messageList {
   overflow-y:auto;
 }
-
 #messages { 
   list-style-type: none;
   margin: 0;
@@ -105,7 +94,7 @@ input {
   box-sizing: border-box;
   border: 1px solid #ccc;
   border-radius: 4px;
-  background-color: rgb(235, 235, 235);
+  background-color:whitesmoke;
   resize: none;
 }
 .lobbyChatScroll {
@@ -117,7 +106,7 @@ input {
   padding: 10px;
 }
 .gameChatScroll {
-  height:396px;
+  height:395px;
   overflow-y:scroll;
   background-color: white;
   border: 1px solid lightgray;
@@ -125,9 +114,8 @@ input {
   padding: 10px;
 }
 .well {
-  background-color:whitesmoke;
+  background-color:white;
 }
-
 .center-block{
     float: none;
 }
@@ -142,5 +130,10 @@ input {
   text-align: center;
   margin-left: 5px;
 }
+h3, h4, h5, p  {
+  padding-top: 0;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
 
 
