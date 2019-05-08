@@ -87,6 +87,7 @@ var getAvailGames = function (req, res, next) {
 var getLeaderboard = function (req, res, next) {
   var lbTop10 = [];
   var lbAll = [];
+  console.log('getLeaderboard')
   
   Leaderboard.findAndCountAll({
     order: [
@@ -128,7 +129,7 @@ router.get('/', forwardAuthenticated, function (req, res) {
 });
 
 // Lobby page
-router.get('/lobby', ensureAuthenticated, getCurrGames, getAvailGames, getLeaderboard, function (req, res) {
+router.get('/lobby', ensureAuthenticated, getCurrGames, getAvailGames, function (req, res) {
   res.render('lobby', {
     currUser: req.user.userName,
     title: "Lobby - Team 10 Chess",
@@ -161,10 +162,13 @@ router.get('/search', ensureAuthenticated, function(req, res){
 });
 // Profile page
 router.get('/profile', ensureAuthenticated, function (req, res) {
-  res.render('profile', {
-    currUser: req.user.userName,
-    title: "Profile - Team 10 Chess",
-    active: { Profile: true }
+  req.user.getFriends().then(function(friends){
+    res.render('profile', {
+      currUser: req.user.userName,
+      title: "Profile - Team 10 Chess",
+      active: { Profile: true },
+      friends: friends
+    });
   });
 });
 
@@ -186,4 +190,16 @@ router.get('/about', ensureAuthenticated, function (req, res) {
   });
 });
 
+router.post('/addFriend', (req, res, next) => {
+  req.user.addFriends(req.body.id);
+  req.user.getFriends().then(function(friends){
+    res.render('profile', {
+      currUser: req.user.userName,
+      title: "Profile - Team 10 Chess",
+      active: { Profile: true },
+      friends: friends
+    });
+  });
+  
+});
 module.exports = router;

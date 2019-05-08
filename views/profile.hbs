@@ -56,22 +56,12 @@
                             </tr>
                         </thead>
                         <tbody>
+                            {{#each friends}}
                             <tr>
-                                <td>Johnson <span class="dot"></span> </td>
+                                <td>{{userName}} <span class="dot"></span> </td>
                                 <td><a type="button" href="/game" class="btn btn-primary btn-xs">Create Game</a></td>
                             </tr>
-                            <tr>
-                                <td>Anthony</td>
-                                <td><a type="button" href="/game" class="btn btn-primary btn-xs">Create Game</a></td>
-                            </tr>
-                            <tr>
-                                <td>Anthony</td>
-                                <td><a type="button" href="/game" class="btn btn-primary btn-xs">Create Game</a></td>
-                            </tr>
-                            <tr>
-                                <td>Johnson <span class="dot"></span> </td>
-                                <td><a type="button" href="/game" class="btn btn-primary btn-xs">Create Game</a></td>
-                            </tr>
+                            {{/each}}
                         </tbody>
                     </table>
                 </div>
@@ -90,7 +80,8 @@
                 data.users.forEach(user => {
                     html += '<tr> \
                     <td>'+ user.userName + '<span class="dot"></span> </td>\
-                    <td><a type="button" href="/game" class="btn btn-success btn-xs">Add Friend</a></td>\
+                    <td><form action="/addFriend" method="POST"><input type="hidden" name="id" value="'+ user.id +'">\
+                    <button type="submit" class="btn btn-success btn-xs">Add Friend</button></form></td>\
                 </tr>';
                 });
                 $('#search-results').html(html);
