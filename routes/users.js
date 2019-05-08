@@ -93,7 +93,6 @@ router.post('/login', (req, res, next) => {
   })(req, res, next);
 });
 
-
 // Logout
 router.get('/logout', ensureAuthenticated, (req, res) => {
   User.findOne({ where: { userName: req.user.userName }}).then(function (user, err) {

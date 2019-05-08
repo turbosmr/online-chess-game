@@ -2,17 +2,23 @@
     <h2 class="welcome-login-reg-header">Login</h2>
 </div>
 <div class="reg-login-bg">
+
+            <!-- Display any error or success messages -->
+           <div class="reg-login-messages">
+                {{> messages}}
+            </div>
     <div class="row">
         <!-- Login form -->
         <div class="reg-login-form">
             <form action="/users/login" method="POST">
-                <!-- Display any error or success messages -->
-                {{> messages}}
+
                 <div class="form-group">
-                    <input type="username" id="username" name="username" class="form-control" placeholder="Enter Username" />
+                    <input type="username" id="username" name="username" class="form-control"
+                        placeholder="Enter Username" />
                 </div>
                 <div class="form-group">
-                    <input type="password" id="password" name="password" class="form-control" placeholder="Enter Password" />
+                    <input type="password" id="password" name="password" class="form-control"
+                        placeholder="Enter Password" />
                 </div>
                 <button type="submit" class="btn btn-primary btn-block">Login</button>
             </form>
