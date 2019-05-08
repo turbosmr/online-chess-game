@@ -31,10 +31,13 @@ $(function () {
     // Display messages on screen
     socket.on('chat message', function (data) {
         $('#messages').append($('<li>').text(data.username + ": " + data.msg));
+        //when msg recieved scroll to bottom
+        scrollToBottom();
     });
 
     //message scroll
     var $el = $("#messagesList");
+    var messagesList = document.getElementById('messagesList')
     function anim() {
         var st = $el.scrollTop();
         var sb = $el.prop("scrollHeight")-$el.innerHeight();
@@ -43,7 +46,13 @@ $(function () {
     function stop(){
         $el.stop();
     }
-    anim();
+
+    //scroll to bottom
+    function scrollToBottom() {
+        messagesList.scrollTop = messagesList.scrollHeight;
+    }
+
+    //when hovering stop animation of scrolling
     $el.hover(stop, anim);
     //end of message scroll
 
