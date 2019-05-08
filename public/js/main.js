@@ -9,7 +9,7 @@ $(function () {
 
     // Retrieve number of connected users
     socket.on('users connected', function (num_users_connected) {
-        $('#players-online').html("Players online: " + num_users_connected);
+        $('#users-connected').html("Users connected: " + num_users_connected);
     });
 
     // Retrieve messages from database upon entering chatroom
@@ -35,17 +35,21 @@ $(function () {
     });
 
     //message scroll
-    var $el = $("#messagesList");
-    function anim() {
-        var st = $el.scrollTop();
-        var sb = $el.prop("scrollHeight")-$el.innerHeight();
-        $el.animate({scrollTop: sb}, "fast",anim);
+    function getMessages() {
+        shouldScroll = messagesList.scollTop + messagesList.clientHeight === messagesList.scrollHeight;
+
+        if (!shouldScroll) {
+            scrollToBottom()
+        }
     }
-    function stop(){
-        $el.stop();
+
+    function scrollToBottom() {
+        messagesList.scrollTop = messagesList.scrollHeight;
     }
-    anim();
-    $el.hover(stop, anim);
+
+    scrollToBottom();
+
+    setInterval(getMessages, 100);
     //end of message scroll
 
 

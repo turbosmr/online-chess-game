@@ -10,7 +10,9 @@ const Op = Sequelize.Op;
 const Game = require('../models').Game;
 
 // Load User Model
-const User = require('../models').User;
+const userModel = require('../models').User;
+
+const Leaderboard = require('../models').Leaderboard;
 
 var getCurrGames = function (req, res, next) {
   var currGames = [];
@@ -54,8 +56,9 @@ var getCurrGames = function (req, res, next) {
       }
       req.currGames = currGames;
     }
-    return next();
   });
+
+  return next();
 }
 
 var getAvailGames = function (req, res, next) {
@@ -76,9 +79,9 @@ var getAvailGames = function (req, res, next) {
       }
       req.availGames = availGames;
     }
-    return next();
   });
 
+  return next();
 }
 
 var getLeaderboard = function (req, res, next) {
@@ -86,7 +89,7 @@ var getLeaderboard = function (req, res, next) {
   var lbAll = [];
   console.log('getLeaderboard')
   
-  User.findAndCountAll({
+  Leaderboard.findAndCountAll({
     order: [
       ['winCount', 'DESC'],
       ['loseCount', 'ASC'],

@@ -1,4 +1,5 @@
 <!-- banner for title of the page -->
+<div class="topSpace"></div>
 <div class="banner">
   <h1 class="bannerHeader">TEAM 10 CHESS</h1>
 </div>
@@ -50,7 +51,7 @@
               <tr>
                 <th class="col-xs-4">Host</th>
                 <th class="col-xs-2">Time</th>
-                <th class="col-xs-2"></th>
+                <th class="col-xs-2">Rank</th>
                 <th class="col-xs-4"></th>
               </tr>
             </thead>
@@ -59,7 +60,7 @@
               <tr>
                 <td class="col-xs-4">{{this.player1}}</td>
                 <td class="col-xs-2">1 day</td>
-                <td class="col-xs-2"></td>
+                <td class="col-xs-2">100th</td>
                 <td class="col-xs-4"><a type="button" href="/game/{{this.gameId}}" class="btn btn-success btn-xs">Join
                     Game</a></td>
               </tr>
@@ -204,14 +205,16 @@
   </div>
   <div class="col-md-3 center-text">
     <div class="lobbyWells well well-sm">
-      <h3 class="text-center">Chat</h3>
+      <h3 class="text-center">Online Chat</h3>
       <div class="well lobbyChatScroll" id="messagesList">
+
         <ul class="thin" id="messages"></ul>
       </div>
       <form id="submit-msg" action="">
-        <input id="m" autocomplete="off"></input> <button type="submit" class="btn btn-success pull-right btn-xs">Send</button>
+        <input id="m" autocomplete="off"></input> <button type="submit" class="btn btn-success btn-xs">Send</button>
       </form>
-      <div id="players-online">
+      <div id="users-connected">
+        </p>
       </div>
     </div>
   </div>

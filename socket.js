@@ -1,10 +1,5 @@
-const Sequelize = require('sequelize');
-
 // Load Games Model
 const Game = require('./models').Game;
-
-// Load Users Model
-const User = require('./models').User;
 
 var socketCount = 0;
 
@@ -36,12 +31,21 @@ module.exports = function (io) {
         socket.on('createGame', function (data) {
             // Unique gameID generator
             var gameID = new IDGenerator().generate();
-            Game.create({
-                gameId: gameID,
+            var gameRoom = {
+                gameID: gameID,
                 player1: data.player1,
+                fen: 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1',
                 move: data.player1,
-                moveTimeLimit: data.moveTimeLimit,
-                gameTimeLimit: data.gameTimeLimit
+                moveTimeLimit: '',
+                gameTimeLimit: ''
+            };
+            Game.create({
+                gameId: gameRoom.gameID,
+                player1: gameRoom.player1,
+                fen: gameRoom.fen,
+                move: gameRoom.move,
+                moveTimeLimit: gameRoom.moveTimeLimit,
+                gameTimeLimit: gameRoom.gameTimeLimit
             });
             console.log(data.player1 + ' created game: ' + gameID);
             socket.emit('newGame', { gameID: gameID });
@@ -52,12 +56,7 @@ module.exports = function (io) {
          */
         socket.on('joinGame', function (data) {
             var rejoin = false;
-            Game.findOne({
-                where: {
-                    gameId: data.gameID,
-                    result: null
-                }
-            }).then(function (game) {
+            Game.findOne({ where: { gameId: data.gameID } }).then(function (game) {
                 // Check to see if such game exist
                 if (game) {
                     // Check if current user belongs to such game
@@ -99,13 +98,13 @@ module.exports = function (io) {
                     }
                     // Game is full
                     else {
-                        socket.emit('fullGame', { message: 'Game "' + game.gameId + '" is full.' });
+                        socket.emit('fullGame', {message: 'Game "' + game.gameId + '" is full.'});
                         console.log('Game "' + game.gameId + '" is full.');
                     }
                 }
                 // Game does not exist
                 else {
-                    socket.emit('dneGame', { message: 'Such game does not exist.' });
+                    socket.emit('dneGame', {message: 'Such game does not exist.'});
                     console.log('Game "' + data.gameID + '" does not exist.');
                 }
             });
@@ -116,19 +115,26 @@ module.exports = function (io) {
          */
         socket.on('playTurn', function (data) {
             Game.findOne({ where: { gameId: data.gameID } }).then(function (game) {
-                var move;
-                if (data.turn == 'w') {
-                    move = game.player1;
+                // Check to see if such game exist
+                if (game) {
+                    var move;
+                    if (data.turn == 'w') {
+                        move = game.player1;
+                    }
+                    else {
+                        move = game.player2;
+                    }
+                    game.update({
+                        fen: data.fen,
+                        pgn: data.pgn,
+                        move: move
+                    });
+                    socket.broadcast.to(game.gameId).emit('turnPlayed', data);
                 }
                 else {
-                    move = game.player2;
+                    console.log('Game "' + data.gameID + '" does not exist.');
+                    socket.emit('err', { message: 'Such game does not exist.' });
                 }
-                game.update({
-                    fen: data.fen,
-                    pgn: data.pgn,
-                    move: move
-                });
-                socket.broadcast.to(game.gameId).emit('turnPlayed', data);
             });
         });
 
@@ -137,42 +143,19 @@ module.exports = function (io) {
          */
         socket.on('gameEnded', function (data) {
             Game.findOne({ where: { gameId: data.gameID } }).then(function (game) {
-                return game.update({
-                    fen: data.fen,
-                    pgn: data.pgn,
-                    result: data.result
-                });
-            }).then(function (game) {
-                if (data.result == 'Checkmate') {
-                    if (game.move != game.player1) {
-                        // Winner; update user's win count
-                        User.update({
-                            winCount: Sequelize.literal('winCount + 1')
-                        }, { where: { userName: game.player1 } });
-                        // Loser; update user's lose count
-                        User.update({
-                            loseCount: Sequelize.literal('loseCount + 1')
-                        }, { where: { userName: game.player2 } });
-                    }
-                    else {
-                        // Winner; update user's win count
-                        User.update({
-                            winCount: Sequelize.literal('winCount + 1')
-                        }, { where: { userName: game.player2 } });
-                        // Loser; update user's lose count
-                        User.update({
-                            loseCount: Sequelize.literal('loseCount + 1')
-                        }, { where: { userName: game.player1 } });
-                    }
+                // Check to see if such game exist
+                if (game) {
+                    game.update({
+                        result: data.result
+                    });
+                    console.log(game.result);
+                    socket.broadcast.to(game.gameId).emit('gameEnd', data);
                 }
-                else if (data.result == 'Draw') {
-                    // Update users' draw count
-                    User.update({
-                        drawCount: Sequelize.literal('drawCount + 1')
-                    }, { where: { userName: game.player1, userName: game.player2 } });
+                else {
+                    console.log('Game "' + data.gameID + '" does not exist.');
+                    socket.emit('err', { message: 'Such game does not exist.' });
                 }
             });
-            socket.broadcast.to(data.gameID).emit('gameEnd', data);
         });
     });
 

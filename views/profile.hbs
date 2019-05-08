@@ -1,95 +1,31 @@
+<div class="topSpace"></div>
 <div class="banner">
     <h1 class="bannerHeader">Profile</h1>
 </div>
 <br>
 
+
 <div class="row">
 
     <div class="col-md-8">
         <div class="well profileWells well-sm">
-            <div class="row">
-                <div class="col-lg-6">
-                    <h3 class="text-center" style="color:black">Choose your board</h3>
-                    <div class="row">
-                        <div class="container ">
-                            <div class="col-xs-2 px-0 ">
-                                <!--Size dropdown content-->
-                                <div id="option1" class="size_chart">
-                                    <img src="../images/theme/black.png" class="img-responsive">
-                                </div>
-                                <div id="option2" class="size_chart">
-                                    <img src="../images/theme/red.png" class="img-responsive">
-                                </div>
-                                <div id="option3" class="size_chart">
-                                    <img src="../images/theme/orange.png" class="img-responsive">
-                                </div>
-                                <div id="option4" class="size_chart">
-                                    <img src="../images/theme/green.png" class="img-responsive">
-                                </div>
-                                <div id="option5" class="size_chart">
-                                    <img src="../images/theme/blue.png" class="img-responsive">
-                                </div>
-                                <div id="option6" class="size_chart">
-                                    <img src="../images/theme/purple.png" class="img-responsive">
-                                </div>
-                            </div>
-                            <div class="col-xs-2 px-0 ">
-                                <!--Size dropdown menu-->
-                                <select id="size_select" onchange='this.form.submitTheme()'>
-                                    <option value="option1">Black</option>
-                                    <option value="option2">Red</option>
-                                    <option value="option3">Orange</option>
-                                    <option value="option4">Green</option>
-                                    <option value="option5">Blue</option>
-                                    <option value="option6">Purple</option>
-                                </select>
-                            </div>
+            <h3 class="text-center">Choose Board and Pieces</h3>
+       
+<div class="dropdown">
+    <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Dropdown Example
+    <span class="caret"></span></button>
+    <ul class="dropdown-menu">
+      <li>
 
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-lg-6">
-                    <h3 class="text-center" style="color:rgb(0, 0, 0)">Choose your pieces</h3>
-                    <div class="row">
-                        <div class="container ">
-                            <div class="col-xs-2 px-0 ">
-                                <img src="../images/chessboard-wood.PNG" class="img-responsive">
-                                <label class="radio-inline control-label">
-                                    <input type="radio" id="woodPiece" name="chessPiece" checked="">
-                                    wooden board
-                                </label>
-                            </div>
-                            <div class="col-xs-2 px-0">
-                                <img src="../images/chessboard-wood.PNG" class="img-responsive">
-                                <label class="radio-inline control-label">
-                                    <input type="radio" id="glassPiece" name="chessPiece">
-                                    wooden board
-                                </label>
-                            </div>
-                            <div class="col-xs-2 px-0">
-                                <img src="../images/chessboard-wood.PNG" class="img-responsive">
-                                <label class="radio-inline control-label">
-                                    <input type="radio" id="steelPiece" name="chessPiece">wooden board
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <br>
-                <div class="col-xs-2">
-                    <button type="submit" class="btn submit btn-primary">Save settings</button>
-                </div>
-            </div>
-        </div>
-
-
-
+         
+          
+          </li>
+      <li><a href="#">CSS</a></li>
+      <li><a href="#">JavaScript</a></li>
+    </ul>
+  </div>
     </div>
-
+     </div>
 
     <div class="col-md-4">
         <div class="well profileWells well-sm">
@@ -98,30 +34,16 @@
 
                 <div class="topnav">
                     <div class="search-container">
-                        <input type="text" placeholder="Search username" name="search">
-                        <button class="btn btn-default" onclick="loadDoc()" type="submit">Search</button>
+
+                            <input type="text" placeholder="search username" name="search">
+                            <button type="submit" class="btn btn-default" onclick="loadDoc()">Search</button>
+
                     </div>
                 </div>
                 <br>
                 <div class="well friendsSearchScroll">
                     <table class="table">
-                        <tbody>
-                            <tr>
-                                <td>Johnson <span class="dot"></span> </td>
-                                <td><a type="button" href="/game" class="btn btn-success btn-xs">Add Friend</a></td>
-                            </tr>
-                            <tr>
-                                <td>Anthony</td>
-                                <td><a type="button" href="/game" class="btn btn-success btn-xs">Add Friend</a></td>
-                            </tr>
-                            <tr>
-                                <td>Anthony</td>
-                                <td><a type="button" href="/game" class="btn btn-success btn-xs">Add Friend</a></td>
-                            </tr>
-                            <tr>
-                                <td>Johnson <span class="dot"></span> </td>
-                                <td><a type="button" href="/game" class="btn btn-success btn-xs">Add Friend</a></td>
-                            </tr>
+                        <tbody id="search-results">
                         </tbody>
                     </table>
                 </div>
@@ -147,35 +69,8 @@
         </div>
     </div>
 </div>
-</div>
 <script>
-    submitTheme(){
-
-    }
-
-</script>
-<script>
-    $(document).ready(function () {
-
-        //hides dropdown content
-        $(".size_chart").hide();
-
-        //unhides first option content
-        $("#option1").show();
-
-        //listen to dropdown for change
-        $("#size_select").change(function () {
-            //rehide content on change
-            $('.size_chart').hide();
-            //unhides current item
-            $('#' + $(this).val()).show();
-        });
-
-    });
-
-</script>
-<script>
-    var loadDoc = function () {
+    var loadDoc = function(){
         $.ajax({
             url: '/search',
             type: 'GET',
