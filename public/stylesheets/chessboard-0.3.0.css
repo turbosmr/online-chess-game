@@ -37,14 +37,13 @@
 
 /* white square */
 .white-1e1d7 {
-  /*background-color:rgb(189, 192, 185);*/
-  /*background-color:rgb(215, 217, 221);*/
-  background-image: url("/images/white-marble-sq.jpg");
+  background-color: rgb(150, 150, 150)
+  /*background-image: url("/images/white-marble-sq.jpg");*/
 }
 
 /* black square */
 .black-3c85d {
-  background-color:rgb(100, 100, 100);
+  background-color:rgb(80, 80, 80);
   /*background-color:rgb(98, 112, 121);*/
 }
 .orange{
