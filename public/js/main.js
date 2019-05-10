@@ -12,10 +12,6 @@ $(function () {
         $('#users-connected').html("Users connected: " + num_users_connected);
     });
 
-    // Retrieve messages from database upon entering chatroom
-    socket.on('retrieve messages', function (msg) {
-        $('#messages').append($('<li>').text(msg.userName + ": " + msg.message));
-    });
     $('#submit-msg').submit(function (e) {
         e.preventDefault(); // prevents page reloading
         console.log('submit method iinside mainjs');
