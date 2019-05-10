@@ -37,10 +37,10 @@ $(function () {
     var $el = $("#messagesList");
     function anim() {
         var st = $el.scrollTop();
-        var sb = $el.prop("scrollHeight")-$el.innerHeight();
-        $el.animate({scrollTop: sb}, "fast",anim);
+        var sb = $el.prop("scrollHeight") - $el.innerHeight();
+        $el.animate({ scrollTop: sb }, "fast", anim);
     }
-    function stop(){
+    function stop() {
         $el.stop();
     }
     anim();
@@ -104,7 +104,7 @@ $(function () {
     var onSnapEnd = function () {
         board.position(game.fen());
         game2.load_pgn(game.pgn());
-        
+
         history = game2.history();
         hist_index = history.length;
 
@@ -276,7 +276,7 @@ $(function () {
 
         // Print move history
         $('#move-history-pgn').html(game.pgn({ max_width: 10, newline_char: '<br />' }));
-        
+
         if (game.game_over() == true) {
             alert(checkGameStatus());
             socket.emit('gameEnded', { gameID: gameID, fen: game.fen(), pgn: game.pgn(), result: result });
@@ -423,12 +423,31 @@ $(function () {
         $('#move-history-link').removeClass('active');
         $(this).addClass('active');
         e.preventDefault();
-      });
-      $('#move-history-link').click(function (e) {
+    });
+    $('#move-history-link').click(function (e) {
         $("#move-history").delay(0).fadeIn(0);
         $("#game-chat").fadeOut(0);
         $('#game-chat-link').removeClass('active');
         $(this).addClass('active');
         e.preventDefault();
-      });
+    });
+
+    function setUpBoard(dimensions) {
+        if (board !== undefined) {
+            currentPosition = board.position();
+            board.destroy();
+        }
+        if (dimensions >= 3) {
+            $('#board').css('width', '525px');
+            $('#board').css('height', '393px');
+            board = new ChessBoard3('board', cfg);
+        } else {
+            $('#board').css('width', '526px');
+            $('#board').css('height', '526px');
+            board = new ChessBoard('board', cfg);
+        }
+        board.position(game.fen(), false);
+    }
+    $('#2D').on('click', function () { setUpBoard(2); });
+    $('#3D').on('click', function () { setUpBoard(3); });
 });

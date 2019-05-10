@@ -215,4 +215,13 @@ router.get('/about', ensureAuthenticated, function (req, res) {
   });
 });
 
+// About page
+router.get('/3d', ensureAuthenticated, function (req, res) {
+  res.render('chess3D', {
+    currUser: req.user.userName,
+    title: "About - Team 10 Chess",
+    active: { chess3D: true }
+  });
+});
+
 module.exports = router;
