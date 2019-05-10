@@ -191,7 +191,7 @@ module.exports = function (io) {
                             result: 'Move Time Expired'
                         });
                         updateUserStat(game);
-                        io.in(game.gameId).emit('moveTimeExpired', { message: 'Move time expired!' });
+                        io.in(game.gameId).emit('moveTimeExpired');
                     }
                 }
             });

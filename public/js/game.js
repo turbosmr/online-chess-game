@@ -207,9 +207,9 @@ $(function () {
         if (!data.rejoin) {
             message = 'Hello, ' + currUser + ".";
         }
-        else {
+        /*else {
             message = 'Welcome back, ' + currUser + ".";
-        }
+        }*/
         $('#userHello').html(message);
 
         gameID = data.gameID;
@@ -291,7 +291,12 @@ $(function () {
         $('#moveTimer').remove();
         $('#moveStatus').remove();
         $('#userHello').remove();
-        alert(data.message);
+        if ((game.move() == 'w' && player1 == true) || (game.move() == 'b' && player2 == true)) {
+            alert('Time expired, you lost!');
+        }
+        else {
+            alert('Time expired, you won!');
+        }
     });
 
     /**
