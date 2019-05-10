@@ -6,6 +6,9 @@ const Game = require('./models').Game;
 // Load Users Model
 const User = require('./models').User;
 
+//Load GameChat Model
+const GameChats = require('./models').GameChats;
+
 var socketCount = 0;
 
 module.exports = function (io) {
@@ -26,6 +29,31 @@ module.exports = function (io) {
         // Store and display messages to connected clients, as well as console
         socket.on('chat message', (data) => {
             io.emit('chat message', data);
+        });
+
+        GameChats.findAndCountAll().then(function(result, error) {
+            if(error)
+            {
+                console.log('Error retrieving GameChats messages');
+            }
+            else
+            {
+                for(var i = 0; i < result.count; i++)
+                {
+                    //console.log(result.rows[i]);
+                    socket.emit('retrieve messages', result.rows[i]);
+                }
+            }
+        });
+
+        socket.on('game chat message', (data) => {
+            GameChats.create({
+                gameId: data.gameId,
+                userName: data.username,
+                message: data.msg
+            });
+
+            io.emit('game chat message', data);
         });
 
         //leaderboard stuff
