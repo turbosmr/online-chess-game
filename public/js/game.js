@@ -286,7 +286,7 @@ $(function () {
         $('#moveTimer').html(data.timeRem);
     });
 
-    socket.on('moveTimeExpired', function (data) {
+    socket.on('moveTimeExpired', function () {
         isGameActive = false;
         $('#moveTimer').remove();
         $('#moveStatus').remove();
