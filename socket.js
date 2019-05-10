@@ -73,7 +73,7 @@ module.exports = function (io) {
                             console.log(data.currUser + ' has returned back to game: ' + game.gameId);
                             rejoin = true;
                         }
-                        socket.broadcast.to(data.gameID).emit('oppRejoined', { oppName: data.currUser });
+                        //socket.broadcast.to(data.gameID).emit('oppRejoined', { oppName: data.currUser });
                         socket.emit('joinedGame', {
                             gameID: game.gameId,
                             player1: game.player1,

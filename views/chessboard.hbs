@@ -1,22 +1,23 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <!--buttons for game-->
 <div class="col-md-3">
   <div class="well well-sm">
     <br>
     <button type="button" class=" btn gameroom center-block">Submit Move</button><br>
     <button type="button" class=" btn gameroom center-block">Offer Draw</button><br>
-    <button type="button" class=" btn gameroom btn-danger center-block">Resign Game</button><br>
+    <button type="button" class=" btn btn-danger center-block">Resign Game</button><br>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/chess.js/0.10.2/chess.js"></script>
     <div class="chessboard" id="board5" style="margin: 0 auto; width: 400px;">
     </div>
     <div class="center">
       <div class="btn-group">
-        <button class="btn" type="button" id="startPositionBtn5"><span
-            class="glyphicon glyphicon-step-backward"></span></button>
-        <button class="btn" type="button" id="prevBtn5"><span class="glyphicon glyphicon-backward"></span></button>
-        <button class="btn" type="button" id="nextBtn5"><span class="glyphicon glyphicon-forward"></span></button>
-        <button class="btn" type="button" id="endPositionBtn5"><span
-            class="glyphicon glyphicon-step-forward"></span></button>
+        <button class="btn game-arrow-buttons" type="button" id="startPositionBtn5"><span
+            class="fa fa-angle-double-left"></span></button>
+        <button class="btn game-arrow-buttons" type="button" id="prevBtn5"><span class="fa fa-angle-left"></span></button>
+        <button class="btn game-arrow-buttons" type="button" id="nextBtn5"><span class="fa fa-angle-right"></span></button>
+        <button class="btn game-arrow-buttons" type="button" id="endPositionBtn5"><span
+            class="fa fa-angle-double-right"></span></button>
       </div>
     </div>
     <br>

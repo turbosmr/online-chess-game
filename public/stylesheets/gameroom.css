@@ -4,6 +4,24 @@ div.modalBoard {
 }
 .btn.gameroom {
     width: 120px;
+    background-color: rgb(120, 120, 120);
+    color: white;
+}
+.btn.gameroom:hover {
+    color: white;
+    background-color: rgb(100, 100, 100);
+}
+.btn.btn-danger{
+    width: 120px;
+}
+.game-arrow-buttons {
+    background-color: rgb(120, 120, 120);
+    color: white;
+    font-size:20px;
+}
+.game-arrow-buttons:hover {
+    color: white;
+    background-color: rgb(100, 100, 100);
 }
 .center {
     text-align: center;
@@ -11,6 +29,7 @@ div.modalBoard {
 .oppName {
     color: white;
     text-align: center;
+    padding-bottom: 8px;
 } 
 .currUser {
     color: white;
@@ -18,7 +37,7 @@ div.modalBoard {
     padding-bottom: 20px;
 } 
 .col-md-3 {
-    padding-top: 65px;
+    padding-top: 73px;
 }
 .panel-login>.panel-heading {
     text-align:center;
