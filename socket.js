@@ -225,7 +225,7 @@ module.exports = function (io) {
             // Update users' draw count
             User.update({
                 drawCount: Sequelize.literal('drawCount + 1')
-            }, { where: { userName: game.player1, userName: game.player2 } });
+            }, { where: { [Op.and]: { userName: game.player1, userName: game.player2 } } });
         }
         else if (game.result == 'Move Time Expired') {
             if (game.move != game.player1) {

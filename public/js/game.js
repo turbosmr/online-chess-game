@@ -113,6 +113,9 @@ $(function () {
         // Check move status
         $('#moveStatus').html(checkMove());
 
+        // Print move history
+        $('#move-history-pgn').html(game.pgn({ max_width: 10, newline_char: '<br />' }));
+
         socket.emit('playTurn', { gameID: gameID, fen: game.fen(), pgn: game.pgn(), turn: game.turn() });
     };
 
@@ -140,7 +143,7 @@ $(function () {
     };
 
     var cfg = {
-        showNotation: false,
+        showNotation: true,
         draggable: true,
         position: 'start',
         onDragStart: onDragStart,
@@ -250,6 +253,9 @@ $(function () {
 
         // Check move status
         $('#moveStatus').html(checkMove());
+
+        // Print move history
+        $('#move-history-pgn').html(game.pgn({ max_width: 10, newline_char: '<br />' }));
     });
 
     /**
@@ -268,6 +274,9 @@ $(function () {
         // Check move status
         $('#moveStatus').html(checkMove());
 
+        // Print move history
+        $('#move-history-pgn').html(game.pgn({ max_width: 10, newline_char: '<br />' }));
+        
         if (game.game_over() == true) {
             alert(checkGameStatus());
             socket.emit('gameEnded', { gameID: gameID, fen: game.fen(), pgn: game.pgn(), result: result });
@@ -408,17 +417,17 @@ $(function () {
     });
 
     // toggle chat and history / login and register
-    $('#login-form-link').click(function (e) {
-        $("#login-form").delay(0).fadeIn(0);
-        $("#register-form").fadeOut(0);
-        $('#register-form-link').removeClass('active');
+    $('#game-chat-link').click(function (e) {
+        $("#game-chat").delay(0).fadeIn(0);
+        $("#move-history").fadeOut(0);
+        $('#move-history-link').removeClass('active');
         $(this).addClass('active');
         e.preventDefault();
       });
-      $('#register-form-link').click(function (e) {
-        $("#register-form").delay(0).fadeIn(0);
-        $("#login-form").fadeOut(0);
-        $('#login-form-link').removeClass('active');
+      $('#move-history-link').click(function (e) {
+        $("#move-history").delay(0).fadeIn(0);
+        $("#game-chat").fadeOut(0);
+        $('#game-chat-link').removeClass('active');
         $(this).addClass('active');
         e.preventDefault();
       });
