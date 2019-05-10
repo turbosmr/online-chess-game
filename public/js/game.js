@@ -52,7 +52,7 @@ $(function () {
         game,
         player1 = false,
         player2 = false,
-        gameStart = true,
+        isGameActive = true,
         game2 = new Chess(), // used for game history
         history,
         hist_index,
@@ -82,7 +82,7 @@ $(function () {
             (player1 === true && game.turn() === 'b') ||
             (player1 === true && piece.search(/^b/) !== -1) ||
             (player2 === true && piece.search(/^w/) !== -1) ||
-            gameStart == false) {
+            isGameActive == false) {
             return false;
         }
     };
@@ -181,10 +181,10 @@ $(function () {
         $('#userHello').html(message);
         $('#oppName').html(data.oppName);
 
+        isGameActive = true;
+
         // Check move status
         $('#moveStatus').html(checkMove());
-
-        gameStart = true;
     });
 
     /**
@@ -233,7 +233,7 @@ $(function () {
                 // P1 has created new game
                 $('#oppName').html('Waiting for an opponent to join...');
                 $('#currUser').html(data.player1);
-                gameStart = false;
+                isGameActive = false;
             }
             else {
                 $('#oppName').html(data.player2);
@@ -258,7 +258,7 @@ $(function () {
      */
     socket.on('turnPlayed', function (data) {
         game.load(data.fen);
-        //game.load_pgn(data.pgn);
+        game.load_pgn(data.pgn);
         board.position(data.fen);
 
         game2.load_pgn(game.pgn());
@@ -282,12 +282,24 @@ $(function () {
         alert(checkGameStatus());
     });
 
+    socket.on('moveTimer', function (data) {
+        $('#moveTimer').html(data.timeRem);
+    });
+
+    socket.on('moveTimeExpired', function (data) {
+        isGameActive = false;
+        $('#moveTimer').remove();
+        $('#moveStatus').remove();
+        $('#userHello').remove();
+        alert(data.message);
+    });
+
     /**
      * Check who has the current move, and render the message. 
      */
     var checkMove = function () {
         if (game.game_over() != true) {
-            if (gameStart == false) {
+            if (isGameActive == false) {
                 return '';
             }
             else if ((player1 == true && game.turn() == 'w') || (player2 == true && game.turn() == 'b')) {
@@ -302,7 +314,7 @@ $(function () {
     /**
      * Check the game status, and render the result. 
      */
-    var checkGameStatus = function (done) {
+    var checkGameStatus = function () {
         var message;
         if (game.game_over() == true) {
             if (game.in_checkmate() == true) {

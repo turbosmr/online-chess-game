@@ -32,7 +32,7 @@
             {{#each currGames}}
             <tr>
               <td class="col-xs-4">{{this.oppName}} {{#if this.oppActive}}<span class="dot"></span>{{/if}}</td>
-              <td class="col-xs-2">1 day</td>
+              <td class="col-xs-2">{{this.moveTime}}</td>
               <td class="col-xs-2">{{this.move}}</td>
               <td class="col-xs-4"><a type="button" href="/game/{{this.gameId}}" class="btn btn-success btn-xs">Rejoin
                   Game</a></td>
@@ -58,7 +58,7 @@
               {{#each availGames}}
               <tr>
                 <td class="col-xs-4">{{this.player1}}</td>
-                <td class="col-xs-2">1 day</td>
+                <td class="col-xs-2">{{this.moveTime}}</td>
                 <td class="col-xs-2"></td>
                 <td class="col-xs-4"><a type="button" href="/game/{{this.gameId}}" class="btn btn-success btn-xs">Join
                     Game</a></td>
@@ -86,13 +86,17 @@
             <!-- Modal body -->
             <div class="modal-body">
               Select time per move
-              <select class="browser-default custom-select">
+              <select class="browser-default custom-select" id="moveTimeLimit">
                 <option selected>Select one</option>
                 <option value="1">1 min</option>
-                <option value="2">3 min</option>
-                <option value="3">5 min</option>
-                <option value="4">1 day</option>
-                <option value="5">3 days</option>
+                <option value="2">2 min</option>
+                <option value="3">3 min</option>
+                <option value="5">5 min</option>
+                <option value="10">10 min</option>
+                <option value="20">20 min</option>
+                <option value="1440">1 day</option>
+                <option value="4320">3 days</option>
+                <option value="7200">5 days</option>
               </select>
               <div class="radio">
                 <p>Timed Game</p>

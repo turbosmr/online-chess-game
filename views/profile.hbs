@@ -105,23 +105,7 @@
                 <br>
                 <div class="well friendsSearchScroll">
                     <table class="table">
-                        <tbody>
-                            <tr>
-                                <td>Johnson <span class="dot"></span> </td>
-                                <td><a type="button" href="/game" class="btn btn-success btn-xs">Add Friend</a></td>
-                            </tr>
-                            <tr>
-                                <td>Anthony</td>
-                                <td><a type="button" href="/game" class="btn btn-success btn-xs">Add Friend</a></td>
-                            </tr>
-                            <tr>
-                                <td>Anthony</td>
-                                <td><a type="button" href="/game" class="btn btn-success btn-xs">Add Friend</a></td>
-                            </tr>
-                            <tr>
-                                <td>Johnson <span class="dot"></span> </td>
-                                <td><a type="button" href="/game" class="btn btn-success btn-xs">Add Friend</a></td>
-                            </tr>
+                        <tbody id="search-results">
                         </tbody>
                     </table>
                 </div>
@@ -185,7 +169,7 @@
 
 </script>
 <script>
-    var loadDoc = function () {
+    var loadDoc = function(){
         $.ajax({
             url: '/search',
             type: 'GET',

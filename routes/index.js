@@ -13,7 +13,14 @@ const Game = require('../models').Game;
 const User = require('../models').User;
 
 var getCurrGames = function (req, res, next) {
-  var currGames = [];
+  var currGames = [],
+      now,
+      timeRem,
+      days,
+      hours,
+      minutes,
+      seconds,
+      timeRemFormatted;
 
   Game.findAndCountAll({
     where: {
@@ -34,23 +41,24 @@ var getCurrGames = function (req, res, next) {
         else {
           currGames[i].oppName = currGames[i].player1;
         }
-        /*User.findOne({
-          where: {
-            userName: currGames[i].oppName
-          }
-        }).then(function (result, err) {
-          if (err) {
-            console.log('Error retrieving user.');
-          }
-          else {
-            if (result.isActive) {
-              console.log(currGames[i].oppName)
-            }
-            else {
-              console.log(currGames[i].oppName)
-            }
-          }
-        });*/
+        now = new Date().getTime();
+        timeRem = results.rows[i].makeMoveBy - now;
+        if (results.rows[i].turns > 0) {
+          days = Math.floor(timeRem / (1000 * 60 * 60 * 24));
+          hours = Math.floor((timeRem % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+          minutes = Math.floor((timeRem % (1000 * 60 * 60)) / (1000 * 60));
+          seconds = Math.floor((timeRem % (1000 * 60)) / 1000);
+          timeRemFormatted = ('0'  + days).slice(-2) + ':' + ('0'  + hours).slice(-2) + ':' + ('0'  + minutes).slice(-2) + ':' + ('0' + seconds).slice(-2);
+          currGames[i].moveTime = timeRemFormatted;
+        }
+        else {
+          days = Math.floor(results.rows[i].moveTimeLimit / (60 * 24));
+          hours = Math.floor((results.rows[i].moveTimeLimit % (60 * 24)) / (60));
+          minutes = results.rows[i].moveTimeLimit;
+          seconds = 0;
+          timeRemFormatted = ('0'  + days).slice(-2) + ':' + ('0'  + hours).slice(-2) + ':' + ('0'  + minutes).slice(-2) + ':' + ('0' + seconds).slice(-2);
+          currGames[i].moveTime = timeRemFormatted;
+        }
       }
       req.currGames = currGames;
     }
@@ -59,7 +67,14 @@ var getCurrGames = function (req, res, next) {
 }
 
 var getAvailGames = function (req, res, next) {
-  var availGames = [];
+  var availGames = [],
+      now,
+      timeRem,
+      days,
+      hours,
+      minutes,
+      seconds,
+      timeRemFormatted;
 
   Game.findAndCountAll({
     where: {
@@ -73,12 +88,29 @@ var getAvailGames = function (req, res, next) {
     else {
       for (var i = 0; i < results.count; i++) {
         availGames[i] = results.rows[i];
+        now = new Date().getTime();
+        timeRem = results.rows[i].makeMoveBy - now;
+        if (results.rows[i].turns > 0) {
+          days = Math.floor(timeRem / (1000 * 60 * 60 * 24));
+          hours = Math.floor((timeRem % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+          minutes = Math.floor((timeRem % (1000 * 60 * 60)) / (1000 * 60));
+          seconds = Math.floor((timeRem % (1000 * 60)) / 1000);
+          timeRemFormatted = ('0'  + days).slice(-2) + ':' + ('0'  + hours).slice(-2) + ':' + ('0'  + minutes).slice(-2) + ':' + ('0' + seconds).slice(-2);
+          availGames[i].moveTime = timeRemFormatted;
+        }
+        else {
+          days = Math.floor(results.rows[i].moveTimeLimit / (60 * 24));
+          hours = Math.floor((results.rows[i].moveTimeLimit % (60 * 24)) / (60));
+          minutes = results.rows[i].moveTimeLimit;
+          seconds = 0;
+          timeRemFormatted = ('0'  + days).slice(-2) + ':' + ('0'  + hours).slice(-2) + ':' + ('0'  + minutes).slice(-2) + ':' + ('0' + seconds).slice(-2);
+          availGames[i].moveTime = timeRemFormatted;
+        }
       }
       req.availGames = availGames;
     }
     return next();
   });
-
 }
 
 var getLeaderboard = function (req, res, next) {
@@ -137,11 +169,10 @@ router.get('/lobby', ensureAuthenticated, getCurrGames, getAvailGames, getLeader
   });
 });
 
-
 //search request searchController.search do the function callback at search controller
 router.get('/search', ensureAuthenticated, function(req, res){
   if(req.xhr || req.accepts('json, html')==='json'){
-    userModel.findAll({where: {userName:{[Op.like]: '%'+req.query.search+'%'}}}).then(function(users){
+    User.findAll({where: {userName:{[Op.like]: '%'+req.query.search+'%'}}}).then(function(users){
       console.log('users = ', users);
       if (users){
         res.send({users: users});
@@ -156,6 +187,7 @@ router.get('/search', ensureAuthenticated, function(req, res){
     res.send({users: undefined});
   }
 });
+
 // Profile page
 router.get('/profile', ensureAuthenticated, function (req, res) {
   res.render('profile', {

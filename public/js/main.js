@@ -48,12 +48,12 @@ $(function () {
     $el.hover(stop, anim);
     //end of message scroll
 
-
     /**
      * Create a new game.
      */
     $('#new').on('click', function () {
-        socket.emit('createGame', { player1: currUser });
+        var moveTimeLimit = $("#moveTimeLimit option:selected").val();
+        socket.emit('createGame', { player1: currUser, moveTimeLimit: moveTimeLimit });
     });
 
     /**
