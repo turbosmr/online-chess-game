@@ -148,7 +148,12 @@
                             <tr>
                                 <td>{{userName}} <span class="dot"></span> </td>
                                 <td><button class="btn btn-success btn-xs create" value="{{userName}}" >Create Game</button></td>
+                                <td>    
+                                    <form action="/removeFriend" method="POST"><input type="hidden" name="id" value="{{id}}"/>
+                                    <button type="submit" class="btn btn-success btn-xs">Remove Friend</button></form>
+                                </td>
                             </tr>
+                            
                             {{/each}}
                         </tbody>
                     </table>
