@@ -8,25 +8,41 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="/stylesheets/main.css">
-    {{#if active.Welcome}}<link rel="stylesheet" href="/stylesheets/welcomePage.css">{{/if}}
-    {{#if active.Game}}<link rel="stylesheet" href="/stylesheets/gameroom.css">{{/if}}
-    {{#if active.Lobby}}<link rel="stylesheet" href="/stylesheets/lobby.css">{{/if}}
-    {{#if active.Profile}}<link rel="stylesheet" href="/stylesheets/profile.css">{{/if}}
+    {{#if active.Welcome}}
+    <link rel="stylesheet" href="/stylesheets/welcomePage.css">
+    {{/if}}
+    {{#if active.Game}}
+    <link rel="stylesheet" href="/stylesheets/gameroom.css">
     <link rel="stylesheet" href="/stylesheets/chessboard-0.3.0.css">
+    {{/if}}
+    {{#if active.Lobby}}
+    <link rel="stylesheet" href="/stylesheets/lobby.css">
+    {{/if}}
+    {{#if active.Profile}}
+    <link rel="stylesheet" href="/stylesheets/profile.css">
+    {{/if}}
+    {{#if active.Register}}
+    <link rel="stylesheet" href="/stylesheets/register.css">
+    {{/if}}
 
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
         integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
         crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
         integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
         crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
-    <script src="/socket.io/socket.io.js"></script>
-    <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
-    <script src="/js/chessboard-0.3.0.min.js"></script>
-    <script src="/js/chess.min.js"></script>
-    <script src="/js/chessboard-0.3.0.js"></script>
-    <script src="/js/chess.js"></script>
+    <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/socket.io/socket.io.js"></script>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.1.js"></script>
+    <script type="text/javascript" src="/js/chessboard-0.3.0.min.js"></script>
+    <script type="text/javascript" src="/js/chess.min.js"></script>
+    <script type="text/javascript" src="/js/chessboard-0.3.0.js"></script>
+    <script type="text/javascript" src="/js/chess.js"></script>
+    <script type="text/javascript" src="/js/three.min.js"></script>
+    <script type="text/javascript" src="/js/helvetiker_regular.typeface.js"></script>
+    <script type="text/javascript" src="/js/OrbitControls.js"></script>
+    <script type="text/javascript" src="/js/chessboard3.min.js"></script>
+    <script type="text/javascript" src="/js/chessboard3.js"></script>
 </head>
 
 <body style="background-color:rgb(56, 52, 52);">
@@ -91,6 +107,10 @@
         var gameID = "{{gameID}}";
     </script>
     <script src="/js/game.js"></script>
+    {{/if}}
+
+    {{#if active.chess3D}}
+    <script src="/js/chess3D.js"></script>
     {{/if}}
 </body>
 

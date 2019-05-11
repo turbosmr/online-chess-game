@@ -12,14 +12,17 @@ $(function () {
     });
 
     // Retrieve messages from database upon entering chatroom
-    socket.on('retrieve messages', function (msg) {
-        $('#messages').append($('<li>').text(msg.username + ": " + msg.message));
+    socket.on('retrieve messages', function (data) {
+        if (data.gameId == gameID) {
+            $('#messages').append($('<li>').text(data.userName + ": " + data.message));
+        }
     });
 
     $('form').submit(function (e) {
         e.preventDefault(); // prevents page reloading
         if ($('#m').val() != '') {
-            socket.emit('chat message', {
+            socket.emit('game chat message', {
+                gameId: gameID,
                 username: currUser,
                 msg: $('#m').val()
             });
@@ -29,26 +32,31 @@ $(function () {
     });
 
     // Display messages on screen
-    socket.on('chat message', function (data) {
+    socket.on('game chat message', function (data) {
         $('#messages').append($('<li>').text(data.username + ": " + data.msg));
+        //when msg recieved scroll to bottom
+        scrollToBottom();
     });
 
     //message scroll
-    function getMessages() {
-        shouldScroll = messagesList.scollTop + messagesList.clientHeight === messagesList.scrollHeight;
-
-        if (!shouldScroll) {
-            scrollToBottom()
-        }
+    var $el = $("#messagesList");
+    var messagesList = document.getElementById('messagesList')
+    function anim() {
+        var st = $el.scrollTop();
+        var sb = $el.prop("scrollHeight") - $el.innerHeight();
+        $el.animate({ scrollTop: sb }, "fast", anim);
+    }
+    function stop() {
+        $el.stop();
     }
 
+    //scroll to bottom
     function scrollToBottom() {
         messagesList.scrollTop = messagesList.scrollHeight;
     }
 
-    scrollToBottom();
-
-    setInterval(getMessages, 100);
+    //when hovering stop animation of scrolling
+    $el.hover(stop, anim);
     //end of message scroll
 
     /* Begin chessboard configuration */
@@ -56,10 +64,13 @@ $(function () {
         game,
         player1 = false,
         player2 = false,
-        gameStart = true,
+        isGameActive = true,
         game2 = new Chess(), // used for game history
         history,
-        hist_index;
+        hist_index,
+        result,
+        drawAccepted = false,
+        oppResigned = false;
 
     var removeGreySquares = function () {
         $('#board .square-55d63').css('background', '');
@@ -85,7 +96,7 @@ $(function () {
             (player1 === true && game.turn() === 'b') ||
             (player1 === true && piece.search(/^b/) !== -1) ||
             (player2 === true && piece.search(/^w/) !== -1) ||
-            gameStart == false) {
+            isGameActive == false) {
             return false;
         }
     };
@@ -103,6 +114,54 @@ $(function () {
         // illegal move
         if (move === null) return 'snapback';
     };
+
+    var onSnapEnd = function () {
+        $('#userHello').remove();
+
+        board.position(game.fen());
+
+        document.getElementById("submitMove").disabled = false;
+        document.getElementById("undoMove").disabled = false;
+    };
+
+    $('#submitMove').on('click', function () {
+        game2.load_pgn(game.pgn());
+        history = game2.history();
+        hist_index = history.length;
+
+        // Check move status
+        $('#moveStatus').html(checkMove());
+
+        // Print move history
+        $('#move-history-pgn').html(game.pgn({ max_width: 10, newline_char: '<br />' }));
+
+        socket.emit('playTurn', { gameID: gameID, fen: game.fen(), pgn: game.pgn(), turn: game.turn() });
+    });
+
+    $('#undoMove').on('click', function () {
+        game.undo();
+        board.position(game.fen());
+        document.getElementById("submitMove").disabled = true;
+        document.getElementById("undoMove").disabled = true;
+    });
+
+    $('#offerDraw').on('click', function () {
+        alert('Draw request sent!');
+        socket.emit('offerDraw', { gameID: gameID });
+    });
+
+    $('#resignGame').on('click', function () {
+        var r = confirm('Are you sure you want to resign the game?');
+        if (r == true) {
+            isGameActive = false;
+            document.getElementById("offerDraw").disabled = true;
+            document.getElementById("resignGame").disabled = true;
+            $('#moveTimer').remove();
+            $('#moveStatus').remove();
+            $('#userHello').remove();
+            socket.emit('gameEnd', { gameID: gameID, fen: game.fen(), pgn: game.pgn(), result: 'Resignation' });
+        }
+    });
 
     var onMouseoverSquare = function (square, piece) {
         // get list of possible moves for this square
@@ -135,7 +194,7 @@ $(function () {
     };
 
     var cfg = {
-        showNotation: false,
+        showNotation: true,
         draggable: true,
         position: 'start',
         onDragStart: onDragStart,
@@ -160,7 +219,11 @@ $(function () {
         var message = 'Your opponent, ' + data.oppName + ' has joined the match.';
         $('#userHello').html(message);
         $('#oppName').html(data.oppName);
-        $('#gameStatus').html(checkGameStatus(game));
+
+        isGameActive = true;
+
+        // Check move status
+        $('#moveStatus').html(checkMove());
     });
 
     /**
@@ -183,9 +246,9 @@ $(function () {
         if (!data.rejoin) {
             message = 'Hello, ' + currUser + ".";
         }
-        else {
+        /*else {
             message = 'Welcome back, ' + currUser + ".";
-        }
+        }*/
         $('#userHello').html(message);
 
         gameID = data.gameID;
@@ -208,7 +271,8 @@ $(function () {
             if (data.player2 == null) {
                 // P1 has created new game
                 $('#oppName').html('Waiting for an opponent to join...');
-                gameStart = false;
+                $('#currUser').html(data.player1);
+                isGameActive = false;
             }
             else {
                 $('#oppName').html(data.player2);
@@ -223,24 +287,11 @@ $(function () {
             $('#currUser').html(data.player2);
         }
 
-        // Check game status
-        $('#gameStatus').html(checkGameStatus(game));
-    });
+        // Check move status
+        $('#moveStatus').html(checkMove());
 
-    /**
-     * Case where game does not exist, redirect user to lobby page.
-     */
-    socket.on('dneGame', function (data) {
-        alert(data.message);
-        location.replace("/");
-    });
-
-    /**
-     * Case where game is full, redirect user to lobby page.
-     */
-    socket.on('fullGame', function (data) {
-        alert(data.message);
-        location.replace("/");
+        // Print move history
+        $('#move-history-pgn').html(game.pgn({ max_width: 10, newline_char: '<br />' }));
     });
 
     /**
@@ -256,30 +307,93 @@ $(function () {
         history = game2.history();
         hist_index = history.length;
 
-        // Check game status
-        $('#gameStatus').html(checkGameStatus(game));
+        // Check move status
+        $('#moveStatus').html(checkMove());
+
+        // Print move history
+        $('#move-history-pgn').html(game.pgn({ max_width: 10, newline_char: '<br />' }));
+
+        if (game.game_over() == true) {
+            alert(checkGameStatus());
+            socket.emit('gameEnd', { gameID: gameID, fen: game.fen(), pgn: game.pgn(), result: result });
+        }
     });
 
     /**
      * If the other player wins or game is tied, this event is received. 
      * Notify the user about either scenario and end the game. 
      */
-    socket.on('gameEnd', function (data) {
-        socket.leave(data.gameID);
-    })
+    socket.on('gameEnded', function (data) {
+        isGameActive = false;
+        if (data.result == 'Draw') {
+            drawAccepted = true;
+        }
+        else if (data.result == 'Resignation') {
+            oppResigned = true;
+        }
+        alert(checkGameStatus());
+    });
+
+    /**
+     * Render move timer. 
+     */
+    socket.on('moveTimer', function (data) {
+        $('#moveTimer').html(data.timeRem);
+    });
+
+    /**
+     * Move time expired. Alert user. 
+     */
+    socket.on('moveTimeExpired', function () {
+        isGameActive = false;
+        document.getElementById("offerDraw").disabled = true;
+        document.getElementById("resignGame").disabled = true;
+        $('#moveTimer').remove();
+        $('#moveStatus').remove();
+        $('#userHello').remove();
+        if ((game.turn() == 'w' && player1 == true) || (game.turn() == 'b' && player2 == true)) {
+            alert('Time expired, you lost!');
+        }
+        else {
+            alert('Time expired, you won!');
+        }
+    });
+
+    /**
+     * Opponent requested draw. Prompt to accept or not. 
+     */
+    socket.on('offeredDraw', function (data) {
+        var r = confirm('Opponent has requested for a draw. Accept?');
+        if (r == true) {
+            document.getElementById("offerDraw").disabled = true;
+            document.getElementById("resignGame").disabled = true;
+            $('#moveTimer').remove();
+            $('#moveStatus').remove();
+            $('#userHello').remove();
+            socket.emit('gameEnd', { gameID: gameID, fen: game.fen(), pgn: game.pgn(), result: 'Draw' });
+        }
+    });
 
     /**
      * Check who has the current move, and render the message. 
      */
-    var checkMove = function (game) {
-        if (gameStart == false) {
-            return '';
-        }
-        else if ((player1 == true && game.turn() == 'w') || (player2 == true && game.turn() == 'b')) {
-            return 'Your move!';
-        }
-        else {
-            return 'Opponent\'s move.';
+    var checkMove = function () {
+        if (game.game_over() != true) {
+            if (isGameActive == false) {
+                return '';
+            }
+            else if ((player1 == true && game.turn() == 'w') || (player2 == true && game.turn() == 'b')) {
+                document.getElementById("offerDraw").disabled = false;
+                document.getElementById("resignGame").disabled = false;
+                return 'Your move!';
+            }
+            else {
+                document.getElementById("submitMove").disabled = true;
+                document.getElementById("undoMove").disabled = true;
+                document.getElementById("offerDraw").disabled = true;
+                document.getElementById("resignGame").disabled = true;
+                return 'Opponent\'s move.';
+            }
         }
     }
 
@@ -287,7 +401,7 @@ $(function () {
      * Check the game status, and render the result. 
      */
     var checkGameStatus = function () {
-        var result, winner;
+        var message;
         if (game.game_over() == true) {
             if (game.in_checkmate() == true) {
                 if (game.turn() == 'b') {
@@ -330,9 +444,21 @@ $(function () {
             }
             socket.emit('gameEnded', { gameID: gameID, result: result });
         }
+        else if (drawAccepted == true) {
+            message = 'Opponent has accepted your draw request.';
+        }
+        else if (oppResigned == true) {
+            message = 'Opponent has resigned, you win!';
+        }
         else {
             return checkMove(game);
         }
+        document.getElementById("offerDraw").disabled = true;
+        document.getElementById("resignGame").disabled = true;
+        $('#moveTimer').remove();
+        $('#moveStatus').remove();
+        $('#userHello').remove();
+        return message;
     }
 
     /**
@@ -376,4 +502,48 @@ $(function () {
         board.position(game2.fen());
         hist_index = history.length;
     });
+
+    // toggle chat and history / login and register
+    $('#game-chat-link').click(function (e) {
+        $("#game-chat").delay(0).fadeIn(0);
+        $("#move-history").fadeOut(0);
+        $('#move-history-link').removeClass('active');
+        $(this).addClass('active');
+        e.preventDefault();
+    });
+    $('#move-history-link').click(function (e) {
+        $("#move-history").delay(0).fadeIn(0);
+        $("#game-chat").fadeOut(0);
+        $('#game-chat-link').removeClass('active');
+        $(this).addClass('active');
+        e.preventDefault();
+    });
+
+    function setUpBoard(dimensions) {
+        if (board !== undefined) {
+            currentPosition = board.position();
+            board.destroy();
+        }
+        if (dimensions >= 3) {
+            $('#board').css('width', '525px');
+            $('#board').css('height', '393px');
+            cfg.backgroundColor = 0x383434;
+            cfg.darkSquareColor = 0x646464;
+            cfg.lightSquareColor = 0x969696;
+            cfg.blackPieceColor = 0x000000;
+            cfg.blackPieceSpecular = 0x646464;
+            cfg.pieceSet = '/assets/chesspieces/classic/{piece}.json';
+            board = new ChessBoard3('board', cfg);
+        } else {
+            $('#board').css('width', '526px');
+            $('#board').css('height', '526px');
+            board = new ChessBoard('board', cfg);
+        }
+        board.position(game.fen(), false);
+        if (player2 == true) {
+            board.flip();
+        }
+    }
+    $('#2D').on('click', function () { setUpBoard(2); });
+    $('#3D').on('click', function () { setUpBoard(3); });
 });

@@ -6,11 +6,20 @@ module.exports = (sequelize, DataTypes) => {
     player2: DataTypes.STRING,
     fen: DataTypes.STRING,
     pgn: DataTypes.STRING,
-    move: DataTypes.STRING,
+    turns: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      defaultValue: 0
+    },
+    move: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
     result: DataTypes.STRING,
     startTime: DataTypes.TIME,
     endTime: DataTypes.TIME,
     moveTimeLimit: DataTypes.INTEGER,
+    makeMoveBy: DataTypes.DOUBLE,
     gameTimeLimit: DataTypes.INTEGER
   }, {});
   Game.associate = function(models) {

@@ -9,24 +9,112 @@
 
     <div class="col-md-8">
         <div class="well profileWells well-sm">
-            <h3 class="text-center">Choose Board and Pieces</h3>
-       
-<div class="dropdown">
-    <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Dropdown Example
-    <span class="caret"></span></button>
-    <ul class="dropdown-menu">
-      <li>
+            <div class="row">
+                <div class="col-lg-6">
+                    <h3 class="text-center" style="color:black">Choose your board</h3>
+                    <div class="row">
+                        <div class="container ">
+                            <div class="col-xs-2 px-0 ">
+                                <!--Size dropdown content-->
+                                <div id="option1" class="color_table">
+                                    <img src="../images/theme/black.png" class="img-responsive">
+                                </div>
+                                <div id="option2" class="color_table">
+                                    <img src="../images/theme/red.png" class="img-responsive">
+                                </div>
+                                <div id="option3" class="color_table">
+                                    <img src="../images/theme/orange.png" class="img-responsive">
+                                </div>
+                                <div id="option4" class="color_table">
+                                    <img src="../images/theme/green.png" class="img-responsive">
+                                </div>
+                                <div id="option5" class="color_table">
+                                    <img src="../images/theme/blue.png" class="img-responsive">
+                                </div>
+                                <div id="option6" class="color_table">
+                                    <img src="../images/theme/purple.png" class="img-responsive">
+                                </div>
+                            </div>
+                            <div class="col-xs-2 px-0 ">
+                                <!--Size dropdown menu-->
+                                <select id="size_select" onchange='this.form.submitTheme()'>
 
-         
-          
-          </li>
-      <li><a href="#">CSS</a></li>
-      <li><a href="#">JavaScript</a></li>
-    </ul>
-  </div>
+                                    <option value="option1">Black</option>
+                                    <option value="option2">Red</option>
+                                    <option value="option3">Orange</option>
+                                    <option value="option4">Green</option>
+                                    <option value="option5">Blue</option>
+                                    <option value="option6">Purple</option>
+                                </select>
+                            </div>
+
+                            <div class="col-xs-2 px-0 ">
+                                <!--Size dropdown content-->
+                                <div id="option7" class="size_chart2">
+                                    <div class="row">
+                                        <div class="col-xs-6">
+                                            <img src="../images/chesspieces/wikipedia/bK.png" class="img-responsive">
+                                            <img src="../images/chesspieces/wikipedia/bQ.png" class="img-responsive">
+                                        </div>
+                                        <div class="col-xs-6">
+                                            <img src="../images/chesspieces/wikipedia/bP.png" class="img-responsive">
+                                            <img src="../images/chesspieces/wikipedia/bB.png" class="img-responsive">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="option8" class="size_chart2">
+                                    <div class="row">
+                                        <div class="col-xs-6">
+                                            <img src="../images/chesspieces/wikipedia/bK2.png" class="img-responsive">
+                                            <img src="../images/chesspieces/wikipedia/bQ2.png" class="img-responsive">
+                                        </div>
+                                        <div class="col-xs-6">
+                                            <img src="../images/chesspieces/wikipedia/bP2.png" class="img-responsive">
+                                            <img src="../images/chesspieces/wikipedia/bB2.png" class="img-responsive">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="option9" class="size_chart2">
+                                    <div class="row">
+                                        <div class="col-xs-6">
+                                            <img src="../images/chesspieces/wikipedia/bK2.png" class="img-responsive">
+                                            <img src="../images/chesspieces/wikipedia/bQ2.png" class="img-responsive">
+                                        </div>
+                                        <div class="col-xs-6">
+                                            <img src="../images/chesspieces/wikipedia/bP2.png" class="img-responsive">
+                                            <img src="../images/chesspieces/wikipedia/bB2.png" class="img-responsive">
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="col-xs-2 px-0 ">
+                                <!--Size dropdown menu-->
+                                <select id="size_select2" onchange='this.form.submitTheme()'>
+                                    <option value="option7">Classic</option>
+                                    <option value="option8">Modern</option>
+                                    <option value="option9">Special</option>
+                                </select>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <br>
+                <div class="col-xs-2">
+                    <button type="submit" class="btn submit btn-primary">Save settings</button>
+                </div>
+            </div>
+        </div>
+
+
+
     </div>
-     </div>
 
+    <!-- /////////////////////////////////////////////////////////////////////////////////////////////////-->
     <div class="col-md-4">
         <div class="well profileWells well-sm">
             <h3 class="text-center">Friends</h3>
@@ -59,11 +147,7 @@
                             {{#each friends}}
                             <tr>
                                 <td>{{userName}} <span class="dot"></span> </td>
-<<<<<<< HEAD
                                 <td><button class="btn btn-success btn-xs create" value="{{userName}}" >Create Game</button></td>
-=======
-                                <td><a type="button" href="/game" class="btn btn-primary btn-xs">Create Game</a></td>
->>>>>>> f62e99c60a258e1c9049d8dc67ebd2d5c5e2721b
                             </tr>
                             {{/each}}
                         </tbody>
@@ -73,6 +157,35 @@
         </div>
     </div>
 </div>
+</div>
+<script>
+
+    $(document).ready(function () {
+
+        //hides dropdown content
+        $(".color_table").hide();
+        $(".size_chart2").hide();
+        //unhides first option content
+        $("#option1").show();
+        $("#option7").show();
+
+        //listen to dropdown for change
+        $("#size_select").change(function () {
+            //rehide content on change
+            $('.color_table').hide();
+            //unhides current item
+            $('#' + $(this).val()).show();
+        });
+        $("#size_select2").change(function () {
+            //rehide content on change
+            $('.size_chart2').hide();
+            //unhides current item
+            $('#' + $(this).val()).show();
+        });
+
+    });
+
+</script>
 <script>
     var loadDoc = function(){
         $.ajax({
