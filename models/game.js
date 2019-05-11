@@ -1,20 +1,10 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
   const Game = sequelize.define('Game', {
-    gameId: {
-      type: DataTypes.INTEGER,
-      allowNull: false
-    },
-    player1: {
-      type: DataTypes.STRING,
-      allowNull: false
-    },
+    gameId: DataTypes.INTEGER,
+    player1: DataTypes.STRING,
     player2: DataTypes.STRING,
-    fen: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      defaultValue: 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1'
-    },
+    fen: DataTypes.STRING,
     pgn: DataTypes.STRING,
     turns: {
       type: DataTypes.INTEGER,

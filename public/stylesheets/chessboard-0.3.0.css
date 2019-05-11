@@ -15,10 +15,9 @@
 
 /* board */
 .board-b72b1 {
-  border: 3px solid white;
+  border: 3px solid rgb(157, 161, 156);
   -moz-box-sizing: content-box;
   box-sizing: content-box;
-  border-radius: 5px;
 }
 
 /* square */
@@ -46,15 +45,7 @@
   background-color:rgb(80, 80, 80);
   /*background-color:rgb(98, 112, 121);*/
 }
-.orange{
-  background-color:rgb(216, 96, 16);
-}
-.green{
-  background-color:rgb(16, 216, 76);
-}
-#selected{
-  
-}
+
 /* highlighted square */
 .highlight1-32417, .highlight2-9c5d2 {
   -webkit-box-shadow: inset 0 0 3px 3px yellow;

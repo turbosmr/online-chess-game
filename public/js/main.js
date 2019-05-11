@@ -9,7 +9,7 @@ $(function () {
 
     // Retrieve number of connected users
     socket.on('users connected', function (num_users_connected) {
-        $('#players-online').html("Players online: " + num_users_connected);
+        $('#users-connected').html("Users connected: " + num_users_connected);
     });
 
     $('#submit-msg').submit(function (e) {
@@ -40,9 +40,6 @@ $(function () {
         var sb = $el.prop("scrollHeight")-$el.innerHeight();
         $el.animate({scrollTop: sb}, "fast",anim);
     }
-    function stop(){
-        $el.stop();
-    }
 
     //scroll to bottom
     function scrollToBottom() {
@@ -65,6 +62,6 @@ $(function () {
      * Redirect user to game page.
      */
     socket.on('newGame', function (data) {
-        location.replace("/game/" + data.gameID);
+        document.location.replace("/game/" + data.gameID);
     });
 });
