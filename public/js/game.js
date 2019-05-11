@@ -184,6 +184,13 @@ $(function () {
         removeGreySquares();
     };
 
+    var onSnapEnd = function () {
+        board.position(game.fen());
+        socket.emit('playTurn', { gameID: gameID, fen: game.fen(), pgn: game.pgn(), turn: game.turn() });
+        $('#userHello').remove();
+        $('#gameStatus').html(checkGameStatus(game));
+    };
+
     var cfg = {
         showNotation: true,
         draggable: true,
@@ -202,26 +209,11 @@ $(function () {
     socket.emit('joinGame', { currUser: currUser, gameID: gameID });
 
     /**
-     * Case where game does not exist, redirect user to lobby page.
-     */
-    socket.on('dneGame', function (data) {
-        alert(data.message);
-        location.replace("/");
-    });
-
-    /**
-     * Case where game is full, redirect user to lobby page.
-     */
-    socket.on('fullGame', function (data) {
-        alert(data.message);
-        location.replace("/");
-    });
-
-    /**
      * Opponent joined the game, alert current user.
      * This event is received when opponent successfully joins the game. 
      */
     socket.on('oppJoined', function (data) {
+        gameStart = true;
         var message = 'Your opponent, ' + data.oppName + ' has joined the match.';
         $('#userHello').html(message);
         $('#oppName').html(data.oppName);
@@ -410,48 +402,54 @@ $(function () {
         var message;
         if (game.game_over() == true) {
             if (game.in_checkmate() == true) {
-                result = 'Checkmate';
                 if (game.turn() == 'b') {
+                    result = 'Checkmate - Player 1 Won';
                     if (player1 == true) {
-                        message = 'Checkmate, you win!';
+                        return 'Checkmate, you win!';
                     }
                     else {
-                        message = 'Checkmate, you lost!';
+                        return 'Checkmate, you lost!';
                     }
                 }
                 else {
+                    result = 'Checkmate - Player 2 Won';
                     if (player2 == true) {
-                        message = 'Checkmate, you win!';
+                        return 'Checkmate, you win!';
                     }
                     else {
-                        message = 'Checkmate, you lost!';
+                        return 'Checkmate, you lost!';
                     }
                 }
             }
             // returns true if insufficient material or 50-move rule
             else if (game.in_draw() == true) {
-                result = 'Draw';
                 if (game.insufficient_material() == true) {
-                    message = 'Draw - insufficient material';
+                    result = 'Draw - insufficient material';
+                    return result;
                 }
                 else {
-                    message = 'Draw - 50-move rule';
+                    result = 'Draw - 50-move rule';
+                    return result;
                 }
             }
             else if (game.in_stalemate() == true) {
-                result = 'Draw';
-                message = 'Draw - stalemate';
+                result = 'Draw - stalemate';
+                return result;
             }
             else if (game.in_threefold() == true) {
-                result = 'Draw';
-                message = 'Draw - threefold repetition';
+                result = 'Draw - threefold repetition';
+                return result;
             }
+            socket.emit('gameEnded', { gameID: gameID, result: result });
         }
         else if (drawAccepted == true) {
             message = 'Opponent has accepted your draw request.';
         }
         else if (oppResigned == true) {
             message = 'Opponent has resigned, you win!';
+        }
+        else {
+            return checkMove(game);
         }
         document.getElementById("offerDraw").disabled = true;
         document.getElementById("resignGame").disabled = true;

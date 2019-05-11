@@ -12,6 +12,8 @@ const Game = require('../models').Game;
 // Load User Model
 const User = require('../models').User;
 
+const Leaderboard = require('../models').Leaderboard;
+
 var getCurrGames = function (req, res, next) {
   var currGames = [],
     now,
@@ -56,8 +58,9 @@ var getCurrGames = function (req, res, next) {
       }
       req.currGames = currGames;
     }
-    return next();
   });
+
+  return next();
 }
 
 var getAvailGames = function (req, res, next) {
@@ -73,21 +76,24 @@ var getAvailGames = function (req, res, next) {
       result: null
     }
   }).then(function (results, err) {
+    console.log('finish get sql');
     if (err) {
       console.log('Error retrieving available games.');
     }
     else {
       for (var i = 0; i < results.count; i++) {
+        console.log('looping');
         availGames[i] = results.rows[i];
         hours = Math.floor((results.rows[i].moveTimeLimit / (60)));
         minutes = results.rows[i].moveTimeLimit % 60;
         timeRemFormatted = ('0' + hours).slice(-3) + 'h' + ('0' + minutes).slice(-2) + 'm';
         availGames[i].moveTime = timeRemFormatted;
       }
+      console.log('end of loop');
       req.availGames = availGames;
     }
-    return next();
   });
+  return next();
 }
 
 var getLeaderboard = function (req, res, next) {
@@ -167,10 +173,13 @@ router.get('/search', ensureAuthenticated, function (req, res) {
 
 // Profile page
 router.get('/profile', ensureAuthenticated, function (req, res) {
-  res.render('profile', {
-    currUser: req.user.userName,
-    title: "Profile - Team 10 Chess",
-    active: { Profile: true }
+  req.user.getFriends().then(function(friends){
+    res.render('profile', {
+      currUser: req.user.userName,
+      title: "Profile - Team 10 Chess",
+      active: { Profile: true },
+      friends: friends
+    });
   });
 });
 
@@ -192,6 +201,21 @@ router.get('/about', ensureAuthenticated, function (req, res) {
   });
 });
 
+router.post('/addFriend', (req, res, next) => {
+  req.user.addFriends(parseInt(req.body.id)).then(function(){
+    req.user.getFriends().then(function(friends){
+      res.redirect('/profile');
+    });
+  });
+});
+
+router.post('/removeFriend', (req, res, next) => {
+  req.user.removeFriend(parseInt(req.body.id)).then(function(){
+    req.user.getFriends().then(function(friends){
+      res.redirect('/profile');
+    });
+  });
+});
 // About page
 router.get('/3d', ensureAuthenticated, function (req, res) {
   res.render('chess3D', {

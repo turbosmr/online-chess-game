@@ -4,30 +4,9 @@
 body, html {
   height: 100%;
   margin: 0 0;
-  padding-top: 30px;
 }
 .navbar-brand {
   font-weight: lighter;
-}
-.topSpace{
-  padding-top: 50px;
-}
-h2.welcome-login-reg-header {
-  font-weight: lighter;
-  text-align: center;
-  color:white;
-}
-.welcome-login-reg-form-header, h2.welcome-login-reg-header {
-  padding-bottom: 20px;
-  text-align: center;
-  font-weight: lighter;
-  color:white;
-}
-h5.welcome-login-reg-shadow {
-  font-size: 17px;
-  text-align: center;
-  text-shadow: 1px 1px black;
-  color:white;
 }
 .reg-login-bg {
   /* The image used */
@@ -38,20 +17,8 @@ h5.welcome-login-reg-shadow {
   background-size:cover;
   height: 400px;
 }
-.reg-login-messages {
-  padding-top: 80px;
-  min-height: 52px;
-  width: 250px;
-  margin: auto;
-}
-.alert {
-  margin-bottom: 0px;
-}
-.reg-login-form {
-  padding-top: 20px;
-  max-height: 100px;
-  margin: auto;
-  width: 250px;
+.topSpace{
+  padding-top: 50px;
 }
 .banner, h1.bannerHeader {
   /* The image used */
@@ -85,12 +52,40 @@ h5.welcome-login-reg-shadow {
 .footer-pushdown {
   min-height: calc(100% - 89px);
 }
+h2.welcome-login-reg-header {
+  font-weight: lighter;
+  text-align: center;
+  color:white;
+}
+.welcome-login-reg-form-header, h2.welcome-login-reg-header {
+  padding-top: 60px;
+  padding-bottom: 20px;
+  text-align: center;
+  font-weight: lighter;
+  color:white;
+}
+.reg-login-form {
+  padding-top: 100px;
+  margin: auto;
+  width: 250px;
+}
+h5.welcome-login-reg-shadow {
+  font-size: 17px;
+  text-align: center;
+  text-shadow: 1px 1px black;
+  color:white;
+}
 * { 
   margin: 0; padding: 0; box-sizing: border-box; 
 }
+#users-connected { 
+  padding: 5px; 
+}
+
 #messageList {
   overflow-y:auto;
 }
+
 #messages { 
   list-style-type: none;
   margin: 0;
@@ -103,14 +98,16 @@ h5.welcome-login-reg-shadow {
   background: #eee; 
 }
 form { 
+  padding: 3px;
+  bottom: 0;
   width: 100%; 
 }
 input {
   width: 80%;
   box-sizing: border-box;
-  border: 1px solid #ccc;
+  border: 2px solid #ccc;
   border-radius: 4px;
-  background-color:whitesmoke;
+  background-color: #f8f8f8;
   resize: none;
 }
 .lobbyChatScroll {
@@ -121,9 +118,11 @@ input {
   border-radius: 5px;
   padding: 10px;
 }
+
 .well {
-  background-color:white;
+  background-color:whitesmoke;
 }
+
 .center-block{
     float: none;
 }
@@ -138,10 +137,5 @@ input {
   text-align: center;
   margin-left: 5px;
 }
-h3, h4, h5, p  {
-  padding-top: 0;
-  font-family: Arial, Helvetica, sans-serif;
-}
-
 
 

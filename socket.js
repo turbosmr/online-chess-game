@@ -52,12 +52,22 @@ module.exports = function (io) {
         socket.on('createGame', function (data) {
             // Unique gameID generator
             var gameID = new IDGenerator().generate();
-            Game.create({
-                gameId: gameID,
+            var gameRoom = {
+                gameID: gameID,
                 player1: data.player1,
+                fen: 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1',
                 move: data.player1,
-                moveTimeLimit: data.moveTimeLimit,
-                gameTimeLimit: data.gameTimeLimit
+                moveTimeLimit: '',
+                gameTimeLimit: ''
+            };
+            Game.create({
+                gameId: gameRoom.gameID,
+                player1: gameRoom.player1,
+                player2: data.player2,
+                fen: gameRoom.fen,
+                move: gameRoom.move,
+                moveTimeLimit: gameRoom.moveTimeLimit,
+                gameTimeLimit: gameRoom.gameTimeLimit
             });
             console.log(data.player1 + ' created game: ' + gameID);
             socket.emit('newGame', { gameID: gameID });
@@ -68,12 +78,7 @@ module.exports = function (io) {
          */
         socket.on('joinGame', function (data) {
             var rejoin = false;
-            Game.findOne({
-                where: {
-                    gameId: data.gameID,
-                    result: null
-                }
-            }).then(function (game) {
+            Game.findOne({ where: { gameId: data.gameID } }).then(function (game) {
                 // Check to see if such game exist
                 if (game) {
                     // Check if current user belongs to such game
@@ -126,13 +131,13 @@ module.exports = function (io) {
                     }
                     // Game is full
                     else {
-                        socket.emit('fullGame', { message: 'Game "' + game.gameId + '" is full.' });
+                        socket.emit('fullGame', {message: 'Game "' + game.gameId + '" is full.'});
                         console.log('Game "' + game.gameId + '" is full.');
                     }
                 }
                 // Game does not exist
                 else {
-                    socket.emit('dneGame', { message: 'Such game does not exist.' });
+                    socket.emit('dneGame', {message: 'Such game does not exist.'});
                     console.log('Game "' + data.gameID + '" does not exist.');
                 }
             });
@@ -149,7 +154,8 @@ module.exports = function (io) {
                     move = game.player1;
                 }
                 else {
-                    move = game.player2;
+                    console.log('Game "' + data.gameID + '" does not exist.');
+                    socket.emit('err', { message: 'Such game does not exist.' });
                 }
                 currDateTime.setMinutes(currDateTime.getMinutes() + game.moveTimeLimit);
                 currDateTime.setSeconds(currDateTime.getSeconds() + 1);

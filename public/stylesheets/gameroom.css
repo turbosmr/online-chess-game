@@ -2,6 +2,9 @@ div.modalBoard {
     display: flex;
     justify-content: center
 }
+.gameroom-height-adjust {
+    min-height: 65px;
+}
 .btn.gameroom {
     width: 120px;
     background-color: rgb(120, 120, 120);

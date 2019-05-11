@@ -1,7 +1,9 @@
+<div class="topSpace"></div>
 <div class="banner">
     <h1 class="bannerHeader">Profile</h1>
 </div>
 <br>
+
 
 <div class="row">
 
@@ -120,8 +122,10 @@
 
                 <div class="topnav">
                     <div class="search-container">
-                        <input type="text" placeholder="Search username" name="search">
-                        <button class="btn btn-default" onclick="loadDoc()" type="submit">Search</button>
+
+                            <input type="text" placeholder="search username" name="search">
+                            <button type="submit" class="btn btn-default" onclick="loadDoc()">Search</button>
+
                     </div>
                 </div>
                 <br>
@@ -140,22 +144,17 @@
                             </tr>
                         </thead>
                         <tbody>
+                            {{#each friends}}
                             <tr>
-                                <td>Johnson <span class="dot"></span> </td>
-                                <td><a type="button" href="/game" class="btn btn-primary btn-xs">Create Game</a></td>
+                                <td>{{userName}} <span class="dot"></span> </td>
+                                <td><button class="btn btn-success btn-xs create" value="{{userName}}" >Create Game</button></td>
+                                <td>    
+                                    <form action="/removeFriend" method="POST"><input type="hidden" name="id" value="{{id}}"/>
+                                    <button type="submit" class="btn btn-success btn-xs">Remove Friend</button></form>
+                                </td>
                             </tr>
-                            <tr>
-                                <td>Anthony</td>
-                                <td><a type="button" href="/game" class="btn btn-primary btn-xs">Create Game</a></td>
-                            </tr>
-                            <tr>
-                                <td>Anthony</td>
-                                <td><a type="button" href="/game" class="btn btn-primary btn-xs">Create Game</a></td>
-                            </tr>
-                            <tr>
-                                <td>Johnson <span class="dot"></span> </td>
-                                <td><a type="button" href="/game" class="btn btn-primary btn-xs">Create Game</a></td>
-                            </tr>
+                            
+                            {{/each}}
                         </tbody>
                     </table>
                 </div>
@@ -203,7 +202,8 @@
                 data.users.forEach(user => {
                     html += '<tr> \
                     <td>'+ user.userName + '<span class="dot"></span> </td>\
-                    <td><a type="button" href="/game" class="btn btn-success btn-xs">Add Friend</a></td>\
+                    <td><form action="/addFriend" method="POST"><input type="hidden" name="id" value="'+ user.id +'">\
+                    <button type="submit" class="btn btn-success btn-xs">Add Friend</button></form></td>\
                 </tr>';
                 });
                 $('#search-results').html(html);
@@ -213,4 +213,13 @@
             }
         });
     };
+    var socket = io();
+    $('.create').each(function() {
+        $( this ).on('click', function (e) {
+            socket.emit('createGame', { player1: currUser, player2: e.target.value });
+        });
+    });
+    socket.on('newGame', function (data) {
+        document.location.replace("/game/" + data.gameID);
+    });
 </script>
