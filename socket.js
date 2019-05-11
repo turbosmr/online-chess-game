@@ -42,6 +42,7 @@ module.exports = function (io) {
             Game.create({
                 gameId: gameRoom.gameID,
                 player1: gameRoom.player1,
+                player2: data.player2,
                 fen: gameRoom.fen,
                 move: gameRoom.move,
                 moveTimeLimit: gameRoom.moveTimeLimit,
