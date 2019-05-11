@@ -258,7 +258,7 @@ $(function () {
      */
     socket.on('turnPlayed', function (data) {
         game.load(data.fen);
-        //game.load_pgn(data.pgn);
+        game.load_pgn(data.pgn);
         board.position(data.fen);
 
         game2.load_pgn(game.pgn());
