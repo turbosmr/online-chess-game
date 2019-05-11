@@ -10,12 +10,19 @@ module.exports = {
       },
       userId: {
         allowNull: false,
+<<<<<<< HEAD
         unique: 'compositeIndex',
+=======
+>>>>>>> f62e99c60a258e1c9049d8dc67ebd2d5c5e2721b
         type: Sequelize.INTEGER
       },
       friendId: {
         allowNull: false,
+<<<<<<< HEAD
         unique: 'compositeIndex',
+=======
+        unique: true,
+>>>>>>> f62e99c60a258e1c9049d8dc67ebd2d5c5e2721b
         type: Sequelize.INTEGER
       },
       createdAt: {

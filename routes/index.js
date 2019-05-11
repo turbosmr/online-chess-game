@@ -191,6 +191,7 @@ router.get('/about', ensureAuthenticated, function (req, res) {
 });
 
 router.post('/addFriend', (req, res, next) => {
+<<<<<<< HEAD
   req.user.addFriends(parseInt(req.body.id)).then(function(){
     req.user.getFriends().then(function(friends){
       res.render('profile', {
@@ -201,5 +202,17 @@ router.post('/addFriend', (req, res, next) => {
       });
     });
   });
+=======
+  req.user.addFriends(req.body.id);
+  req.user.getFriends().then(function(friends){
+    res.render('profile', {
+      currUser: req.user.userName,
+      title: "Profile - Team 10 Chess",
+      active: { Profile: true },
+      friends: friends
+    });
+  });
+  
+>>>>>>> f62e99c60a258e1c9049d8dc67ebd2d5c5e2721b
 });
 module.exports = router;
