@@ -13,7 +13,13 @@ const Game = require('../models').Game;
 const User = require('../models').User;
 
 var getCurrGames = function (req, res, next) {
-  var currGames = [];
+  var currGames = [],
+    now,
+    timeRem,
+    days,
+    hours,
+    minutes,
+    timeRemFormatted;
 
   Game.findAndCountAll({
     where: {
@@ -34,23 +40,19 @@ var getCurrGames = function (req, res, next) {
         else {
           currGames[i].oppName = currGames[i].player1;
         }
-        /*User.findOne({
-          where: {
-            userName: currGames[i].oppName
-          }
-        }).then(function (result, err) {
-          if (err) {
-            console.log('Error retrieving user.');
-          }
-          else {
-            if (result.isActive) {
-              console.log(currGames[i].oppName)
-            }
-            else {
-              console.log(currGames[i].oppName)
-            }
-          }
-        });*/
+        now = new Date().getTime();
+        timeRem = results.rows[i].makeMoveBy - now;
+        if (results.rows[i].turns > 0) {
+          hours = Math.floor((timeRem / (1000 * 60 * 60)));
+          minutes = Math.floor((timeRem % (1000 * 60 * 60)) / (1000 * 60));
+          timeRemFormatted = ('0' + hours).slice(-3) + 'h' + ('0' + minutes).slice(-2) + 'm';
+        }
+        else {
+          hours = Math.floor((results.rows[i].moveTimeLimit / (60)));
+          minutes = results.rows[i].moveTimeLimit % 60;
+          timeRemFormatted = ('0' + hours).slice(-3) + 'h' + ('0' + minutes).slice(-2) + 'm';
+        }
+        currGames[i].moveTime = timeRemFormatted;
       }
       req.currGames = currGames;
     }
@@ -59,7 +61,11 @@ var getCurrGames = function (req, res, next) {
 }
 
 var getAvailGames = function (req, res, next) {
-  var availGames = [];
+  var availGames = [],
+    days,
+    hours,
+    minutes,
+    timeRemFormatted;
 
   Game.findAndCountAll({
     where: {
@@ -73,18 +79,21 @@ var getAvailGames = function (req, res, next) {
     else {
       for (var i = 0; i < results.count; i++) {
         availGames[i] = results.rows[i];
+        hours = Math.floor((results.rows[i].moveTimeLimit / (60)));
+        minutes = results.rows[i].moveTimeLimit % 60;
+        timeRemFormatted = ('0' + hours).slice(-3) + 'h' + ('0' + minutes).slice(-2) + 'm';
+        availGames[i].moveTime = timeRemFormatted;
       }
       req.availGames = availGames;
     }
     return next();
   });
-
 }
 
 var getLeaderboard = function (req, res, next) {
   var lbTop10 = [];
   var lbAll = [];
-  
+
   User.findAndCountAll({
     order: [
       ['winCount', 'DESC'],
@@ -93,20 +102,20 @@ var getLeaderboard = function (req, res, next) {
     ]
   }).then(function (results, err) {
     if (err) {
-        console.log('Error retrieving leaderboard.');
-        return next();
+      console.log('Error retrieving leaderboard.');
+      return next();
     }
     else {
       for (var i = 0; i < results.count; i++) {
         if (i < 10) {
           lbTop10[i] = results.rows[i];
-          lbTop10[i].rank = i+1;
+          lbTop10[i].rank = i + 1;
           lbAll[i] = results.rows[i];
-          lbAll[i].rank = i+1;
+          lbAll[i].rank = i + 1;
         }
         else {
           lbAll[i] = results.rows[i];
-          lbAll[i].rank = i+1;
+          lbAll[i].rank = i + 1;
         }
       }
       req.lbTop10 = lbTop10;
@@ -137,25 +146,25 @@ router.get('/lobby', ensureAuthenticated, getCurrGames, getAvailGames, getLeader
   });
 });
 
-
 //search request searchController.search do the function callback at search controller
-router.get('/search', ensureAuthenticated, function(req, res){
-  if(req.xhr || req.accepts('json, html')==='json'){
-    userModel.findAll({where: {userName:{[Op.like]: '%'+req.query.search+'%'}}}).then(function(users){
+router.get('/search', ensureAuthenticated, function (req, res) {
+  if (req.xhr || req.accepts('json, html') === 'json') {
+    User.findAll({ where: { userName: { [Op.like]: '%' + req.query.search + '%' } } }).then(function (users) {
       console.log('users = ', users);
-      if (users){
-        res.send({users: users});
+      if (users) {
+        res.send({ users: users });
       } else {
-        res.send({users: undefined});
+        res.send({ users: undefined });
       }
     });
-    
+
   } else {
     //Do something else by reloading the page.
     console.log('not ajax byebye');
-    res.send({users: undefined});
+    res.send({ users: undefined });
   }
 });
+
 // Profile page
 router.get('/profile', ensureAuthenticated, function (req, res) {
   res.render('profile', {
@@ -180,6 +189,15 @@ router.get('/about', ensureAuthenticated, function (req, res) {
     currUser: req.user.userName,
     title: "About - Team 10 Chess",
     active: { About: true }
+  });
+});
+
+// About page
+router.get('/3d', ensureAuthenticated, function (req, res) {
+  res.render('chess3D', {
+    currUser: req.user.userName,
+    title: "About - Team 10 Chess",
+    active: { chess3D: true }
   });
 });
 

@@ -16,11 +16,20 @@ module.exports = (sequelize, DataTypes) => {
       defaultValue: 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1'
     },
     pgn: DataTypes.STRING,
-    move: DataTypes.STRING,
+    turns: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      defaultValue: 0
+    },
+    move: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
     result: DataTypes.STRING,
     startTime: DataTypes.TIME,
     endTime: DataTypes.TIME,
     moveTimeLimit: DataTypes.INTEGER,
+    makeMoveBy: DataTypes.DOUBLE,
     gameTimeLimit: DataTypes.INTEGER
   }, {});
   Game.associate = function(models) {

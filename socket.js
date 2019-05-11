@@ -1,10 +1,14 @@
 const Sequelize = require('sequelize');
+const Op = Sequelize.Op;
 
 // Load Games Model
 const Game = require('./models').Game;
 
 // Load Users Model
 const User = require('./models').User;
+
+//Load GameChat Model
+const GameChats = require('./models').GameChats;
 
 var socketCount = 0;
 
@@ -26,6 +30,28 @@ module.exports = function (io) {
         // Store and display messages to connected clients, as well as console
         socket.on('chat message', (data) => {
             io.emit('chat message', data);
+        });
+
+        GameChats.findAndCountAll().then(function (result, error) {
+            if (error) {
+                console.log('Error retrieving GameChats messages');
+            }
+            else {
+                for (var i = 0; i < result.count; i++) {
+                    //console.log(result.rows[i]);
+                    socket.emit('retrieve messages', result.rows[i]);
+                }
+            }
+        });
+
+        socket.on('game chat message', (data) => {
+            GameChats.create({
+                gameId: data.gameId,
+                userName: data.username,
+                message: data.msg
+            });
+
+            io.emit('game chat message', data);
         });
 
         //leaderboard stuff
@@ -64,13 +90,13 @@ module.exports = function (io) {
                     if (game.player1 == data.currUser || game.player2 == data.currUser) {
                         socket.join(game.gameId);
                         if (game.player2 == null) {
-                            console.log(data.currUser + ' created game: ' + game.gameId);
+                            console.log(data.currUser + ' joined game: ' + game.gameId);
                         }
                         else {
                             console.log(data.currUser + ' has returned back to game: ' + game.gameId);
                             rejoin = true;
                         }
-                        socket.broadcast.to(data.gameID).emit('oppRejoined', { oppName: data.currUser });
+                        //socket.broadcast.to(data.gameID).emit('oppRejoined', { oppName: data.currUser });
                         socket.emit('joinedGame', {
                             gameID: game.gameId,
                             player1: game.player1,
@@ -116,17 +142,22 @@ module.exports = function (io) {
          */
         socket.on('playTurn', function (data) {
             Game.findOne({ where: { gameId: data.gameID } }).then(function (game) {
-                var move;
+                var move,
+                    currDateTime = new Date();
                 if (data.turn == 'w') {
                     move = game.player1;
                 }
                 else {
                     move = game.player2;
                 }
+                currDateTime.setMinutes(currDateTime.getMinutes() + game.moveTimeLimit);
+                currDateTime.setSeconds(currDateTime.getSeconds() + 1);
                 game.update({
                     fen: data.fen,
                     pgn: data.pgn,
-                    move: move
+                    turns: Sequelize.literal('turns + 1'),
+                    move: move,
+                    makeMoveBy: currDateTime.getTime()
                 });
                 socket.broadcast.to(game.gameId).emit('turnPlayed', data);
             });
@@ -135,7 +166,7 @@ module.exports = function (io) {
         /**
          * Notify the players about the victor.
          */
-        socket.on('gameEnded', function (data) {
+        socket.on('gameEnd', function (data) {
             Game.findOne({ where: { gameId: data.gameID } }).then(function (game) {
                 return game.update({
                     fen: data.fen,
@@ -143,38 +174,96 @@ module.exports = function (io) {
                     result: data.result
                 });
             }).then(function (game) {
-                if (data.result == 'Checkmate') {
-                    if (game.move != game.player1) {
-                        // Winner; update user's win count
-                        User.update({
-                            winCount: Sequelize.literal('winCount + 1')
-                        }, { where: { userName: game.player1 } });
-                        // Loser; update user's lose count
-                        User.update({
-                            loseCount: Sequelize.literal('loseCount + 1')
-                        }, { where: { userName: game.player2 } });
+                updateUserStat(game);
+            });
+            socket.broadcast.to(data.gameID).emit('gameEnded', data);
+        });
+
+        /**
+         * Player requesting draw. Send request to opponent.
+         */
+        socket.on('offerDraw', function (data) {
+            socket.broadcast.to(data.gameID).emit('offeredDraw', data);
+        });
+
+        /**
+         * Move timer.
+         */
+        setInterval(function () {
+            Game.findAndCountAll({
+                where: {
+                    [Op.not]: [{ player2: null }],
+                    turns: { [Op.gt]: 0 },
+                    result: null
+                }
+            }).then(function (results, err) {
+                var game,
+                    now,
+                    timeRem,
+                    days,
+                    hours,
+                    minutes,
+                    seconds,
+                    timeRemFormatted;
+                for (var i = 0; i < results.count; i++) {
+                    game = results.rows[i];
+                    now = new Date().getTime();
+                    timeRem = game.makeMoveBy - now;
+                    days = Math.floor(timeRem / (1000 * 60 * 60 * 24));
+                    hours = Math.floor((timeRem % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                    minutes = Math.floor((timeRem % (1000 * 60 * 60)) / (1000 * 60));
+                    seconds = Math.floor((timeRem % (1000 * 60)) / 1000);
+                    timeRemFormatted = 'Move Time Left: ' + ('0' + days).slice(-2) + ':' + ('0' + hours).slice(-2) + ':' + ('0' + minutes).slice(-2) + ':' + ('0' + seconds).slice(-2)
+                    if (timeRem > 0) {
+                        io.in(game.gameId).emit('moveTimer', { timeRem: timeRemFormatted });
+                        //console.log(('0'  + days).slice(-2) + ':' + ('0'  + hours).slice(-2) + ':' + ('0'  + minutes).slice(-2) + ':' + ('0' + seconds).slice(-2));
                     }
                     else {
-                        // Winner; update user's win count
-                        User.update({
-                            winCount: Sequelize.literal('winCount + 1')
-                        }, { where: { userName: game.player2 } });
-                        // Loser; update user's lose count
-                        User.update({
-                            loseCount: Sequelize.literal('loseCount + 1')
-                        }, { where: { userName: game.player1 } });
+                        game.update({
+                            result: 'Move Time Expired'
+                        });
+                        updateUserStat(game);
+                        socket.in(game.gameId).emit('moveTimeExpired');
                     }
                 }
-                else if (data.result == 'Draw') {
-                    // Update users' draw count
-                    User.update({
-                        drawCount: Sequelize.literal('drawCount + 1')
-                    }, { where: { userName: game.player1, userName: game.player2 } });
-                }
             });
-            socket.broadcast.to(data.gameID).emit('gameEnd', data);
-        });
+        }, 1000);
     });
+
+    function updateUserStat(game) {
+        if (game.result == 'Checkmate' || game.result == 'Move Time Expired' || game.result == 'Resignation') {
+            if (game.move != game.player1) {
+                // Winner; update user's win count
+                User.update({
+                    winCount: Sequelize.literal('winCount + 1')
+                }, { where: { userName: game.player1 } });
+                // Loser; update user's lose count
+                User.update({
+                    loseCount: Sequelize.literal('loseCount + 1')
+                }, { where: { userName: game.player2 } });
+            }
+            else {
+                // Winner; update user's win count
+                User.update({
+                    winCount: Sequelize.literal('winCount + 1')
+                }, { where: { userName: game.player2 } });
+                // Loser; update user's lose count
+                User.update({
+                    loseCount: Sequelize.literal('loseCount + 1')
+                }, { where: { userName: game.player1 } });
+            }
+        }
+        else if (game.result == 'Draw') {
+            // Update users' draw count
+            User.update({
+                drawCount: Sequelize.literal('drawCount + 1')
+            }, { where: { userName: game.player1 } });
+            // Update users' draw count
+            User.update({
+                drawCount: Sequelize.literal('drawCount + 1')
+            }, { where: { userName: game.player2 } });
+        }
+    }
 
     function IDGenerator() {
         this.length = 8;

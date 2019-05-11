@@ -127,23 +127,7 @@
                 <br>
                 <div class="well friendsSearchScroll">
                     <table class="table">
-                        <tbody>
-                            <tr>
-                                <td>Johnson <span class="dot"></span> </td>
-                                <td><a type="button" href="/game" class="btn btn-success btn-xs">Add Friend</a></td>
-                            </tr>
-                            <tr>
-                                <td>Anthony</td>
-                                <td><a type="button" href="/game" class="btn btn-success btn-xs">Add Friend</a></td>
-                            </tr>
-                            <tr>
-                                <td>Anthony</td>
-                                <td><a type="button" href="/game" class="btn btn-success btn-xs">Add Friend</a></td>
-                            </tr>
-                            <tr>
-                                <td>Johnson <span class="dot"></span> </td>
-                                <td><a type="button" href="/game" class="btn btn-success btn-xs">Add Friend</a></td>
-                            </tr>
+                        <tbody id="search-results">
                         </tbody>
                     </table>
                 </div>
@@ -206,4 +190,27 @@
         });
 
     });
+
+</script>
+<script>
+    var loadDoc = function(){
+        $.ajax({
+            url: '/search',
+            type: 'GET',
+            data: { search: $('input')[0].value, },
+            success: function (data) {
+                let html = '';
+                data.users.forEach(user => {
+                    html += '<tr> \
+                    <td>'+ user.userName + '<span class="dot"></span> </td>\
+                    <td><a type="button" href="/game" class="btn btn-success btn-xs">Add Friend</a></td>\
+                </tr>';
+                });
+                $('#search-results').html(html);
+            },
+            error: function () {
+                console.log('error');
+            }
+        });
+    };
 </script>
