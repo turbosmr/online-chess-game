@@ -14,13 +14,12 @@ const User = require('../models').User;
 
 var getCurrGames = function (req, res, next) {
   var currGames = [],
-      now,
-      timeRem,
-      days,
-      hours,
-      minutes,
-      seconds,
-      timeRemFormatted;
+    now,
+    timeRem,
+    days,
+    hours,
+    minutes,
+    timeRemFormatted;
 
   Game.findAndCountAll({
     where: {
@@ -44,21 +43,16 @@ var getCurrGames = function (req, res, next) {
         now = new Date().getTime();
         timeRem = results.rows[i].makeMoveBy - now;
         if (results.rows[i].turns > 0) {
-          days = Math.floor(timeRem / (1000 * 60 * 60 * 24));
-          hours = Math.floor((timeRem % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+          hours = Math.floor((timeRem / (1000 * 60 * 60)));
           minutes = Math.floor((timeRem % (1000 * 60 * 60)) / (1000 * 60));
-          seconds = Math.floor((timeRem % (1000 * 60)) / 1000);
-          timeRemFormatted = ('0'  + days).slice(-2) + ':' + ('0'  + hours).slice(-2) + ':' + ('0'  + minutes).slice(-2) + ':' + ('0' + seconds).slice(-2);
-          currGames[i].moveTime = timeRemFormatted;
+          timeRemFormatted = ('0' + hours).slice(-3) + 'h' + ('0' + minutes).slice(-2) + 'm';
         }
         else {
-          days = Math.floor(results.rows[i].moveTimeLimit / (60 * 24));
-          hours = Math.floor((results.rows[i].moveTimeLimit % (60 * 24)) / (60));
-          minutes = results.rows[i].moveTimeLimit;
-          seconds = 0;
-          timeRemFormatted = ('0'  + days).slice(-2) + ':' + ('0'  + hours).slice(-2) + ':' + ('0'  + minutes).slice(-2) + ':' + ('0' + seconds).slice(-2);
-          currGames[i].moveTime = timeRemFormatted;
+          hours = Math.floor((results.rows[i].moveTimeLimit / (60)));
+          minutes = results.rows[i].moveTimeLimit % 60;
+          timeRemFormatted = ('0' + hours).slice(-3) + 'h' + ('0' + minutes).slice(-2) + 'm';
         }
+        currGames[i].moveTime = timeRemFormatted;
       }
       req.currGames = currGames;
     }
@@ -68,13 +62,10 @@ var getCurrGames = function (req, res, next) {
 
 var getAvailGames = function (req, res, next) {
   var availGames = [],
-      now,
-      timeRem,
-      days,
-      hours,
-      minutes,
-      seconds,
-      timeRemFormatted;
+    days,
+    hours,
+    minutes,
+    timeRemFormatted;
 
   Game.findAndCountAll({
     where: {
@@ -88,24 +79,10 @@ var getAvailGames = function (req, res, next) {
     else {
       for (var i = 0; i < results.count; i++) {
         availGames[i] = results.rows[i];
-        now = new Date().getTime();
-        timeRem = results.rows[i].makeMoveBy - now;
-        if (results.rows[i].turns > 0) {
-          days = Math.floor(timeRem / (1000 * 60 * 60 * 24));
-          hours = Math.floor((timeRem % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-          minutes = Math.floor((timeRem % (1000 * 60 * 60)) / (1000 * 60));
-          seconds = Math.floor((timeRem % (1000 * 60)) / 1000);
-          timeRemFormatted = ('0'  + days).slice(-2) + ':' + ('0'  + hours).slice(-2) + ':' + ('0'  + minutes).slice(-2) + ':' + ('0' + seconds).slice(-2);
-          availGames[i].moveTime = timeRemFormatted;
-        }
-        else {
-          days = Math.floor(results.rows[i].moveTimeLimit / (60 * 24));
-          hours = Math.floor((results.rows[i].moveTimeLimit % (60 * 24)) / (60));
-          minutes = results.rows[i].moveTimeLimit;
-          seconds = 0;
-          timeRemFormatted = ('0'  + days).slice(-2) + ':' + ('0'  + hours).slice(-2) + ':' + ('0'  + minutes).slice(-2) + ':' + ('0' + seconds).slice(-2);
-          availGames[i].moveTime = timeRemFormatted;
-        }
+        hours = Math.floor((results.rows[i].moveTimeLimit / (60)));
+        minutes = results.rows[i].moveTimeLimit % 60;
+        timeRemFormatted = ('0' + hours).slice(-3) + 'h' + ('0' + minutes).slice(-2) + 'm';
+        availGames[i].moveTime = timeRemFormatted;
       }
       req.availGames = availGames;
     }
@@ -116,7 +93,7 @@ var getAvailGames = function (req, res, next) {
 var getLeaderboard = function (req, res, next) {
   var lbTop10 = [];
   var lbAll = [];
-  
+
   User.findAndCountAll({
     order: [
       ['winCount', 'DESC'],
@@ -125,20 +102,20 @@ var getLeaderboard = function (req, res, next) {
     ]
   }).then(function (results, err) {
     if (err) {
-        console.log('Error retrieving leaderboard.');
-        return next();
+      console.log('Error retrieving leaderboard.');
+      return next();
     }
     else {
       for (var i = 0; i < results.count; i++) {
         if (i < 10) {
           lbTop10[i] = results.rows[i];
-          lbTop10[i].rank = i+1;
+          lbTop10[i].rank = i + 1;
           lbAll[i] = results.rows[i];
-          lbAll[i].rank = i+1;
+          lbAll[i].rank = i + 1;
         }
         else {
           lbAll[i] = results.rows[i];
-          lbAll[i].rank = i+1;
+          lbAll[i].rank = i + 1;
         }
       }
       req.lbTop10 = lbTop10;
@@ -170,21 +147,21 @@ router.get('/lobby', ensureAuthenticated, getCurrGames, getAvailGames, getLeader
 });
 
 //search request searchController.search do the function callback at search controller
-router.get('/search', ensureAuthenticated, function(req, res){
-  if(req.xhr || req.accepts('json, html')==='json'){
-    User.findAll({where: {userName:{[Op.like]: '%'+req.query.search+'%'}}}).then(function(users){
+router.get('/search', ensureAuthenticated, function (req, res) {
+  if (req.xhr || req.accepts('json, html') === 'json') {
+    User.findAll({ where: { userName: { [Op.like]: '%' + req.query.search + '%' } } }).then(function (users) {
       console.log('users = ', users);
-      if (users){
-        res.send({users: users});
+      if (users) {
+        res.send({ users: users });
       } else {
-        res.send({users: undefined});
+        res.send({ users: undefined });
       }
     });
-    
+
   } else {
     //Do something else by reloading the page.
     console.log('not ajax byebye');
-    res.send({users: undefined});
+    res.send({ users: undefined });
   }
 });
 

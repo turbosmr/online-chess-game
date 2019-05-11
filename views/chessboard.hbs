@@ -3,9 +3,10 @@
 <div class="col-md-3">
   <div class="well well-sm">
     <br>
-    <button type="button" class=" btn gameroom center-block">Submit Move</button><br>
-    <button type="button" class=" btn gameroom center-block">Offer Draw</button><br>
-    <button type="button" class=" btn btn-danger center-block">Resign Game</button><br>
+    <button type="button" class=" btn gameroom center-block" id="submitMove" disabled>Submit Move</button><br>
+    <button type="button" class=" btn gameroom center-block" id="undoMove" disabled>Undo Move</button><br>
+    <button type="button" class=" btn gameroom center-block" id="offerDraw" disabled>Offer Draw</button><br>
+    <button type="button" class=" btn btn-danger center-block" id="resignGame" disabled>Resign Game</button><br>
     <div class="center">
       <div class="btn-group">
         <button class="btn game-arrow-buttons" type="button" id="startPositionBtn5"><span
@@ -25,7 +26,6 @@
 
   <!--text to display time per move, time left, and your move-->
   <h4 id="moveTimer" style="color:white"></h4>
-  <h4 id="gameTimer" style="color:white">Game Time Left: N/A</h4>
   <h4 id="moveStatus" style="color:rgb(58, 153, 58)"></h4>
   <h4 id="userHello" style="color:rgb(58, 153, 58)"></h4>
 

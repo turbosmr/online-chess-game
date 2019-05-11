@@ -56,7 +56,9 @@ $(function () {
         game2 = new Chess(), // used for game history
         history,
         hist_index,
-        result;
+        result,
+        drawAccepted = false,
+        oppResigned = false;
 
     var removeGreySquares = function () {
         $('#board .square-55d63').css('background', '');
@@ -102,13 +104,30 @@ $(function () {
     };
 
     var onSnapEnd = function () {
-        board.position(game.fen());
-        game2.load_pgn(game.pgn());
+        $('#userHello').remove();
 
+        board.position(game.fen());
+
+        /* game2.load_pgn(game.pgn());
         history = game2.history();
         hist_index = history.length;
 
-        $('#userHello').remove();
+        // Check move status
+        $('#moveStatus').html(checkMove());
+
+        // Print move history
+        $('#move-history-pgn').html(game.pgn({ max_width: 10, newline_char: '<br />' }));
+
+        socket.emit('playTurn', { gameID: gameID, fen: game.fen(), pgn: game.pgn(), turn: game.turn() }); */
+
+        document.getElementById("submitMove").disabled = false;
+        document.getElementById("undoMove").disabled = false;
+    };
+
+    $('#submitMove').on('click', function () {
+        game2.load_pgn(game.pgn());
+        history = game2.history();
+        hist_index = history.length;
 
         // Check move status
         $('#moveStatus').html(checkMove());
@@ -117,7 +136,32 @@ $(function () {
         $('#move-history-pgn').html(game.pgn({ max_width: 10, newline_char: '<br />' }));
 
         socket.emit('playTurn', { gameID: gameID, fen: game.fen(), pgn: game.pgn(), turn: game.turn() });
-    };
+    });
+
+    $('#undoMove').on('click', function () {
+        game.undo();
+        board.position(game.fen());
+        document.getElementById("submitMove").disabled = true;
+        document.getElementById("undoMove").disabled = true;
+    });
+
+    $('#offerDraw').on('click', function () {
+        alert('Draw request sent!');
+        socket.emit('offerDraw', { gameID: gameID });
+    });
+
+    $('#resignGame').on('click', function () {
+        var r = confirm('Are you sure you want to resign the game?');
+        if (r == true) {
+            isGameActive = false;
+            document.getElementById("offerDraw").disabled = true;
+            document.getElementById("resignGame").disabled = true;
+            $('#moveTimer').remove();
+            $('#moveStatus').remove();
+            $('#userHello').remove();
+            socket.emit('gameEnd', { gameID: gameID, fen: game.fen(), pgn: game.pgn(), result: 'Resignation' });
+        }
+    });
 
     var onMouseoverSquare = function (square, piece) {
         // get list of possible moves for this square
@@ -279,7 +323,7 @@ $(function () {
 
         if (game.game_over() == true) {
             alert(checkGameStatus());
-            socket.emit('gameEnded', { gameID: gameID, fen: game.fen(), pgn: game.pgn(), result: result });
+            socket.emit('gameEnd', { gameID: gameID, fen: game.fen(), pgn: game.pgn(), result: result });
         }
     });
 
@@ -287,16 +331,31 @@ $(function () {
      * If the other player wins or game is tied, this event is received. 
      * Notify the user about either scenario and end the game. 
      */
-    socket.on('gameEnd', function (data) {
+    socket.on('gameEnded', function (data) {
+        isGameActive = false;
+        if (data.result == 'Draw') {
+            drawAccepted = true;
+        }
+        else if (data.result == 'Resignation') {
+            oppResigned = true;
+        }
         alert(checkGameStatus());
     });
 
+    /**
+     * Render move timer. 
+     */
     socket.on('moveTimer', function (data) {
         $('#moveTimer').html(data.timeRem);
     });
 
+    /**
+     * Opponent requested draw. Prompt to accept or not. 
+     */
     socket.on('moveTimeExpired', function () {
         isGameActive = false;
+        document.getElementById("offerDraw").disabled = true;
+        document.getElementById("resignGame").disabled = true;
         $('#moveTimer').remove();
         $('#moveStatus').remove();
         $('#userHello').remove();
@@ -309,6 +368,21 @@ $(function () {
     });
 
     /**
+     * Opponent requested draw. Prompt to accept or not. 
+     */
+    socket.on('offeredDraw', function (data) {
+        var r = confirm('Opponent has requested for a draw. Accept?');
+        if (r == true) {
+            document.getElementById("offerDraw").disabled = true;
+            document.getElementById("resignGame").disabled = true;
+            $('#moveTimer').remove();
+            $('#moveStatus').remove();
+            $('#userHello').remove();
+            socket.emit('gameEnd', { gameID: gameID, fen: game.fen(), pgn: game.pgn(), result: 'Draw' });
+        }
+    });
+
+    /**
      * Check who has the current move, and render the message. 
      */
     var checkMove = function () {
@@ -317,9 +391,15 @@ $(function () {
                 return '';
             }
             else if ((player1 == true && game.turn() == 'w') || (player2 == true && game.turn() == 'b')) {
+                document.getElementById("offerDraw").disabled = false;
+                document.getElementById("resignGame").disabled = false;
                 return 'Your move!';
             }
             else {
+                document.getElementById("submitMove").disabled = true;
+                document.getElementById("undoMove").disabled = true;
+                document.getElementById("offerDraw").disabled = true;
+                document.getElementById("resignGame").disabled = true;
                 return 'Opponent\'s move.';
             }
         }
@@ -369,6 +449,15 @@ $(function () {
                 message = 'Draw - threefold repetition';
             }
         }
+        else if (drawAccepted == true) {
+            message = 'Opponent has accepted your draw request.';
+        }
+        else if (oppResigned == true) {
+            message = 'Opponent has resigned, you win!';
+        }
+        document.getElementById("offerDraw").disabled = true;
+        document.getElementById("resignGame").disabled = true;
+        $('#moveTimer').remove();
         $('#moveStatus').remove();
         $('#userHello').remove();
         return message;
@@ -440,6 +529,12 @@ $(function () {
         if (dimensions >= 3) {
             $('#board').css('width', '525px');
             $('#board').css('height', '393px');
+            cfg.backgroundColor = 0x383434;
+            cfg.darkSquareColor = 0x646464;
+            cfg.lightSquareColor = 0x969696;
+            cfg.blackPieceColor = 0x000000;
+            cfg.blackPieceSpecular = 0x646464;
+            cfg.pieceSet = '/assets/chesspieces/classic/{piece}.json';
             board = new ChessBoard3('board', cfg);
         } else {
             $('#board').css('width', '526px');
@@ -447,6 +542,9 @@ $(function () {
             board = new ChessBoard('board', cfg);
         }
         board.position(game.fen(), false);
+        if (player2 == true) {
+            board.flip();
+        }
     }
     $('#2D').on('click', function () { setUpBoard(2); });
     $('#3D').on('click', function () { setUpBoard(3); });
