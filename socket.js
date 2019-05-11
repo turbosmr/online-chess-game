@@ -32,17 +32,7 @@ module.exports = function (io) {
             io.emit('chat message', data);
         });
 
-        GameChats.findAndCountAll().then(function (result, error) {
-            if (error) {
-                console.log('Error retrieving GameChats messages');
-            }
-            else {
-                for (var i = 0; i < result.count; i++) {
-                    //console.log(result.rows[i]);
-                    socket.emit('retrieve messages', result.rows[i]);
-                }
-            }
-        });
+
 
         socket.on('game chat message', (data) => {
             GameChats.create({
@@ -51,7 +41,7 @@ module.exports = function (io) {
                 message: data.msg
             });
 
-            io.emit('game chat message', data);
+            io.in(data.gameId).emit('game chat message', data);
         });
 
         //leaderboard stuff
@@ -97,6 +87,17 @@ module.exports = function (io) {
                             rejoin = true;
                         }
                         //socket.broadcast.to(data.gameID).emit('oppRejoined', { oppName: data.currUser });
+                        GameChats.findAndCountAll({ where: { gameId: data.gameID }}).then(function (messages, err) {
+                            if (err) {
+                                console.log('Error retrieving GameChats messages');
+                            }
+                            else {
+                                for (var i = 0; i < messages.count; i++) {
+                                    //console.log(result.rows[i]);
+                                    socket.emit('retrieve messages', messages.rows[i]);
+                                }
+                            }
+                        });
                         socket.emit('joinedGame', {
                             gameID: game.gameId,
                             player1: game.player1,
