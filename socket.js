@@ -12,8 +12,6 @@ const GameChats = require('./models').GameChats;
 
 var socketCount = 0;
 
-var target = new Date('2019-05-08 20:00:00').getTime();
-
 module.exports = function (io) {
     /* Check for connection between client and server */
     io.on('connection', (socket) => {
@@ -194,7 +192,7 @@ module.exports = function (io) {
         /**
          * Move timer.
          */
-        /*setInterval(function () {
+        setInterval(function () {
             Game.findAndCountAll({where: {
                 [Op.not]: [{ player2: null }],
                 turns: {[Op.gt]: 0}, 
@@ -230,7 +228,7 @@ module.exports = function (io) {
                     }
                 }
             });
-        }, 1000);*/
+        }, 1000);
     });
 
     function updateUserStat (game) {
