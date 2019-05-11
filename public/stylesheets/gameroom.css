@@ -17,6 +17,24 @@ div.modalBoard {
 .btn.btn-danger{
     width: 120px;
 }
+.submit-button {
+    background-color: rgb(122, 202, 57);
+    color: white;
+    width: 60px;
+}
+.submit-button:hover {
+    color: white;
+    background-color: rgb(85, 141, 38);
+}
+.game-buttons {
+    background-color: rgb(120, 120, 120);
+    color: white;
+    width: 60px;
+}
+.game-buttons:hover {
+    color: white;
+    background-color: rgb(100, 100, 100);
+}
 .game-arrow-buttons {
     background-color: rgb(120, 120, 120);
     color: white;
@@ -63,3 +81,19 @@ div.modalBoard {
     height:526px;
     padding:8px;
 }
+.gameChatScroll {
+    height:395px;
+    overflow-y:scroll;
+    background-color: white;
+    border: 1px solid lightgray;
+    border-radius: 5px;
+    padding: 10px;
+  }
+  .gameHistoryScroll {
+    height:437px;
+    overflow-y:scroll;
+    background-color: white;
+    border: 1px solid lightgray;
+    border-radius: 5px;
+    padding: 10px;
+  }

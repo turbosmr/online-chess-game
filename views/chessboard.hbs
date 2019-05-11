@@ -9,11 +9,20 @@
   <!--buttons for game-->
   <div class="well well-sm">
     <br>
-    <button type="button" class=" btn gameroom center-block" id="submitMove" disabled>Submit Move</button><br>
-    <button type="button" class=" btn gameroom center-block" id="undoMove" disabled>Undo Move</button><br>
-    <button type="button" class=" btn gameroom center-block" id="offerDraw" disabled>Offer Draw</button><br>
-    <button type="button" class=" btn btn-danger center-block" id="resignGame" disabled>Resign Game</button><br>
     <div class="center">
+      <div class="btn-group">
+        <button type="button" class="btn submit-button center-block" id="submitMove" disabled>&#10004;</button>
+        <button type="button" class="btn game-buttons center-block" id="undoMove" disabled>&#10008;</button>
+      </div><br><br>
+
+      <button type="button" class=" btn gameroom center-block" id="offerDraw" disabled>Offer Draw</button><br>
+      <button type="button" class=" btn btn-danger center-block" id="resignGame" disabled>Resign Game</button><br>
+
+      <div class="btn-group">
+        <button type="button" class="btn game-buttons center-block" id="2D">2D</button>
+        <button type="button" class="btn game-buttons center-block" id="3D">3D</button>
+      </div><br><br>
+
       <div class="btn-group">
         <button class="btn game-arrow-buttons" type="button" id="startPositionBtn5"><span
             class="fa fa-angle-double-left"></span></button>
@@ -23,11 +32,8 @@
             class="fa fa-angle-right"></span></button>
         <button class="btn game-arrow-buttons" type="button" id="endPositionBtn5"><span
             class="fa fa-angle-double-right"></span></button>
-      </div><br><br>
-      <div class="btn-group">
-        <button type="button" class="btn btn-success center-block" id="2D">2D</button>
-        <button type="button" class="btn btn-success center-block" id="3D">3D</button>
-      </div>
+      </div><br>
+
     </div>
     <br>
   </div>
@@ -77,7 +83,7 @@
       </form>
     </div>
     <div id="move-history" style="display: none;">
-      <div class="well gameChatScroll" id="move-history-pgn">
+      <div class="well gameHistoryScroll" id="move-history-pgn">
       </div>
     </div>
   </div>

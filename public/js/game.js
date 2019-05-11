@@ -13,9 +13,7 @@ $(function () {
 
     // Retrieve messages from database upon entering chatroom
     socket.on('retrieve messages', function (data) {
-        if (data.gameId == gameID) {
             $('#messages').append($('<li>').text(data.userName + ": " + data.message));
-        }
     });
 
     $('form').submit(function (e) {

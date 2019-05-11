@@ -118,14 +118,7 @@ input {
   border-radius: 5px;
   padding: 10px;
 }
-.gameChatScroll {
-  height:396px;
-  overflow-y:scroll;
-  background-color: white;
-  border: 1px solid lightgray;
-  border-radius: 5px;
-  padding: 10px;
-}
+
 .well {
   background-color:whitesmoke;
 }
