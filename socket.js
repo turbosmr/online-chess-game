@@ -32,15 +32,12 @@ module.exports = function (io) {
             io.emit('chat message', data);
         });
 
-        GameChats.findAndCountAll().then(function(result, error) {
-            if(error)
-            {
+        GameChats.findAndCountAll().then(function (result, error) {
+            if (error) {
                 console.log('Error retrieving GameChats messages');
             }
-            else
-            {
-                for(var i = 0; i < result.count; i++)
-                {
+            else {
+                for (var i = 0; i < result.count; i++) {
                     //console.log(result.rows[i]);
                     socket.emit('retrieve messages', result.rows[i]);
                 }
@@ -145,7 +142,7 @@ module.exports = function (io) {
          */
         socket.on('playTurn', function (data) {
             Game.findOne({ where: { gameId: data.gameID } }).then(function (game) {
-                var move, 
+                var move,
                     currDateTime = new Date();
                 if (data.turn == 'w') {
                     move = game.player1;
@@ -193,11 +190,13 @@ module.exports = function (io) {
          * Move timer.
          */
         setInterval(function () {
-            Game.findAndCountAll({where: {
-                [Op.not]: [{ player2: null }],
-                turns: {[Op.gt]: 0}, 
-                result: null
-            }}).then(function (results, err) {
+            Game.findAndCountAll({
+                where: {
+                    [Op.not]: [{ player2: null }],
+                    turns: { [Op.gt]: 0 },
+                    result: null
+                }
+            }).then(function (results, err) {
                 var game,
                     now,
                     timeRem,
@@ -214,7 +213,7 @@ module.exports = function (io) {
                     hours = Math.floor((timeRem % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
                     minutes = Math.floor((timeRem % (1000 * 60 * 60)) / (1000 * 60));
                     seconds = Math.floor((timeRem % (1000 * 60)) / 1000);
-                    timeRemFormatted = 'Move Time Left: ' + ('0'  + days).slice(-2) + ':' + ('0'  + hours).slice(-2) + ':' + ('0'  + minutes).slice(-2) + ':' + ('0' + seconds).slice(-2)
+                    timeRemFormatted = 'Move Time Left: ' + ('0' + days).slice(-2) + ':' + ('0' + hours).slice(-2) + ':' + ('0' + minutes).slice(-2) + ':' + ('0' + seconds).slice(-2)
                     if (timeRem > 0) {
                         io.in(game.gameId).emit('moveTimer', { timeRem: timeRemFormatted });
                         //console.log(('0'  + days).slice(-2) + ':' + ('0'  + hours).slice(-2) + ':' + ('0'  + minutes).slice(-2) + ':' + ('0' + seconds).slice(-2));
@@ -224,15 +223,15 @@ module.exports = function (io) {
                             result: 'Move Time Expired'
                         });
                         updateUserStat(game);
-                        io.in(game.gameId).emit('moveTimeExpired');
+                        socket.in(game.gameId).emit('moveTimeExpired');
                     }
                 }
             });
         }, 1000);
     });
 
-    function updateUserStat (game) {
-        if (game.result == 'Checkmate') {
+    function updateUserStat(game) {
+        if (game.result == 'Checkmate' || game.result == 'Move Time Expired' || game.result == 'Resignation') {
             if (game.move != game.player1) {
                 // Winner; update user's win count
                 User.update({
@@ -263,50 +262,6 @@ module.exports = function (io) {
             User.update({
                 drawCount: Sequelize.literal('drawCount + 1')
             }, { where: { userName: game.player2 } });
-        }
-        else if (game.result == 'Move Time Expired') {
-            if (game.move != game.player1) {
-                // Winner; update user's win count
-                User.update({
-                    winCount: Sequelize.literal('winCount + 1')
-                }, { where: { userName: game.player1 } });
-                // Loser; update user's lose count
-                User.update({
-                    loseCount: Sequelize.literal('loseCount + 1')
-                }, { where: { userName: game.player2 } });
-            }
-            else {
-                // Winner; update user's win count
-                User.update({
-                    winCount: Sequelize.literal('winCount + 1')
-                }, { where: { userName: game.player2 } });
-                // Loser; update user's lose count
-                User.update({
-                    loseCount: Sequelize.literal('loseCount + 1')
-                }, { where: { userName: game.player1 } });
-            }
-        }
-        else if (game.result == 'Resignation') {
-            if (game.move != game.player1) {
-                // Winner; update user's win count
-                User.update({
-                    winCount: Sequelize.literal('winCount + 1')
-                }, { where: { userName: game.player1 } });
-                // Loser; update user's lose count
-                User.update({
-                    loseCount: Sequelize.literal('loseCount + 1')
-                }, { where: { userName: game.player2 } });
-            }
-            else {
-                // Winner; update user's win count
-                User.update({
-                    winCount: Sequelize.literal('winCount + 1')
-                }, { where: { userName: game.player2 } });
-                // Loser; update user's lose count
-                User.update({
-                    loseCount: Sequelize.literal('loseCount + 1')
-                }, { where: { userName: game.player1 } });
-            }
         }
     }
 

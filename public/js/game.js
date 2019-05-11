@@ -13,8 +13,7 @@ $(function () {
 
     // Retrieve messages from database upon entering chatroom
     socket.on('retrieve messages', function (data) {
-        if(data.gameId == gameID)
-        {
+        if (data.gameId == gameID) {
             $('#messages').append($('<li>').text(data.userName + ": " + data.message));
         }
     });
@@ -120,18 +119,6 @@ $(function () {
         $('#userHello').remove();
 
         board.position(game.fen());
-
-        /* game2.load_pgn(game.pgn());
-        history = game2.history();
-        hist_index = history.length;
-
-        // Check move status
-        $('#moveStatus').html(checkMove());
-
-        // Print move history
-        $('#move-history-pgn').html(game.pgn({ max_width: 10, newline_char: '<br />' }));
-
-        socket.emit('playTurn', { gameID: gameID, fen: game.fen(), pgn: game.pgn(), turn: game.turn() }); */
 
         document.getElementById("submitMove").disabled = false;
         document.getElementById("undoMove").disabled = false;
@@ -363,7 +350,7 @@ $(function () {
     });
 
     /**
-     * Opponent requested draw. Prompt to accept or not. 
+     * Move time expired. Alert user. 
      */
     socket.on('moveTimeExpired', function () {
         isGameActive = false;
@@ -372,7 +359,7 @@ $(function () {
         $('#moveTimer').remove();
         $('#moveStatus').remove();
         $('#userHello').remove();
-        if ((game.move() == 'w' && player1 == true) || (game.move() == 'b' && player2 == true)) {
+        if ((game.turn() == 'w' && player1 == true) || (game.turn() == 'b' && player2 == true)) {
             alert('Time expired, you lost!');
         }
         else {
