@@ -24,7 +24,11 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       defaultValue: 0
     },
-    rating: DataTypes.DOUBLE,
+    rating: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      defaultValue: 1200
+    },
     isActive: DataTypes.BOOLEAN
   }, {});
   User.associate = function(models) {
