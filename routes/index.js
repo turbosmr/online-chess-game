@@ -96,9 +96,7 @@ var getLeaderboard = function (req, res, next) {
 
   User.findAndCountAll({
     order: [
-      ['winCount', 'DESC'],
-      ['loseCount', 'ASC'],
-      ['drawCount', 'DESC']
+      ['rating', 'DESC'],
     ]
   }).then(function (results, err) {
     if (err) {
