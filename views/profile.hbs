@@ -143,12 +143,62 @@
                             {{#each friends}}
                             <tr>
                                 <td>{{userName}} <span class="dot"></span> </td>
-                                <td><button class="btn btn-success btn-xs create" value="{{userName}}" >Create Game</button></td>
+                                <td><button type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#myModal">Create
+                                Game</button></td>
                                 <td>    
                                     <form action="/removeFriend" method="POST"><input type="hidden" name="id" value="{{id}}"/>
                                     <button type="submit" class="btn btn-success btn-xs">Remove Friend</button></form>
                                 </td>
                             </tr>
+                            <!-- The Modal -->
+                            <div class="modal" id="myModal">
+                                <div class="modal-dialog">
+                                <div class="modal-content">
+
+                                    <!-- Modal Header -->
+                                    <div class="modal-header">
+                                    <h4 class="modal-title">Create New Game</h4>
+                                    </div>
+
+                                    <!-- Modal body -->
+                                    <div class="modal-body">
+                                    Select time per move
+                                    <select class="browser-default custom-select" id="moveTimeLimit">
+                                        <option selected>Select one</option>
+                                        <option value="1">1 min</option>
+                                        <option value="2">2 min</option>
+                                        <option value="3">3 min</option>
+                                        <option value="5">5 min</option>
+                                        <option value="10">10 min</option>
+                                        <option value="20">20 min</option>
+                                        <option value="1440">1 day</option>
+                                        <option value="4320">3 days</option>
+                                        <option value="7200">5 days</option>
+                                    </select>
+                                    <div class="radio">
+                                        <p>Timed Game</p>
+                                        <label><input type="radio" name="optradio" checked>Yes</label>
+                                    </div>
+                                    <div class="radio">
+                                        <label><input type="radio" name="optradio">No</label>
+                                    </div>
+                                    Select time per game
+                                    <select class="browser-default custom-select" id="gameTimeLimit">
+                                        <option selected>Select one</option>
+                                        <option value="1">10 min</option>
+                                        <option value="2">20 min</option>
+                                        <option value="3">1 hour</option>
+                                    </select>
+                                    </div>
+
+                                    <!-- Modal footer -->
+                                    <div class="modal-footer">
+                                    <button class="btn btn-primary create" value="{{userName}}" data-dismiss="modal" >Create Game</button>
+                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                    </div>
+                                </div>
+                                </div>
+                            </div>
                             
                             {{/each}}
                         </tbody>
@@ -212,7 +262,9 @@
     var socket = io();
     $('.create').each(function() {
         $( this ).on('click', function (e) {
-            socket.emit('createGame', { player1: currUser, player2: e.target.value });
+            var moveTimeLimit = $("#moveTimeLimit option:selected").val();
+            var gameTimeLimit = $("#gameTimeLimit option:selected").val();
+            socket.emit('createGame', { player1: currUser, player2: e.target.value, moveTimeLimit: moveTimeLimit, gameTimeLimit: gameTimeLimit });
         });
     });
     socket.on('newGame', function (data) {

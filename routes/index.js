@@ -76,8 +76,7 @@ var getAvailGames = function (req, res, next) {
     console.log('finish get sql');
     if (err) {
       console.log('Error retrieving available games.');
-    }
-    else {
+    } else {
       for (var i = 0; i < results.count; i++) {
         console.log('looping');
         availGames[i] = results.rows[i];
@@ -91,7 +90,6 @@ var getAvailGames = function (req, res, next) {
     }
     return next();
   });
-  return next();
 }
 
 var getLeaderboard = function (req, res, next) {
@@ -107,9 +105,7 @@ var getLeaderboard = function (req, res, next) {
   }).then(function (results, err) {
     if (err) {
       console.log('Error retrieving leaderboard.');
-      return next();
-    }
-    else {
+    } else {
       for (var i = 0; i < results.count; i++) {
         if (i < 10) {
           lbTop10[i] = results.rows[i];
@@ -124,8 +120,8 @@ var getLeaderboard = function (req, res, next) {
       }
       req.lbTop10 = lbTop10;
       req.lbAll = lbAll;
-      return next();
     }
+    return next();
   });
 }
 
