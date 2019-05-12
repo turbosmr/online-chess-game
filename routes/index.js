@@ -128,6 +128,7 @@ var getLeaderboard = function (req, res, next) {
       return next();
     }
   });
+  return next();
 }
 
 // Welcome page
