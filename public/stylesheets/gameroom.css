@@ -2,12 +2,61 @@ div.modalBoard {
     display: flex;
     justify-content: center
 }
-.gameroom-height-adjust {
-    min-height: 65px;
-}
 .btn.gameroom {
     width: 120px;
+    background-color: rgb(120, 120, 120);
+    color: white;
+}
+.btn.gameroom:hover {
+    color: white;
+    background-color: rgb(100, 100, 100);
+}
+.btn.btn-danger{
+    width: 120px;
+}
+.game-arrow-buttons {
+    background-color: rgb(120, 120, 120);
+    color: white;
+    font-size:20px;
+}
+.game-arrow-buttons:hover {
+    color: white;
+    background-color: rgb(100, 100, 100);
 }
 .center {
     text-align: center;
+}
+.oppName {
+    color: white;
+    text-align: center;
+    padding-bottom: 8px;
+} 
+.currUser {
+    color: white;
+    text-align: center;
+    padding-bottom: 20px;
+} 
+.col-md-3 {
+    padding-top: 73px;
+}
+.panel-login>.panel-heading {
+    text-align:center;
+}
+.panel-login>.panel-heading a{
+    font-family:Arial, Helvetica, sans-serif;
+	text-decoration: none;
+	color: gray;
+	font-size: 24px;
+	-webkit-transition: all 0.1s linear;
+	-moz-transition: all 0.1s linear;
+    transition: all 0.1s linear;
+}
+.panel-login>.panel-heading a.active{
+    font-family:Arial, Helvetica, sans-serif;
+	color: black;
+	font-size: 24px;
+}
+.gameWell {
+    height:526px;
+    padding:8px;
 }

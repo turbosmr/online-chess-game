@@ -1,71 +1,81 @@
-<script src="https://cdnjs.cloudflare.com/ajax/libs/chess.js/0.10.2/chess.js"></script>
-<div class="topSpace"></div>
-
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<!--buttons for game-->
 <div class="col-md-3">
-
-  <!--gameroom2 class div is needed to give proper height to buttons container-->
-  <div class="gameroom-height-adjust">
-  </div>
-
-  <!--buttons for game-->
   <div class="well well-sm">
     <br>
-    <button type="button" class=" btn gameroom center-block">Submit Move</button><br>
-    <button type="button" class=" btn gameroom center-block">Offer Draw</button><br>
-    <button type="button" class=" btn gameroom btn-danger center-block">Resign Game</button><br>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/chess.js/0.10.2/chess.js"></script>
-    <div class="chessboard" id="board5" style="margin: 0 auto; width: 400px;">
-    </div>
+    <button type="button" class=" btn gameroom center-block" id="submitMove" disabled>Submit Move</button><br>
+    <button type="button" class=" btn gameroom center-block" id="undoMove" disabled>Undo Move</button><br>
+    <button type="button" class=" btn gameroom center-block" id="offerDraw" disabled>Offer Draw</button><br>
+    <button type="button" class=" btn btn-danger center-block" id="resignGame" disabled>Resign Game</button><br>
     <div class="center">
       <div class="btn-group">
-        <button class="btn" type="button" id="startPositionBtn5"><span
-            class="glyphicon glyphicon-step-backward"></span></button>
-        <button class="btn" type="button" id="prevBtn5"><span class="glyphicon glyphicon-backward"></span></button>
-        <button class="btn" type="button" id="nextBtn5"><span class="glyphicon glyphicon-forward"></span></button>
-        <button class="btn" type="button" id="endPositionBtn5"><span
-            class="glyphicon glyphicon-step-forward"></span></button>
+        <button class="btn game-arrow-buttons" type="button" id="startPositionBtn5"><span
+            class="fa fa-angle-double-left"></span></button>
+        <button class="btn game-arrow-buttons" type="button" id="prevBtn5"><span
+            class="fa fa-angle-left"></span></button>
+        <button class="btn game-arrow-buttons" type="button" id="nextBtn5"><span
+            class="fa fa-angle-right"></span></button>
+        <button class="btn game-arrow-buttons" type="button" id="endPositionBtn5"><span
+            class="fa fa-angle-double-right"></span></button>
+      </div><br><br>
+      <div class="btn-group">
+        <button type="button" class="btn btn-success center-block" id="2D">2D</button>
+        <button type="button" class="btn btn-success center-block" id="3D">3D</button>
       </div>
     </div>
     <br>
   </div>
 
   <!--text to display time per move, time left, and your move-->
-  <h3 class="gameroom" style="color:white">Time Per Move: 1 Day</h3>
-  <h3 class="gameroom" style="color:white">Time Left: 12:54</h3>
-  <h3 id="gameStatus" style="color:rgb(58, 153, 58)"></h3>
-  <h3 id="userHello" style="color:rgb(58, 153, 58)"></h3>
+  <h4 id="moveTimer" style="color:white"></h4>
+  <h4 id="moveStatus" style="color:rgb(58, 153, 58)"></h4>
+  <h4 id="userHello" style="color:rgb(58, 153, 58)"></h4>
+
 </div>
 
 <div class="col-md-6">
   <!--text for person you are playing-->
-  <h3 class="text-center" style="color:white" id="oppName"></h3>
+  <div class="oppName">
+    <h3 id="oppName"></h3>
+  </div>
 
   <!--chessboard and pieces-->
   <div class="chessboard well-sm">
-    <div id="board" style="width: 100%"></div>
+    <div id="board"></div>
   </div>
 
   <!--text for person you are playing-->
-  <h3 class="text-center" style="color:white" id="currUser"></h3>
-  <br>
+  <div class="currUser">
+    <h3 id="currUser"></h3>
+  </div>
 </div>
 
+<!--Chat/ Hisory tabs-->
 <div class="col-md-3">
-
-  <!--gameroom-chat-height-adjust class div is needed to give proper height to chat container-->
-  <div class="gameroom-height-adjust">
-  </div>
-
-  <!--Chat-->
-  <div class="well well-sm">
-    <h4 class="text-center">Chat</h4>
-    <div class="well gameChatScroll" id="messagesList">
-      <ul class="thin" id="messages"></ul>
+  <div class="well gameWell">
+    <div class="panel-login">
+      <div class="panel-heading">
+        <div class="row">
+          <div class="col-xs-6">
+            <a href="#" class="active" id="game-chat-link">Chat</a>
+          </div>
+          <div class="col-xs-6">
+            <a href="#" id="move-history-link">History</a>
+          </div>
+        </div>
+      </div>
     </div>
+    <div id="game-chat">
+      <div class="well gameChatScroll" id="messagesList">
+        <ul class="thin" id="messages"></ul>
+      </div>
       <form id="submit-msg" action="">
-        <input id="m" autocomplete="off"></input> <button type="submit" class="btn btn-success btn-xs">Send</button>
+        <input id="m" autocomplete="off"></input>
+        <button type="submit" class="btn btn-success pull-right btn-xs">Send</button>
       </form>
-    <br>
+    </div>
+    <div id="move-history" style="display: none;">
+      <div class="well gameChatScroll" id="move-history-pgn">
+      </div>
+    </div>
   </div>
-</div>

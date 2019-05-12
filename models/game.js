@@ -1,16 +1,35 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
   const Game = sequelize.define('Game', {
-    gameId: DataTypes.INTEGER,
-    player1: DataTypes.STRING,
+    gameId: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
+    player1: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
     player2: DataTypes.STRING,
-    fen: DataTypes.STRING,
+    fen: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      defaultValue: 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1'
+    },
     pgn: DataTypes.STRING,
-    move: DataTypes.STRING,
+    turns: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      defaultValue: 0
+    },
+    move: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
     result: DataTypes.STRING,
     startTime: DataTypes.TIME,
     endTime: DataTypes.TIME,
     moveTimeLimit: DataTypes.INTEGER,
+    makeMoveBy: DataTypes.DOUBLE,
     gameTimeLimit: DataTypes.INTEGER
   }, {});
   Game.associate = function(models) {

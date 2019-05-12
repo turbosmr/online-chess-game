@@ -9,13 +9,9 @@ $(function () {
 
     // Retrieve number of connected users
     socket.on('users connected', function (num_users_connected) {
-        $('#users-connected').html("Users connected: " + num_users_connected);
+        $('#players-online').html("Players online: " + num_users_connected);
     });
 
-    // Retrieve messages from database upon entering chatroom
-    socket.on('retrieve messages', function (msg) {
-        $('#messages').append($('<li>').text(msg.userName + ": " + msg.message));
-    });
     $('#submit-msg').submit(function (e) {
         e.preventDefault(); // prevents page reloading
         console.log('submit method iinside mainjs');
@@ -32,59 +28,43 @@ $(function () {
     // Display messages on screen
     socket.on('chat message', function (data) {
         $('#messages').append($('<li>').text(data.username + ": " + data.msg));
+        //when msg recieved scroll to bottom
+        scrollToBottom();
     });
 
-<<<<<<< HEAD
-    // //message scroll
-    // var messageList = document.getElementById('messagesList');
-
-    // function getMessages() {
-    //     shouldScroll = messagesList.scollTop + messagesList.clientHeight === messagesList.scrollHeight;
-
-    //     if(!shouldScroll) {
-    //         scrollToBottom()
-    //     }
-    // }
-
-    // function scrollToBottom() {
-    //     messagesList.scrollTop = messagesList.scrollHeight;
-    // }
-    
-    // scrollToBottom();
-    
-    // setInterval(getMessages, 100);
-=======
     //message scroll
-    function getMessages() {
-        shouldScroll = messagesList.scollTop + messagesList.clientHeight === messagesList.scrollHeight;
-
-        if (!shouldScroll) {
-            scrollToBottom()
-        }
+    var $el = $("#messagesList");
+    var messagesList = document.getElementById('messagesList')
+    function anim() {
+        var st = $el.scrollTop();
+        var sb = $el.prop("scrollHeight")-$el.innerHeight();
+        $el.animate({scrollTop: sb}, "fast",anim);
+    }
+    function stop(){
+        $el.stop();
     }
 
+    //scroll to bottom
     function scrollToBottom() {
         messagesList.scrollTop = messagesList.scrollHeight;
     }
 
-    scrollToBottom();
-
-    setInterval(getMessages, 100);
->>>>>>> 2db62f870809be10da9abb4ae6e96e75b026343d
+    //when hovering stop animation of scrolling
+    $el.hover(stop, anim);
     //end of message scroll
-
 
     /**
      * Create a new game.
      */
     $('#new').on('click', function () {
-        socket.emit('createGame', { player1: currUser });
+        var moveTimeLimit = $("#moveTimeLimit option:selected").val();
+        socket.emit('createGame', { player1: currUser, moveTimeLimit: moveTimeLimit });
     });
 
     /**
      * Redirect user to game page.
      */
     socket.on('newGame', function (data) {
-        location.replace("/game/" + data.gameID);
+        document.location.replace("/game/" + data.gameID);
     });
 });
