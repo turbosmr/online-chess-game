@@ -68,12 +68,13 @@
       </div>
 
       <!-- Button to Open the Modal -->
-      <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#myModal">Create
+      <button type="button" class="btn btn-sm btn-primary" data-keyboard="false" data-backdrop="static"
+      data-toggle="modal" data-target="#myModal">Create
         Game</button>
 
       <!-- The Modal -->
       <div class="modal" id="myModal">
-        <div class="modal-dialog">
+       <div class="modal-dialog modal-sm">
           <div class="modal-content">
 
             <!-- Modal Header -->
@@ -96,25 +97,11 @@
                 <option value="4320">3 days</option>
                 <option value="7200">5 days</option>
               </select>
-              <div class="radio">
-                <p>Timed Game</p>
-                <label><input type="radio" name="optradio" checked>Yes</label>
-              </div>
-              <div class="radio">
-                <label><input type="radio" name="optradio">No</label>
-              </div>
-              Select time per game
-              <select class="browser-default custom-select">
-                <option selected>Select one</option>
-                <option value="1">10 min</option>
-                <option value="2">20 min</option>
-                <option value="3">1 hour</option>
-              </select>
             </div>
 
             <!-- Modal footer -->
             <div class="modal-footer">
-              <button type="button" class="btn btn-primary" data-dismiss="modal" id="new">Create Game</button>
+              <button type="button" class="btn btn-primary pull-left" data-dismiss="modal" id="new">Create Game</button>
               <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
             </div>
           </div>
