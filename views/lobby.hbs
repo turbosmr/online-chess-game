@@ -130,7 +130,8 @@
           <thead>
             <tr>
               <th class="col-xs-2">Rank</th>
-              <th class="col-xs-4">Player</th>
+              <th class="col-xs-2">Player</th>
+              <th class="col-xs-2">Rating</th>
               <th class="col-xs-2">Wins</th>
               <th class="col-xs-2">Losses</th>
               <th class="col-xs-2">Draws</th>
@@ -140,7 +141,8 @@
             {{#each lbTop10}}
             <tr>
               <td class="col-xs-2">{{this.rank}}</td>
-              <td class="col-xs-4">{{this.userName}}</td>
+              <td class="col-xs-2">{{this.userName}}</td>
+              <td class="col-xs-2">{{this.rating}}</td>
               <td class="col-xs-2">{{this.winCount}}</td>
               <td class="col-xs-2">{{this.loseCount}}</td>
               <td class="col-xs-2">{{this.drawCount}}</td>
@@ -173,7 +175,8 @@
                     <thead>
                       <tr>
                         <th class="col-xs-2">Rank</th>
-                        <th class="col-xs-4">Player</th>
+                        <th class="col-xs-2">Player</th>
+                        <th class="col-xs-2">Rating</th>
                         <th class="col-xs-2">Wins</th>
                         <th class="col-xs-2">Losses</th>
                         <th class="col-xs-2">Draws</th>
@@ -183,7 +186,8 @@
                       {{#each lbAll}}
                       <tr>
                         <td class="col-xs-2">{{this.rank}}</td>
-                        <td class="col-xs-4">{{this.userName}}</td>
+                        <td class="col-xs-2">{{this.userName}}</td>
+                        <td class="col-xs-2">{{this.rating}}</td>
                         <td class="col-xs-2">{{this.winCount}}</td>
                         <td class="col-xs-2">{{this.loseCount}}</td>
                         <td class="col-xs-2">{{this.drawCount}}</td>

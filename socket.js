@@ -1,4 +1,5 @@
 const Sequelize = require('sequelize');
+const EloRating = require('elo-rating');
 const Op = Sequelize.Op;
 
 // Load Games Model
@@ -242,38 +243,135 @@ module.exports = function (io) {
     });
 
     function updateUserStat(game) {
-        if (game.result == 'Checkmate' || game.result == 'Move Time Expired' || game.result == 'Resignation') {
-            if (game.move != game.player1) {
-                // Winner; update user's win count
-                User.update({
-                    winCount: Sequelize.literal('winCount + 1')
-                }, { where: { userName: game.player1 } });
-                // Loser; update user's lose count
-                User.update({
-                    loseCount: Sequelize.literal('loseCount + 1')
-                }, { where: { userName: game.player2 } });
+
+        var p1Rating;
+        var p2Rating;
+
+        User.findAndCountAll().then(function(users,error) {
+            
+            for(var i = 0; i < users.count; i++)
+            {
+                if(users.rows[i].userName == game.player1)
+                {
+                    p1Rating = users.rows[i].rating;
+                }
+                else if(users.rows[i].userName == game.player2)
+                {
+                    p2Rating = users.rows[i].rating;
+                }
             }
-            else {
-                // Winner; update user's win count
-                User.update({
-                    winCount: Sequelize.literal('winCount + 1')
-                }, { where: { userName: game.player2 } });
-                // Loser; update user's lose count
-                User.update({
-                    loseCount: Sequelize.literal('loseCount + 1')
-                }, { where: { userName: game.player1 } });
+
+            console.log('p1 rating: ' + p1Rating);
+            console.log('p2 rating: ' + p2Rating);
+
+            //determine k-factor for p1 and p2
+            var k1Factor;
+            var k2Factor;
+            if(p1Rating < 2100)
+            {
+                k1Factor = 32;
             }
-        }
-        else if (game.result == 'Draw') {
-            // Update users' draw count
-            User.update({
-                drawCount: Sequelize.literal('drawCount + 1')
-            }, { where: { userName: game.player1 } });
-            // Update users' draw count
-            User.update({
-                drawCount: Sequelize.literal('drawCount + 1')
-            }, { where: { userName: game.player2 } });
-        }
+            else if(p1Rating >= 2100 && p1Rating <= 2400)
+            {
+                k1Factor = 24;
+            }
+            else
+            {
+                k1Factor = 16;
+            }
+
+            if(p2Rating < 2100)
+            {
+                k2Factor = 32;
+            }
+            else if(p2Rating >= 2100 && p2Rating <= 2400)
+            {
+                k2Factor = 24;
+            }
+            else
+            {
+                k2Factor = 16;
+            }
+
+            console.log('k1Factor: ' + k1Factor);
+            console.log('k2Factor: ' + k2Factor);
+
+            if (game.result == 'Checkmate' || game.result == 'Move Time Expired' || game.result == 'Resignation') {
+
+                if (game.move != game.player1) {
+    
+                    var elo = EloRating.calculate(p1Rating, p2Rating, true, k1Factor);
+                    console.log(game.player1 + ' elo: ' + elo.playerRating + ', ' + game.player2 +  ' elo: ' + elo.opponentRating);
+                    // Winner; update user's win count and rating
+                    User.update({
+                        winCount: Sequelize.literal('winCount + 1'),
+                        rating: elo.playerRating
+                    }, { where: { userName: game.player1 } });
+                    // Loser; update user's lose count and rating
+                    User.update({
+                        loseCount: Sequelize.literal('loseCount + 1'),
+                        rating: elo.opponentRating
+                    }, { where: { userName: game.player2 } });
+                }
+                else {
+                    var elo = EloRating.calculate(p2Rating, p1Rating, true, k2Factor);
+                    console.log(game.player1 + ' elo: ' + elo.playerRating + ', ' + game.player2 +  ' elo: ' + elo.opponentRating);
+                    // Winner; update user's win count
+                    User.update({
+                        winCount: Sequelize.literal('winCount + 1'),
+                        rating: elo.playerRating
+                    }, { where: { userName: game.player2 } });
+                    // Loser; update user's lose count
+                    User.update({
+                        loseCount: Sequelize.literal('loseCount + 1'),
+                        rating: elo.opponentRating
+                    }, { where: { userName: game.player1 } });
+                }
+            }
+            else if (game.result == 'Draw') {
+                //k1 + [0.5 * expected score] //0.5 is the draw
+                var expectedScore = EloRating.expected(p1Rating, p2Rating);
+                var difference = k1 + (0.5 * expectedScore);
+
+                if(p1Rating > p2Rating)
+                {
+                    // Update users' draw count
+                    User.update({
+                        drawCount: Sequelize.literal('drawCount + 1'),
+                        rating: Sequelize.literal('rating -' + difference)
+                    }, { where: { userName: game.player1 } });
+                    // Update users' draw count
+                    User.update({
+                        drawCount: Sequelize.literal('drawCount + 1'),
+                        rating: Sequelize.literal('rating +' + difference)
+                    }, { where: { userName: game.player2 } });
+                }
+                else if(p1Rating < p2Rating)
+                {
+                    // Update users' draw count
+                    User.update({
+                        drawCount: Sequelize.literal('drawCount + 1'),
+                        rating: Sequelize.literal('rating +' + difference)
+                    }, { where: { userName: game.player1 } });
+                    // Update users' draw count
+                    User.update({
+                        drawCount: Sequelize.literal('drawCount + 1'),
+                        rating: Sequelize.literal('rating -' + difference)
+                    }, { where: { userName: game.player2 } });
+                }
+                else
+                {
+                    // Update users' draw count
+                    User.update({
+                        drawCount: Sequelize.literal('drawCount + 1')
+                    }, { where: { userName: game.player1 } });
+                    // Update users' draw count
+                    User.update({
+                        drawCount: Sequelize.literal('drawCount + 1')
+                    }, { where: { userName: game.player2 } });
+                }
+            }
+        });
     }
 
     function IDGenerator() {
