@@ -2,23 +2,26 @@
     <h2 class="welcome-login-reg-header">Register</h2>
 </div>
 <div class="reg-login-bg">
+
+    <!-- Display any error or success messages -->
+    <div class="reg-login-messages">
+        {{> messages}}
+    </div>
     <div class="row">
         <!-- Register form -->
         <div class="reg-login-form">
             <form action="/users/register" method="POST">
-                <!-- Display any error or success messages -->
-                {{> messages}}
                 <div class="form-group">
                     <input type="username" id="username" name="username" class="form-control"
-                        placeholder="Enter Username" value="{{username}}" maxlength="10"/>
+                        placeholder="Enter Username" value="{{username}}" maxlength="10" />
                 </div>
                 <div class="form-group">
                     <input type="password" id="password" name="password" class="form-control"
-                        placeholder="Create Password" maxlength="20"/>
+                        placeholder="Create Password" maxlength="20" />
                 </div>
                 <div class="form-group">
                     <input type="password" id="password2" name="password2" class="form-control"
-                        placeholder="Confirm Password" maxlength="20"/>
+                        placeholder="Confirm Password" maxlength="20" />
                 </div>
                 <button type="submit" class="btn btn-primary btn-block">
                     Register
@@ -30,3 +33,77 @@
         </div>
     </div>
 </div>
+
+
+<!--
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+<script>$(function () {
+        $('#login-form-link').click(function (e) {
+            $("#login-form").delay(100).fadeIn(100);
+            $("#register-form").fadeOut(100);
+            $('#register-form-link').removeClass('active');
+            $(this).addClass('active');
+            e.preventDefault();
+        });
+        $('#register-form-link').click(function (e) {
+            $("#register-form").delay(100).fadeIn(100);
+            $("#login-form").fadeOut(100);
+            $('#login-form-link').removeClass('active');
+            $(this).addClass('active');
+            e.preventDefault();
+        });
+    });
+</script>
+<div class="welcome-login-reg-header">
+    <h2 class="welcome-login-reg-header">Welcome to TEAM 10 CHESS</h2>
+</div>
+<div class="reg-login-bg">
+    <div class="reg-login-form">
+        {{> messages}}
+        <div class="panel panel-login">
+            <div class="panel-heading">
+                <div class="row">
+                    <div class="col-xs-6">
+                        <a href="#" class="active" id="login-form-link">Login</a>
+                    </div>
+                    <div class="col-xs-6">
+                        <a href="#" id="register-form-link">Register</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <form id="login-form" action="/users/login" method="POST" role="form" style="display: block;">
+            <div class="form-group">
+                <input type="text" name="username" id="username" tabindex="1" class="form-control"
+                    placeholder="Enter Username">
+            </div>
+            <div class="form-group">
+                <input type="password" name="password" id="password" tabindex="2" class="form-control"
+                    placeholder="Enter Password">
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary btn-block">Login</button>
+            </div>
+        </form>
+        <form id="register-form" action="/users/register" method="POST" role="form" style="display: none;">
+            <div class="form-group">
+                <input type="text" name="username" id="username" tabindex="1" class="form-control"
+                   placeholder="Enter Username" value="{{username}}" maxlength="10">
+            </div>
+            <div class="form-group">
+                <input type="password" name="password" id="password" tabindex="2" class="form-control"
+                    placeholder="Create Password" maxlength="20">
+            </div>
+            <div class="form-group">
+                <input type="password" name="password2" id="password2" tabindex="2" class="form-control"
+                    placeholder="Confirm Password" maxlength="20">
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary btn-block">Register</button>
+            </div>
+        </form>
+    </div>
+</div>
+-->
