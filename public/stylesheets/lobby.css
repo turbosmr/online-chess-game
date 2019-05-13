@@ -6,9 +6,6 @@
     height:456px;
     overflow-y:scroll;
 }
-td {
-    font-weight: lighter;
-}
 .lobbyWells {
     height:585px;
 }
@@ -50,4 +47,8 @@ td {
 .table-fixed tbody td, .table-fixed thead > tr> th {
   float: left;
   border-bottom-width: 0;
+}
+#players-online {
+
+  padding-top: 15px;
 }

@@ -23,18 +23,19 @@
           <thead>
             <tr>
               <th class="col-xs-3">Opponent</th>
-              <th class="col-xs-3">Time</th>
+              <th class="col-xs-2">Time</th>
               <th class="col-xs-3">Move</th>
-              <th class="col-xs-3"></th>
+              <th class="col-xs-4"></th>
             </tr>
           </thead>
           <tbody id="gamesScroll">
             {{#each currGames}}
             <tr>
               <td class="col-xs-3">{{this.oppName}} {{#if this.oppActive}}<span class="dot"></span>{{/if}}</td>
-              <td class="col-xs-3">{{this.moveTime}}</td>
+              <td class="col-xs-2">{{this.moveTime}}</td>
               <td class="col-xs-3">{{this.move}}</td>
-              <td class="col-xs-3"><a type="button" href="/game/{{this.gameId}}" class="btn pull-right btn-success btn-xs">Rejoin</a></td>
+              <td class="col-xs-4"><a type="button" href="/game/{{this.gameId}}" class="btn pull-right btn-success btn-xs">Rejoin
+                  Game</a></td>
             </tr>
             {{/each}}
           </tbody>
@@ -59,7 +60,8 @@
                 <td class="col-xs-3">{{this.player1}}</td>
                 <td class="col-xs-3">{{this.moveTime}}</td>
                 <td class="col-xs-2"></td>
-                <td class="col-xs-4"><a type="button" href="/game/{{this.gameId}}" class="btn pull-right btn-success btn-xs">Join</a></td>
+                <td class="col-xs-4"><a type="button" href="/game/{{this.gameId}}" class="btn pull-right btn-success btn-xs">Join
+                    Game</a></td>
               </tr>
               {{/each}}
             </tbody>
