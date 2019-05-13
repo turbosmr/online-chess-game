@@ -10,11 +10,12 @@ module.exports = {
       },
       userId: {
         allowNull: false,
+        unique: 'compositeIndex',
         type: Sequelize.INTEGER
       },
       friendId: {
         allowNull: false,
-        unique: true,
+        unique: 'compositeIndex',
         type: Sequelize.INTEGER
       },
       createdAt: {

@@ -1,3 +1,16 @@
+
+  .img-responsive {
+    display: block;
+    max-width: 100%;
+    height: auto;
+  }
+  /* label{
+    color: aliceblue;
+    
+  } */
+ .btn.padding{
+    padding:5px;
+ }
 .friendsScroll {
   height:174px;
   overflow-y:scroll;

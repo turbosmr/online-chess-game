@@ -57,8 +57,8 @@ module.exports = function (io) {
                 player1: data.player1,
                 fen: 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1',
                 move: data.player1,
-                moveTimeLimit: '',
-                gameTimeLimit: ''
+                moveTimeLimit: data.moveTimeLimit,
+                gameTimeLimit: data.gameTimeLimit
             };
             Game.create({
                 gameId: gameRoom.gameID,
@@ -67,7 +67,7 @@ module.exports = function (io) {
                 fen: gameRoom.fen,
                 move: gameRoom.move,
                 moveTimeLimit: gameRoom.moveTimeLimit,
-                gameTimeLimit: gameRoom.gameTimeLimit
+                gameTimeLimit: gameRoom.gameTimeLimit 
             });
             console.log(data.player1 + ' created game: ' + gameID);
             socket.emit('newGame', { gameID: gameID });
