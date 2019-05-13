@@ -3,8 +3,8 @@
   overflow-y: auto;
 }
 .leaderBoardScroll {
-  height:456px;
-  overflow-y:scroll;
+    height:456px;
+    overflow-y:scroll;
 }
 .lobbyWells {
   height:585px;
