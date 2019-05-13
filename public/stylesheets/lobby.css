@@ -6,9 +6,6 @@
     height:456px;
     overflow-y:scroll;
 }
-td {
-    font-weight: lighter;
-}
 .lobbyWells {
     height:585px;
 }
