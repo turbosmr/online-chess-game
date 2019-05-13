@@ -321,7 +321,7 @@ module.exports = function (io) {
             else if (game.result == 'Draw') {
                 //k1 + [0.5 * expected score] //0.5 is the draw
                 var expectedScore = EloRating.expected(p1Rating, p2Rating);
-                var difference = k1 + (0.5 * expectedScore);
+                var difference = k1Factor + (0.5 * expectedScore);
 
                 if(p1Rating > p2Rating)
                 {
