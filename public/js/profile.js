@@ -26,7 +26,7 @@ $(function () {
 
 var loadDoc = function () {
   $.ajax({
-      url: '/search',
+      url: '/profile/search',
       type: 'GET',
       data: { search: $('input')[0].value, },
       success: function (data) {

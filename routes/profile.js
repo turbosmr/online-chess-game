@@ -37,6 +37,24 @@ router.post('/save', (req, res, next) => {
   res.redirect('/profile');
 });
 
+// Friend search request
+router.get('/search', ensureAuthenticated, function (req, res) {
+  if (req.xhr || req.accepts('json, html') === 'json') {
+    User.findAll({ where: { userName: { [Op.like]: '%' + req.query.search + '%' } } }).then(function (users) {
+      if (users) {
+        res.send({ users: users });
+      } else {
+        res.send({ users: undefined });
+      }
+    });
+
+  } else {
+    //Do something else by reloading the page.
+    console.log('not ajax byebye');
+    res.send({ users: undefined });
+  }
+});
+
 // Add friend
 router.post('/addFriend', (req, res, next) => {
   req.user.addFriends(parseInt(req.body.id)).then(function(){

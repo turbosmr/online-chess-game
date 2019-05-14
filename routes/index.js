@@ -142,24 +142,6 @@ router.get('/lobby', ensureAuthenticated, getCurrGames, getAvailGames, getLeader
   });
 });
 
-// Search request searchController.search do the function callback at search controller
-router.get('/search', ensureAuthenticated, function (req, res) {
-  if (req.xhr || req.accepts('json, html') === 'json') {
-    User.findAll({ where: { userName: { [Op.like]: '%' + req.query.search + '%' } } }).then(function (users) {
-      if (users) {
-        res.send({ users: users });
-      } else {
-        res.send({ users: undefined });
-      }
-    });
-
-  } else {
-    //Do something else by reloading the page.
-    console.log('not ajax byebye');
-    res.send({ users: undefined });
-  }
-});
-
 // How to Play page
 router.get('/howToPlay', ensureAuthenticated, function (req, res) {
   res.render('howToPlay', {
