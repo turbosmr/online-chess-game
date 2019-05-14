@@ -192,7 +192,7 @@ module.exports = function (io) {
         /**
          * Move timer.
          */
-        /*setInterval(function () {
+        setInterval(function () {
             Game.findAndCountAll({
                 where: {
                     [Op.not]: [{ player2: null }],
@@ -230,7 +230,7 @@ module.exports = function (io) {
                     }
                 }
             });
-        }, 1000);*/
+        }, 1000);
     });
 
     function updateUserStat(game) {
