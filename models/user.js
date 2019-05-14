@@ -26,8 +26,14 @@ module.exports = (sequelize, DataTypes) => {
     },
     rating: DataTypes.DOUBLE,
     isActive: DataTypes.BOOLEAN,
-    boardTheme2D: DataTypes.STRING,
-    pieceTheme2D: DataTypes.STRING
+    boardTheme2D: {
+      type: DataTypes.STRING,
+      defaultValue: 'default_board_theme'
+    },
+    pieceTheme2D: {
+      type: DataTypes.STRING,
+      defaultValue: 'wikipedia_piece_theme'
+    }
   }, {});
   User.associate = function(models) {
     // associations can be defined here
