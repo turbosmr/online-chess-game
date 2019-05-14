@@ -27,18 +27,19 @@ module.exports = function (io) {
             io.emit('users connected', socketCount);
         });
 
-        // Store and display messages to connected clients, as well as console
-        socket.on('chat message', (data) => {
-            io.emit('chat message', data);
+        // Display lobby chat messages to connected clients
+        socket.on('lobby chat', (data) => {
+            io.emit('lobby chat', data);
         });
 
-        socket.on('game chat message', (data) => {
+        // Store game chat messages and display to that specific gameroom
+        socket.on('game chat', (data) => {
             GameChats.create({
                 gameId: data.gameId,
                 userName: data.username,
                 message: data.msg
             });
-            io.in(data.gameId).emit('game chat message', data);
+            io.in(data.gameId).emit('game chat', data);
         });
 
         /**
@@ -92,13 +93,14 @@ module.exports = function (io) {
                             rejoin = true;
                         }
                         //socket.broadcast.to(data.gameID).emit('oppRejoined', { oppName: data.currUser });
+                        // Retrieve game chat messages
                         GameChats.findAndCountAll({ where: { gameId: data.gameID } }).then(function (messages, err) {
                             if (err) {
                                 console.log('Error retrieving GameChats messages');
                             }
                             else {
                                 for (var i = 0; i < messages.count; i++) {
-                                    socket.emit('retrieve messages', messages.rows[i]);
+                                    socket.emit('retrieve game chat', messages.rows[i]);
                                 }
                             }
                         }).then(function () {
