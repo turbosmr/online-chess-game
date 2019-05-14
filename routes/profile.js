@@ -28,6 +28,7 @@ router.get('/', ensureAuthenticated, function (req, res) {
   });
 });
 
+// Save profile settings
 router.post('/save', (req, res, next) => {
   User.update({
     boardTheme2D: req.body.boardTheme2D,
@@ -36,9 +37,22 @@ router.post('/save', (req, res, next) => {
   res.redirect('/profile');
 });
 
-// Handling a route that does not exist (i.e. /profile/abc123)
-router.get('/*', ensureAuthenticated, function (req, res) {
-  res.redirect('/profile');
+// Add friend
+router.post('/addFriend', (req, res, next) => {
+  req.user.addFriends(parseInt(req.body.id)).then(function(){
+    req.user.getFriends().then(function(friends){
+      res.redirect('/profile');
+    });
+  });
+});
+
+// Remove friend
+router.post('/removeFriend', (req, res, next) => {
+  req.user.removeFriend(parseInt(req.body.id)).then(function(){
+    req.user.getFriends().then(function(friends){
+      res.redirect('/profile');
+    });
+  });
 });
 
 module.exports = router;
