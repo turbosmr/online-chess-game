@@ -6,29 +6,31 @@ body, html {
   margin: 0 0;
   padding-top: 30px;
 }
-.navbar-brand {
-  font-weight: lighter;
-}
+
 .topSpace{
   padding-top: 50px;
 }
+/* this gives the lighter font weight for the header text */
 h2.welcome-login-reg-header {
   font-weight: lighter;
   text-align: center;
   color:white;
 }
+/*gives the size, shadow and alignment for the text for the welcome page */
 .welcome-login-reg-form-header, h2.welcome-login-reg-header {
   padding-bottom: 20px;
   text-align: center;
   font-weight: lighter;
   color:white;
 }
+/* gives the size, shadow and alignment for the text for the login/register pages */
 h5.welcome-login-reg-shadow {
   font-size: 17px;
   text-align: center;
   text-shadow: 1px 1px black;
   color:white;
 }
+
 .reg-login-bg {
   /* The image used */
   background-image: url("/images/chessbg.jpg");
@@ -38,21 +40,25 @@ h5.welcome-login-reg-shadow {
   background-size:cover;
   height: 400px;
 }
+/* adjust the height of the alert messages to be center in the background of the register/login page */ 
 .reg-login-messages {
   padding-top: 80px;
   min-height: 52px;
   width: 250px;
   margin: auto;
 }
+/* shortens the divs for the alerts so they are not too big */
 .alert {
   margin-bottom: 0px;
 }
+
 .reg-login-form {
   padding-top: 20px;
   max-height: 100px;
   margin: auto;
   width: 250px;
 }
+
 .banner, h1.bannerHeader {
   /* The image used */
   background-image: url("/images/chessbg.jpg");
@@ -73,68 +79,65 @@ h5.welcome-login-reg-shadow {
   text-shadow: 1px 1px black;
   color:white;
 }
+
 .container{
   justify-content: center;
   align-items: center;
 }
+/* color and padding of the footer */
 .footer{
   background-color:rgb(37, 36, 36);
   color: white;
   padding: 30px;
 }
+/* this makes the footer stay at the bottom (aka: sticky footer) */
 .footer-pushdown {
   min-height: calc(100% - 89px);
 }
+
 * { 
   margin: 0; padding: 0; box-sizing: border-box; 
 }
+
 #messageList {
   overflow-y:auto;
 }
+
 #messages { 
   list-style-type: none;
   margin: 0;
   padding-top: 0px;
 }
+/* padding for messages */
 #messages li { 
   padding: 5px 10px; 
 }
+/* gives the chat light color difference between lines */
 #messages li:nth-child(odd) { 
   background: #eee; 
 }
+
 form { 
   width: 100%; 
 }
+/* used for the login and register inputs to gives them a boarder */
 input {
-  width: 80%;
+  width: 76%;
   box-sizing: border-box;
   border: 1px solid #ccc;
   border-radius: 4px;
   background-color:whitesmoke;
   resize: none;
 }
-.lobbyChatScroll {
-  height:421px;
-  overflow-y:scroll;
-  background-color: white;
-  border: 1px solid lightgray;
-  border-radius: 5px;
-  padding: 10px;
-}
-.gameChatScroll {
-  height:395px;
-  overflow-y:scroll;
-  background-color: white;
-  border: 1px solid lightgray;
-  border-radius: 5px;
-  padding: 10px;
-}
+/* makkes all wells white */ 
 .well {
   background-color:white;
 }
+
 .center-block{
     float: none;
 }
+/* we were going to use this for an online indicator */
 .dot {
     height: 10px;
     width: 10px;
@@ -142,14 +145,14 @@ input {
     border-radius: 50%;
     display: inline-block;
 }
+/* centers all buttons */
 .centerButton { 
   text-align: center;
   margin-left: 5px;
 }
+/* text style and zero padding so that the text dosen't have too much spacing*/
 h3, h4, h5, p  {
   padding-top: 0;
   font-family: Arial, Helvetica, sans-serif;
 }
-
-
 

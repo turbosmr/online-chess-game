@@ -7,9 +7,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="/stylesheets/main.css">
     {{#if active.Welcome}}
-    <link rel="stylesheet" href="/stylesheets/welcomePage.css">
+    <link rel="stylesheet" href="/stylesheets/welcome.css">
     {{/if}}
     {{#if active.Game}}
     <link rel="stylesheet" href="/stylesheets/gameroom.css">
@@ -34,15 +35,19 @@
     <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="/socket.io/socket.io.js"></script>
     <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.1.js"></script>
-    <script type="text/javascript" src="/js/chessboard-0.3.0.min.js"></script>
+
+    {{#if active.Game}}
     <script type="text/javascript" src="/js/chess.min.js"></script>
     <script type="text/javascript" src="/js/chessboard-0.3.0.js"></script>
+    <script type="text/javascript" src="/js/chessboard-0.3.0.min.js"></script>
     <script type="text/javascript" src="/js/chess.js"></script>
     <script type="text/javascript" src="/js/three.min.js"></script>
     <script type="text/javascript" src="/js/helvetiker_regular.typeface.js"></script>
     <script type="text/javascript" src="/js/OrbitControls.js"></script>
     <script type="text/javascript" src="/js/chessboard3.min.js"></script>
     <script type="text/javascript" src="/js/chessboard3.js"></script>
+    <script type="text/javascript" src="/js/chessboardjs-themes.js"></script>
+    {{/if}}
 </head>
 
 <body style="background-color:rgb(56, 52, 52);">
@@ -109,8 +114,8 @@
     <script src="/js/game.js"></script>
     {{/if}}
 
-    {{#if active.chess3D}}
-    <script src="/js/chess3D.js"></script>
+    {{#if active.Profile}}
+    <script src="/js/profile.js"></script>
     {{/if}}
 </body>
 

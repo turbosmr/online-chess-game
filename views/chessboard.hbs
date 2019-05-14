@@ -1,13 +1,22 @@
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
 <!--buttons for game-->
 <div class="col-md-3">
   <div class="well well-sm">
     <br>
-    <button type="button" class=" btn gameroom center-block" id="submitMove" disabled>Submit Move</button><br>
-    <button type="button" class=" btn gameroom center-block" id="undoMove" disabled>Undo Move</button><br>
-    <button type="button" class=" btn gameroom center-block" id="offerDraw" disabled>Offer Draw</button><br>
-    <button type="button" class=" btn btn-danger center-block" id="resignGame" disabled>Resign Game</button><br>
     <div class="center">
+      <div class="btn-group">
+        <button type="button" class="btn submit-button center-block" id="submitMove" disabled>&#10004;</button>
+        <button type="button" class="btn game-buttons center-block" id="undoMove" disabled>&#10008;</button>
+      </div><br><br>
+
+      <button type="button" class=" btn offerDraw center-block" id="offerDraw" disabled>Offer Draw</button><br>
+      <button type="button" class=" btn btn-danger center-block" id="resignGame" disabled>Resign Game</button><br>
+
+      <div class="btn-group">
+        <button type="button" class="btn game-buttons center-block" id="2D">2D</button>
+        <button type="button" class="btn game-buttons center-block" id="3D">3D</button>
+      </div><br><br>
+
       <div class="btn-group">
         <button class="btn game-arrow-buttons" type="button" id="startPositionBtn5"><span
             class="fa fa-angle-double-left"></span></button>
@@ -17,11 +26,8 @@
             class="fa fa-angle-right"></span></button>
         <button class="btn game-arrow-buttons" type="button" id="endPositionBtn5"><span
             class="fa fa-angle-double-right"></span></button>
-      </div><br><br>
-      <div class="btn-group">
-        <button type="button" class="btn btn-success center-block" id="2D">2D</button>
-        <button type="button" class="btn btn-success center-block" id="3D">3D</button>
-      </div>
+      </div><br>
+
     </div>
     <br>
   </div>
@@ -53,7 +59,7 @@
 <!--Chat/ Hisory tabs-->
 <div class="col-md-3">
   <div class="well gameWell">
-    <div class="panel-login">
+    <div class="panel-chat">
       <div class="panel-heading">
         <div class="row">
           <div class="col-xs-6">
@@ -69,13 +75,13 @@
       <div class="well gameChatScroll" id="messagesList">
         <ul class="thin" id="messages"></ul>
       </div>
-      <form id="submit-msg" action="">
+      <form id="submit-msg">
         <input id="m" autocomplete="off"></input>
         <button type="submit" class="btn btn-success pull-right btn-xs">Send</button>
       </form>
     </div>
     <div id="move-history" style="display: none;">
-      <div class="well gameChatScroll" id="move-history-pgn">
+      <div class="well gameHistoryScroll" id="move-history-pgn">
       </div>
     </div>
   </div>

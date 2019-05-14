@@ -14,6 +14,7 @@
 </h5>
 <br>
 
+<!-- Current games and Avialable games -->
 <div class="row">
   <div class="col-md-4">
     <div class="well lobbyWells well-sm">
@@ -23,25 +24,25 @@
           <thead>
             <tr>
               <th class="col-xs-3">Opponent</th>
-              <th class="col-xs-2">Time</th>
+              <th class="col-xs-3">Time</th>
               <th class="col-xs-3">Move</th>
-              <th class="col-xs-4"></th>
+              <th class="col-xs-3"></th>
             </tr>
           </thead>
           <tbody id="gamesScroll">
             {{#each currGames}}
             <tr>
               <td class="col-xs-3">{{this.oppName}} {{#if this.oppActive}}<span class="dot"></span>{{/if}}</td>
-              <td class="col-xs-2">{{this.moveTime}}</td>
+              <td class="col-xs-3">{{this.moveTime}}</td>
               <td class="col-xs-3">{{this.move}}</td>
-              <td class="col-xs-4"><a type="button" href="/game/{{this.gameId}}" class="btn pull-right btn-success btn-xs">Rejoin
-                  Game</a></td>
+              <td class="col-xs-3"><a type="button" href="/game/{{this.gameId}}"
+                  class="btn pull-right btn-success btn-xs">Rejoin</a></td>
             </tr>
             {{/each}}
           </tbody>
         </table>
       </div>
-
+      <!-- Avialable games -->
       <h3 class="text-center">Available Games</h3>
       <div class="panel-group">
         <div class="gamesWell">
@@ -50,8 +51,8 @@
               <tr>
                 <th class="col-xs-3">Host</th>
                 <th class="col-xs-3">Time</th>
-                <th class="col-xs-2"></th>
-                <th class="col-xs-4"></th>
+                <th class="col-xs-3"></th>
+                <th class="col-xs-3"></th>
               </tr>
             </thead>
             <tbody id="gamesScroll">
@@ -60,8 +61,8 @@
                 <td class="col-xs-3">{{this.player1}}</td>
                 <td class="col-xs-3">{{this.moveTime}}</td>
                 <td class="col-xs-2"></td>
-                <td class="col-xs-4"><a type="button" href="/game/{{this.gameId}}" class="btn pull-right btn-success btn-xs">Join
-                    Game</a></td>
+                <td class="col-xs-4"><a type="button" href="/game/{{this.gameId}}"
+                    class="btn pull-right btn-success btn-xs">Join</a></td>
               </tr>
               {{/each}}
             </tbody>
@@ -69,25 +70,25 @@
         </div>
       </div>
 
-      <!-- Button to Open the Modal -->
-      <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#myModal">Create
+      <!-- Button to Open Create game modal -->
+      <button type="button" class="btn btn-sm btn-primary" data-keyboard="false" data-backdrop="static"
+        data-toggle="modal" data-target="#myModal">Create
         Game</button>
 
-      <!-- The Modal -->
+      <!-- Create game Modal -->
       <div class="modal" id="myModal">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-sm">
           <div class="modal-content">
 
-            <!-- Modal Header -->
+            <!-- Create game Modal Header -->
             <div class="modal-header">
               <h4 class="modal-title">Create New Game</h4>
             </div>
-
-            <!-- Modal body -->
+            <!-- Create game Modal body -->
             <div class="modal-body">
               Select time per move
-              <select class="browser-default custom-select" id="moveTimeLimit">
-                <option selected>Select one</option>
+              <select id="moveTimeLimit" required>
+                <option value="">Select one</option>
                 <option value="1">1 min</option>
                 <option value="2">2 min</option>
                 <option value="3">3 min</option>
@@ -98,25 +99,11 @@
                 <option value="4320">3 days</option>
                 <option value="7200">5 days</option>
               </select>
-              <div class="radio">
-                <p>Timed Game</p>
-                <label><input type="radio" name="optradio" checked>Yes</label>
-              </div>
-              <div class="radio">
-                <label><input type="radio" name="optradio">No</label>
-              </div>
-              Select time per game
-              <select class="browser-default custom-select">
-                <option selected>Select one</option>
-                <option value="1">10 min</option>
-                <option value="2">20 min</option>
-                <option value="3">1 hour</option>
-              </select>
             </div>
 
-            <!-- Modal footer -->
+            <!-- Create game Modal footer -->
             <div class="modal-footer">
-              <button type="button" class="btn btn-primary" data-dismiss="modal" id="new">Create Game</button>
+              <button type="submit" class="btn btn-primary pull-left" id="new">Create Game</button>
               <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
             </div>
           </div>
@@ -124,6 +111,8 @@
       </div>
     </div>
   </div>
+
+  <!-- Leader Board -->
   <div class="col-md-5">
     <div class="lobbyWells well well-sm">
       <h3 class="text-center">Leaderboard</h3>
@@ -133,9 +122,9 @@
             <tr>
               <th class="col-xs-2">Rank</th>
               <th class="col-xs-4">Player</th>
+              <th class="col-xs-2">Rating</th>
               <th class="col-xs-2">Wins</th>
               <th class="col-xs-2">Losses</th>
-              <th class="col-xs-2">Draws</th>
             </tr>
           </thead>
           <tbody>
@@ -143,9 +132,9 @@
             <tr>
               <td class="col-xs-2">{{this.rank}}</td>
               <td class="col-xs-4">{{this.userName}}</td>
+              <td class="col-xs-2">{{this.rating}}</td>
               <td class="col-xs-2">{{this.winCount}}</td>
               <td class="col-xs-2">{{this.loseCount}}</td>
-              <td class="col-xs-2">{{this.drawCount}}</td>
             </tr>
             {{/each}}
           </tbody>
@@ -153,21 +142,21 @@
       </div>
       <br>
 
-      <!-- Button to Open the Modal -->
+      <!-- Button to Open the Leader Board Modal -->
       <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#myModal-2">See Full
         Leaderboard</button>
 
-      <!-- The Modal -->
+      <!-- Leader Board Modal -->
       <div class="modal" id="myModal-2">
         <div class="modal-dialog">
           <div class="modal-content">
 
-            <!-- Modal Header -->
+            <!-- Leader Board Modal Header -->
             <div class="modal-header">
               <h3 class="text-center">Leaderboard</h3>
             </div>
 
-            <!-- Modal body -->
+            <!-- Leader Board Modal body, the tbody will scroll -->
             <div class="modal-body">
               <div class="panel-group">
                 <div class="steveWell">
@@ -175,7 +164,8 @@
                     <thead>
                       <tr>
                         <th class="col-xs-2">Rank</th>
-                        <th class="col-xs-4">Player</th>
+                        <th class="col-xs-2">Player</th>
+                        <th class="col-xs-2">Rating</th>
                         <th class="col-xs-2">Wins</th>
                         <th class="col-xs-2">Losses</th>
                         <th class="col-xs-2">Draws</th>
@@ -185,7 +175,8 @@
                       {{#each lbAll}}
                       <tr>
                         <td class="col-xs-2">{{this.rank}}</td>
-                        <td class="col-xs-4">{{this.userName}}</td>
+                        <td class="col-xs-2">{{this.userName}}</td>
+                        <td class="col-xs-2">{{this.rating}}</td>
                         <td class="col-xs-2">{{this.winCount}}</td>
                         <td class="col-xs-2">{{this.loseCount}}</td>
                         <td class="col-xs-2">{{this.drawCount}}</td>
@@ -196,7 +187,7 @@
                 </div>
               </div>
 
-              <!-- Modal footer -->
+              <!-- Leader Board Modal footer -->
               <div class="modal-footer">
                 <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
               </div>
@@ -206,14 +197,17 @@
       </div>
     </div>
   </div>
+
+  <!-- chat -->
   <div class="col-md-3 center-text">
     <div class="lobbyWells well well-sm">
       <h3 class="text-center">Chat</h3>
       <div class="well lobbyChatScroll" id="messagesList">
         <ul class="thin" id="messages"></ul>
       </div>
-      <form id="submit-msg" action="">
-        <input id="m" autocomplete="off"></input> <button type="submit" class="btn btn-success pull-right btn-xs">Send</button>
+      <form id="submit-msg">
+        <input id="m" autocomplete="off"></input> <button type="submit"
+          class="btn btn-success pull-right btn-xs">Send</button>
       </form>
       <div id="players-online">
       </div>
