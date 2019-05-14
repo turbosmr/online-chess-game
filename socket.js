@@ -32,19 +32,14 @@ module.exports = function (io) {
             io.emit('chat message', data);
         });
 
-
-
         socket.on('game chat message', (data) => {
             GameChats.create({
                 gameId: data.gameId,
                 userName: data.username,
                 message: data.msg
             });
-
             io.in(data.gameId).emit('game chat message', data);
         });
-
-        //leaderboard stuff
 
         /**
          * Create a new game room and notify the creator of game. 
@@ -87,24 +82,28 @@ module.exports = function (io) {
                             rejoin = true;
                         }
                         //socket.broadcast.to(data.gameID).emit('oppRejoined', { oppName: data.currUser });
-                        GameChats.findAndCountAll({ where: { gameId: data.gameID }}).then(function (messages, err) {
+                        GameChats.findAndCountAll({ where: { gameId: data.gameID } }).then(function (messages, err) {
                             if (err) {
                                 console.log('Error retrieving GameChats messages');
                             }
                             else {
                                 for (var i = 0; i < messages.count; i++) {
-                                    //console.log(result.rows[i]);
                                     socket.emit('retrieve messages', messages.rows[i]);
                                 }
                             }
-                        });
-                        socket.emit('joinedGame', {
-                            gameID: game.gameId,
-                            player1: game.player1,
-                            player2: game.player2,
-                            fen: game.fen,
-                            pgn: game.pgn,
-                            rejoin: rejoin
+                        }).then(function () {
+                            User.findOne({ where: { userName: data.currUser } }).then(function (user) {
+                                socket.emit('joinedGame', {
+                                    gameID: game.gameId,
+                                    player1: game.player1,
+                                    player2: game.player2,
+                                    fen: game.fen,
+                                    pgn: game.pgn,
+                                    rejoin: rejoin,
+                                    boardTheme2D: user.boardTheme2D,
+                                    pieceTheme2D: user.pieceTheme2D
+                                });
+                            });
                         });
                     }
                     // Check to see if game is full; if not, join current user
@@ -115,13 +114,16 @@ module.exports = function (io) {
                         socket.join(game.gameId);
                         console.log(data.currUser + ' has joined game: ' + game.gameId);
                         socket.broadcast.to(game.gameId).emit('oppJoined', { oppName: data.currUser });
-                        socket.emit('joinedGame', {
-                            gameID: game.gameId,
-                            player1: game.player1,
-                            player2: game.player2,
-                            fen: game.fen,
-                            pgn: game.pgn,
-                            rejoin: rejoin
+                        User.findOne({ where: { userName: data.currUser } }).then(function (user) {
+                            socket.emit('joinedGame', {
+                                gameID: game.gameId,
+                                player1: game.player1,
+                                player2: game.player2,
+                                fen: game.fen,
+                                pgn: game.pgn,
+                                rejoin: rejoin,
+                                boardTheme2D: user.boardTheme2D
+                            });
                         });
                     }
                     // Game is full
@@ -190,7 +192,7 @@ module.exports = function (io) {
         /**
          * Move timer.
          */
-        setInterval(function () {
+        /*setInterval(function () {
             Game.findAndCountAll({
                 where: {
                     [Op.not]: [{ player2: null }],
@@ -228,7 +230,7 @@ module.exports = function (io) {
                     }
                 }
             });
-        }, 1000);
+        }, 1000);*/
     });
 
     function updateUserStat(game) {

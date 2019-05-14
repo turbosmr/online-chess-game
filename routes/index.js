@@ -1,4 +1,4 @@
-/* This file handles routing except for registration and login */
+/* This file handles "/" routes */
 
 const express = require('express');
 const { ensureAuthenticated, forwardAuthenticated } = require('../config/auth');
@@ -165,15 +165,6 @@ router.get('/search', ensureAuthenticated, function (req, res) {
   }
 });
 
-// Profile page
-router.get('/profile', ensureAuthenticated, function (req, res) {
-  res.render('profile', {
-    currUser: req.user.userName,
-    title: "Profile - Team 10 Chess",
-    active: { Profile: true }
-  });
-});
-
 // How to Play page
 router.get('/howToPlay', ensureAuthenticated, function (req, res) {
   res.render('howToPlay', {
@@ -189,15 +180,6 @@ router.get('/about', ensureAuthenticated, function (req, res) {
     currUser: req.user.userName,
     title: "About - Team 10 Chess",
     active: { About: true }
-  });
-});
-
-// About page
-router.get('/3d', ensureAuthenticated, function (req, res) {
-  res.render('chess3D', {
-    currUser: req.user.userName,
-    title: "About - Team 10 Chess",
-    active: { chess3D: true }
   });
 });
 

@@ -1,23 +1,13 @@
-var loadDoc = function() {
+$('#saveProfile').on('click', function () {
+  var boardTheme2D = $("#boardTheme2D_option option:selected").val();
+  var pieceTheme2D = $("#pieceTheme2D_option option:selected").val();
+  
   $.ajax({
-    url: "/search",
-    type: "GET",
-    data: { search: $("input")[0].value },
-    success: function(data) {
-      let html = "";
-      data.users.forEach(user => {
-        html +=
-          "<tr> \
-                    <td>" +
-          user.userName +
-          '<span class="dot"></span> </td>\
-                    <td><a type="button" href="/game" class="btn btn-success btn-xs">Add Friend</a></td>\
-                </tr>';
-      });
-      $("#search-results").html(html);
-    },
-    error: function() {
-      console.log("error");
+    url: '/profile/save',
+    type: 'POST',
+    data: { boardTheme2D: boardTheme2D, pieceTheme2D: pieceTheme2D },
+    success: function () {
+      location.replace("/profile");
     }
   });
-};
+});

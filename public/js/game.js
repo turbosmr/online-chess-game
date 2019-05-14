@@ -158,6 +158,7 @@ $(function () {
             $('#moveStatus').remove();
             $('#userHello').remove();
             socket.emit('gameEnd', { gameID: gameID, fen: game.fen(), pgn: game.pgn(), result: 'Resignation' });
+            location.replace("/");
         }
     });
 
@@ -264,6 +265,8 @@ $(function () {
             game.load_pgn(data.pgn);
         }
 
+        cfg.boardTheme = window[data.boardTheme2D];
+        cfg.pieceTheme = window[data.pieceTheme2D];
         cfg.position = data.fen;
         board = ChessBoard('board', cfg);
 

@@ -66,6 +66,7 @@ app.use(function (req, res, next) {
 app.use('/', require('./routes/index.js'));
 app.use('/users', require('./routes/users.js'));
 app.use('/game', require('./routes/game.js'));
+app.use('/profile', require('./routes/profile.js'));
 
 // Set port number
 app.set('port', 8081);

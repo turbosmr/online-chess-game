@@ -4,112 +4,102 @@
 <br>
 
 <div class="row">
-
     <div class="col-md-8">
-        <div class="well profileWells well-sm">
+        <div class="well profileWells">
             <div class="row">
                 <div class="col-lg-6">
-                    <h3 class="text-center" style="color:black">Choose your board</h3>
+                    <h3>Board Theme</h3>
+                </div>
+                <div class="col-lg-6">
+                    <h3>Piece Theme</h3>
+                </div>
+                <div class="col-lg-12">
                     <div class="row">
-                        <div class="container ">
-                            <div class="col-xs-2 px-0 ">
-                                <!--Size dropdown content-->
-                                <div id="option1" class="color_table">
-                                    <img src="../images/theme/black.png" class="img-responsive">
-                                </div>
-                                <div id="option2" class="color_table">
-                                    <img src="../images/theme/red.png" class="img-responsive">
-                                </div>
-                                <div id="option3" class="color_table">
-                                    <img src="../images/theme/orange.png" class="img-responsive">
-                                </div>
-                                <div id="option4" class="color_table">
-                                    <img src="../images/theme/green.png" class="img-responsive">
-                                </div>
-                                <div id="option5" class="color_table">
-                                    <img src="../images/theme/blue.png" class="img-responsive">
-                                </div>
-                                <div id="option6" class="color_table">
-                                    <img src="../images/theme/purple.png" class="img-responsive">
-                                </div>
+                        <div class="col-xs-3">
+                            <!--Size dropdown content-->
+                            <div id="default_board_theme" class="boardTheme2D_img">
+                                <img src="../images/board_theme/default_board_theme.png" class="img-responsive">
                             </div>
-                            <div class="col-xs-2 px-0 ">
-                                <!--Size dropdown menu-->
-                                <select id="size_select" onchange='this.form.submitTheme()'>
-
-                                    <option value="option1">Black</option>
-                                    <option value="option2">Red</option>
-                                    <option value="option3">Orange</option>
-                                    <option value="option4">Green</option>
-                                    <option value="option5">Blue</option>
-                                    <option value="option6">Purple</option>
-                                </select>
+                            <div id="chess24_board_theme" class="boardTheme2D_img">
+                                <img src="../images/board_theme/chess24_board_theme.png" class="img-responsive">
                             </div>
-
-                            <div class="col-xs-2 px-0 ">
-                                <!--Size dropdown content-->
-                                <div id="option7" class="size_chart2">
-                                    <div class="row">
-                                        <div class="col-xs-6">
-                                            <img src="../images/chesspieces/wikipedia/bK.png" class="img-responsive">
-                                            <img src="../images/chesspieces/wikipedia/bQ.png" class="img-responsive">
-                                        </div>
-                                        <div class="col-xs-6">
-                                            <img src="../images/chesspieces/wikipedia/bP.png" class="img-responsive">
-                                            <img src="../images/chesspieces/wikipedia/bB.png" class="img-responsive">
-                                        </div>
+                            <div id="metro_board_theme" class="boardTheme2D_img">
+                                <img src="../images/board_theme/metro_board_theme.png" class="img-responsive">
+                            </div>
+                            <div id="leipzig_board_theme" class="boardTheme2D_img">
+                                <img src="../images/board_theme/leipzig_board_theme.png" class="img-responsive">
+                            </div>
+                            <div id="wikipedia_board_theme" class="boardTheme2D_img">
+                                <img src="../images/board_theme/wikipedia_board_theme.png" class="img-responsive">
+                            </div>
+                            <div id="dilena_board_theme" class="boardTheme2D_img">
+                                <img src="../images/board_theme/dilena_board_theme.png" class="img-responsive">
+                            </div>
+                            <div id="uscf_board_theme" class="boardTheme2D_img">
+                                <img src="../images/board_theme/uscf_board_theme.png" class="img-responsive">
+                            </div>
+                            <div id="symbol_board_theme" class="boardTheme2D_img">
+                                <img src="../images/board_theme/symbol_board_theme.png" class="img-responsive">
+                            </div>
+                        </div>
+                        <div class="col-xs-3 px-0 ">
+                            <!--Size dropdown menu-->
+                            <select id="boardTheme2D_option">
+                                <option id="default_board_theme" value="default_board_theme">Default</option>
+                                <option id="chess24_board_theme" value="chess24_board_theme">Chess24</option>
+                                <option id="metro_board_theme" value="metro_board_theme">Metro</option>
+                                <option id="leipzig_board_theme" value="leipzig_board_theme">Leipzig</option>
+                                <option id="wikipedia_board_theme" value="wikipedia_board_theme">Wikipedia</option>
+                                <option id="dilena_board_theme" value="dilena_board_theme">Dilena</option>
+                                <option id="uscf_board_theme" value="uscf_board_theme">USCF</option>
+                                <option id="symbol_board_theme" value="symbol_board_theme">Symbol</option>
+                            </select>
+                        </div>
+                        <div class="col-xs-3 px-0 ">
+                            <!--Size dropdown content-->
+                            <div id="wikipedia_piece_theme" class="pieceTheme2D_img">
+                                <div class="row">
+                                    <div class="col-xs-6">
+                                        <img src="/images/piece_theme/wikipedia/bK.png" class="img-responsive">
+                                        <img src="../images/piece_theme/wikipedia/bQ.png" class="img-responsive">
+                                    </div>
+                                    <div class="col-xs-6">
+                                        <img src="/images/piece_theme/wikipedia/bP.png" class="img-responsive">
+                                        <img src="/images/piece_theme/wikipedia/bB.png" class="img-responsive">
                                     </div>
                                 </div>
-                                <div id="option8" class="size_chart2">
-                                    <div class="row">
-                                        <div class="col-xs-6">
-                                            <img src="../images/chesspieces/wikipedia/bK2.png" class="img-responsive">
-                                            <img src="../images/chesspieces/wikipedia/bQ2.png" class="img-responsive">
-                                        </div>
-                                        <div class="col-xs-6">
-                                            <img src="../images/chesspieces/wikipedia/bP2.png" class="img-responsive">
-                                            <img src="../images/chesspieces/wikipedia/bB2.png" class="img-responsive">
-                                        </div>
+                            </div>
+                            <div id="modern_piece_theme" class="pieceTheme2D_img">
+                                <div class="row">
+                                    <div class="col-xs-6">
+                                        <img src="/images/piece_theme/modern/bK.png" class="img-responsive">
+                                        <img src="/images/piece_theme/modern/bQ.png" class="img-responsive">
+                                    </div>
+                                    <div class="col-xs-6">
+                                        <img src="/images/piece_theme/modern/bP.png" class="img-responsive">
+                                        <img src="/images/piece_theme/modern/bB.png" class="img-responsive">
                                     </div>
                                 </div>
-                                <div id="option9" class="size_chart2">
-                                    <div class="row">
-                                        <div class="col-xs-6">
-                                            <img src="../images/chesspieces/wikipedia/bK2.png" class="img-responsive">
-                                            <img src="../images/chesspieces/wikipedia/bQ2.png" class="img-responsive">
-                                        </div>
-                                        <div class="col-xs-6">
-                                            <img src="../images/chesspieces/wikipedia/bP2.png" class="img-responsive">
-                                            <img src="../images/chesspieces/wikipedia/bB2.png" class="img-responsive">
-                                        </div>
-                                    </div>
-                                </div>
-
                             </div>
-                            <div class="col-xs-2 px-0 ">
-                                <!--Size dropdown menu-->
-                                <select id="size_select2" onchange='this.form.submitTheme()'>
-                                    <option value="option7">Classic</option>
-                                    <option value="option8">Modern</option>
-                                    <option value="option9">Special</option>
-                                </select>
-                            </div>
-
+                        </div>
+                        <div class="col-xs-3 px-0 ">
+                            <!--Size dropdown menu-->
+                            <select id="pieceTheme2D_option">
+                                <option value="classic_piece_theme">Classic</option>
+                                <option value="modern_piece_theme">Modern</option>
+                            </select>
                         </div>
                     </div>
                 </div>
             </div>
-
             <div class="row">
                 <br>
-                <div class="col-xs-2">
-                    <button type="submit" class="btn submit btn-primary">Save settings</button>
+                <div class="col-lg-12">
+                    <button type="submit" class="btn submit btn-primary pull-right" id="saveProfile">Save
+                        settings</button>
                 </div>
             </div>
         </div>
-
-
-
     </div>
 
     <!-- /////////////////////////////////////////////////////////////////////////////////////////////////-->
@@ -140,22 +130,21 @@
                             </tr>
                         </thead>
                         <tbody>
+                            {{#each friends}}
                             <tr>
-                                <td>Johnson <span class="dot"></span> </td>
-                                <td><a type="button" href="/game" class="btn btn-primary btn-xs">Create Game</a></td>
+                                <td>{{userName}} <span class="dot"></span> </td>
+                                <td><button type="button" class="btn btn-success btn-xs" data-toggle="modal"
+                                        data-target="#myModal">Create
+                                        Game</button></td>
+                                <td>
+                                    <form action="/removeFriend" method="POST"><input type="hidden" name="id"
+                                            value="{{id}}" />
+                                        <button type="submit" class="btn btn-success btn-xs">Remove Friend</button>
+                                    </form>
+                                </td>
                             </tr>
-                            <tr>
-                                <td>Anthony</td>
-                                <td><a type="button" href="/game" class="btn btn-primary btn-xs">Create Game</a></td>
-                            </tr>
-                            <tr>
-                                <td>Anthony</td>
-                                <td><a type="button" href="/game" class="btn btn-primary btn-xs">Create Game</a></td>
-                            </tr>
-                            <tr>
-                                <td>Johnson <span class="dot"></span> </td>
-                                <td><a type="button" href="/game" class="btn btn-primary btn-xs">Create Game</a></td>
-                            </tr>
+
+                            {{/each}}
                         </tbody>
                     </table>
                 </div>
@@ -163,37 +152,34 @@
         </div>
     </div>
 </div>
-</div>
 <script>
-
     $(document).ready(function () {
-
         //hides dropdown content
-        $(".color_table").hide();
-        $(".size_chart2").hide();
+        $(".boardTheme2D_img").hide();
+        $(".pieceTheme2D_img").hide();
         //unhides first option content
-        $("#option1").show();
-        $("#option7").show();
+        $("#default_board_theme").show();
+        $("#wikipedia_piece_theme").show();
 
         //listen to dropdown for change
-        $("#size_select").change(function () {
+        $("#boardTheme2D_option").change(function () {
             //rehide content on change
-            $('.color_table').hide();
+            $('.boardTheme2D_img').hide();
             //unhides current item
             $('#' + $(this).val()).show();
         });
-        $("#size_select2").change(function () {
+        $("#pieceTheme2D_option").change(function () {
             //rehide content on change
-            $('.size_chart2').hide();
+            $('.pieceTheme2D_img').hide();
             //unhides current item
             $('#' + $(this).val()).show();
         });
-
+        //document.getElementById("uscf_board_theme").selected = true;
+        //document.getElementById("{{pieceTheme2D}}").selected = true;
     });
-
 </script>
 <script>
-    var loadDoc = function(){
+    var loadDoc = function () {
         $.ajax({
             url: '/search',
             type: 'GET',
@@ -203,7 +189,8 @@
                 data.users.forEach(user => {
                     html += '<tr> \
                     <td>'+ user.userName + '<span class="dot"></span> </td>\
-                    <td><a type="button" href="/game" class="btn btn-success btn-xs">Add Friend</a></td>\
+                    <td><form action="/addFriend" method="POST"><input type="hidden" name="id" value="'+ user.id + '">\
+                    <button type="submit" class="btn btn-success btn-xs">Add Friend</button></form></td>\
                 </tr>';
                 });
                 $('#search-results').html(html);
@@ -213,4 +200,15 @@
             }
         });
     };
+    var socket = io();
+    $('.create').each(function () {
+        $(this).on('click', function (e) {
+            var moveTimeLimit = $("#moveTimeLimit option:selected").val();
+            var gameTimeLimit = $("#gameTimeLimit option:selected").val();
+            socket.emit('createGame', { player1: currUser, player2: e.target.value, moveTimeLimit: moveTimeLimit, gameTimeLimit: gameTimeLimit });
+        });
+    });
+    socket.on('newGame', function (data) {
+        document.location.replace("/game/" + data.gameID);
+    });
 </script>
