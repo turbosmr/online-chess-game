@@ -71,19 +71,16 @@ var getAvailGames = function (req, res, next) {
       result: null
     }
   }).then(function (results, err) {
-    console.log('finish get sql');
     if (err) {
       console.log('Error retrieving available games.');
     } else {
       for (var i = 0; i < results.count; i++) {
-        console.log('looping');
         availGames[i] = results.rows[i];
         hours = Math.floor((results.rows[i].moveTimeLimit / (60)));
         minutes = results.rows[i].moveTimeLimit % 60;
         timeRemFormatted = ('0' + hours).slice(-3) + 'h' + ('0' + minutes).slice(-2) + 'm';
         availGames[i].moveTime = timeRemFormatted;
       }
-      console.log('end of loop');
       req.availGames = availGames;
     }
     return next();
