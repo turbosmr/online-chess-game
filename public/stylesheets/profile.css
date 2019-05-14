@@ -93,3 +93,11 @@
   float: left;
   border-bottom-width: 0;
 }
+
+.btn.btn-success {
+width: 58px;
+}
+
+.btn.btn-danger {
+  width: 58px;
+  }

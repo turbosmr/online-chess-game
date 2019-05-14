@@ -33,25 +33,15 @@ var loadDoc = function () {
           let html = '';
           html += '<div class="well friendsSearchScroll">\
                       <table class="table">\
-                          <thead>\
-                              <tr>\
-                                  <th class="col-xs-3">Player</th>\
-                                  <th class="col-xs-3"></th>\
-                                  <th class="col-xs-3"></th>\
-                                  <th class="col-xs-3"></th>\
-                              </tr>\
-                          </thead>\
-                          <tbody>';
+                          <tbody>'
           data.users.forEach(user => {
               html += '       <tr> \
                                   <td class="col-xs-3">'+ user.userName + '</td>\
-                                  <td class="col-xs-3">\
-                                      <form action="/profile/addFriend" method="POST"><input type="hidden" name="id" value="'+ user.id + '">\
-                                          <button type="submit" class="btn btn-success btn-xs pull-right">Add</button>\
-                                      </form>\
-                                  </td>\
                                   <td class="col-xs-3"></td>\
                                   <td class="col-xs-3"></td>\
+                                  <td class="col-xs-3"><form action="/profile/addFriend" method="POST"><input type="hidden" name="id" value="'+ user.id + '">\
+                                  <button type="submit" class="btn btn-success btn-xs pull-right">Add</button>\
+                              </form></td>\
                               </tr>';
           });
           html += '       </tbody>\
