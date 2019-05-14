@@ -14,6 +14,7 @@
 </h5>
 <br>
 
+<!-- Current games and Avialable games -->
 <div class="row">
   <div class="col-md-4">
     <div class="well lobbyWells well-sm">
@@ -40,7 +41,7 @@
           </tbody>
         </table>
       </div>
-
+      <!-- Avialable games -->
       <h3 class="text-center">Available Games</h3>
       <div class="panel-group">
         <div class="gamesWell">
@@ -67,22 +68,22 @@
         </div>
       </div>
 
-      <!-- Button to Open the Modal -->
+      <!-- Button to Open Create game modal -->
       <button type="button" class="btn btn-sm btn-primary" data-keyboard="false" data-backdrop="static"
       data-toggle="modal" data-target="#myModal">Create
         Game</button>
 
-      <!-- The Modal -->
+      <!-- Create game Modal -->
       <div class="modal" id="myModal">
        <div class="modal-dialog modal-sm">
           <div class="modal-content">
 
-            <!-- Modal Header -->
+            <!-- Create game Modal Header -->
             <div class="modal-header">
               <h4 class="modal-title">Create New Game</h4>
             </div>
 
-            <!-- Modal body -->
+            <!-- Create game Modal body -->
             <div class="modal-body">
               Select time per move
               <select class="browser-default custom-select" id="moveTimeLimit">
@@ -99,7 +100,7 @@
               </select>
             </div>
 
-            <!-- Modal footer -->
+            <!-- Create game Modal footer -->
             <div class="modal-footer">
               <button type="button" class="btn btn-primary pull-left" data-dismiss="modal" id="new">Create Game</button>
               <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
@@ -109,6 +110,8 @@
       </div>
     </div>
   </div>
+
+  <!-- Leader Board -->
   <div class="col-md-5">
     <div class="lobbyWells well well-sm">
       <h3 class="text-center">Leaderboard</h3>
@@ -138,21 +141,21 @@
       </div>
       <br>
 
-      <!-- Button to Open the Modal -->
+      <!-- Button to Open the Leader Board Modal -->
       <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#myModal-2">See Full
         Leaderboard</button>
 
-      <!-- The Modal -->
+      <!-- Leader Board Modal -->
       <div class="modal" id="myModal-2">
         <div class="modal-dialog">
           <div class="modal-content">
 
-            <!-- Modal Header -->
+            <!-- Leader Board Modal Header -->
             <div class="modal-header">
               <h3 class="text-center">Leaderboard</h3>
             </div>
 
-            <!-- Modal body -->
+            <!-- Leader Board Modal body, the tbody will scroll -->
             <div class="modal-body">
               <div class="panel-group">
                 <div class="steveWell">
@@ -181,7 +184,7 @@
                 </div>
               </div>
 
-              <!-- Modal footer -->
+              <!-- Leader Board Modal footer -->
               <div class="modal-footer">
                 <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
               </div>
@@ -191,6 +194,8 @@
       </div>
     </div>
   </div>
+  
+  <!-- chat -->
   <div class="col-md-3 center-text">
     <div class="lobbyWells well well-sm">
       <h3 class="text-center">Chat</h3>
