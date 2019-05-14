@@ -29,7 +29,7 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       defaultValue: 1200
     },
-    isActive: DataTypes.BOOLEAN
+    isActive: DataTypes.BOOLEAN,
     boardTheme2D: {
       type: DataTypes.STRING,
       defaultValue: 'default_board_theme'
