@@ -89,3 +89,18 @@ $('#saveProfile').on('click', function () {
     }
   });
 });
+
+/**
+ * Create a new game.
+ */
+$('#new').on('click', function () {
+  let html = '';
+  if ($('#moveTimeLimit').val()) {
+      $('#new').attr("data-dismiss", "modal");
+      var moveTimeLimit = $("#moveTimeLimit option:selected").val();
+      socket.emit('createGame', { player1: currUser, moveTimeLimit: moveTimeLimit });
+  }
+  else {
+      alert('Please select a move time limit.');
+  }
+});

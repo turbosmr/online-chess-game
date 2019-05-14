@@ -95,7 +95,8 @@
             <div class="row">
                 <br>
                 <div class="col-lg-12">
-                    <button type="submit" class="btn submit btn-primary pull-right" id="saveProfile">Save settings</button>
+                    <button type="submit" class="btn submit btn-primary pull-right" id="saveProfile">Save
+                        settings</button>
                 </div>
             </div>
         </div>
@@ -132,13 +133,52 @@
                             <tr>
                                 <td class="col-xs-3">{{userName}}</td>
                                 <td class="col-xs-3"></td>
-                                <td class="col-xs-3"><button type="button" class="btn btn-primary btn-xs pull-right" data-toggle="modal" data-target="#myModal">Create Game</button></td>
+                                <td class="col-xs-3"><button type="button" class="btn btn-primary btn-xs pull-right"
+                                        data-backdrop="static" data-toggle="modal" data-target="#myModal">Create
+                                        Game</button></td>
                                 <td class="col-xs-3">
-                                    <form action="/profile/removeFriend" method="POST"><input type="hidden" name="id" value="{{id}}"/>
+                                    <form action="/profile/removeFriend" method="POST"><input type="hidden" name="id"
+                                            value="{{id}}" />
                                         <button type="submit" class="btn btn-danger btn-xs pull-right">Remove</button>
                                     </form>
                                 </td>
                             </tr>
+                            <!-- Create game Modal -->
+                            <div class="modal" id="myModal">
+                                <div class="modal-dialog modal-sm">
+                                    <div class="modal-content">
+
+                                        <!-- Create game Modal Header -->
+                                        <div class="modal-header">
+                                            <h4 class="modal-title">Create New Game</h4>
+                                        </div>
+                                        <!-- Create game Modal body -->
+                                        <div class="modal-body">
+                                            Select time per move
+                                            <select id="moveTimeLimit" required>
+                                                <option value="">Select one</option>
+                                                <option value="1">1 min</option>
+                                                <option value="2">2 min</option>
+                                                <option value="3">3 min</option>
+                                                <option value="5">5 min</option>
+                                                <option value="10">10 min</option>
+                                                <option value="20">20 min</option>
+                                                <option value="1440">1 day</option>
+                                                <option value="4320">3 days</option>
+                                                <option value="7200">5 days</option>
+                                            </select>
+                                        </div>
+
+                                        <!-- Create game Modal footer -->
+                                        <div class="modal-footer">
+                                            <button type="submit" class="btn btn-primary pull-left" id="new">Create
+                                                Game</button>
+                                            <button type="button" class="btn btn-danger"
+                                                data-dismiss="modal">Close</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                             {{/each}}
                         </tbody>
                     </table>
