@@ -1,24 +1,52 @@
-div.modalBoard {
-    display: flex;
-    justify-content: center
-}
-.btn.gameroom {
+
+/* gives the offer draw proper width */
+.btn.offerDraw {
     width: 120px;
     background-color: rgb(120, 120, 120);
     color: white;
 }
-.btn.gameroom:hover {
+/* gives the buttons a differnt color when you hover the mouse or pad */ 
+.btn.offerDraw:hover {
     color: white;
     background-color: rgb(100, 100, 100);
 }
+/* gives the resign game button the proper width */
 .btn.btn-danger{
     width: 120px;
 }
+/* gives the submit/undo buttons the proper width */
+.submit-button {
+    background-color: rgb(122, 202, 57);
+    color: white;
+    width: 60px;
+}
+/* gives the submit button a differnt color when you hover the mouse or pad */ 
+.submit-button:hover {
+    color: white;
+    background-color: rgb(85, 141, 38);
+}
+/* gives the send button the proper width */ 
+.btn.btn-success {
+    width: 50px;
+  }
+/* color and width for the 2D/3D buttons */
+.game-buttons {
+    background-color: rgb(120, 120, 120);
+    color: white;
+    width: 60px;
+}
+/* color for the hover of 2D/3D buttons */
+.game-buttons:hover {
+    color: white;
+    background-color: rgb(100, 100, 100);
+}
+/* color and text size for the history buttons */
 .game-arrow-buttons {
     background-color: rgb(120, 120, 120);
     color: white;
     font-size:20px;
 }
+/* color for the hover of the history buttons */
 .game-arrow-buttons:hover {
     color: white;
     background-color: rgb(100, 100, 100);
@@ -26,23 +54,28 @@ div.modalBoard {
 .center {
     text-align: center;
 }
+/* color and spacing for the opponents name */
 .oppName {
     color: white;
     text-align: center;
     padding-bottom: 8px;
 } 
+/* color and padding for the players name */
 .currUser {
     color: white;
     text-align: center;
     padding-bottom: 20px;
 } 
+/* needed for the chat and the button divs to be even with the gameboard */
 .col-md-3 {
     padding-top: 73px;
 }
-.panel-login>.panel-heading {
+
+.panel-chat>.panel-heading {
     text-align:center;
 }
-.panel-login>.panel-heading a{
+
+.panel-chat>.panel-heading a{
     font-family:Arial, Helvetica, sans-serif;
 	text-decoration: none;
 	color: gray;
@@ -51,12 +84,32 @@ div.modalBoard {
 	-moz-transition: all 0.1s linear;
     transition: all 0.1s linear;
 }
-.panel-login>.panel-heading a.active{
+
+.panel-chat>.panel-heading a.active{
     font-family:Arial, Helvetica, sans-serif;
 	color: black;
 	font-size: 24px;
 }
+/* gives the chat well the proper height to be even with the 2D game board */
 .gameWell {
     height:526px;
     padding:8px;
 }
+/* gives the chat the ability to scroll and gives it the boarder color and the proper height */
+.gameChatScroll {
+    height:395px;
+    overflow-y:scroll;
+    background-color: white;
+    border: 1px solid lightgray;
+    border-radius: 5px;
+    padding: 10px;
+  }
+  /* gives the  the ability to scroll and gives it the boarder color and the proper height */
+  .gameHistoryScroll {
+    height:437px;
+    overflow-y:scroll;
+    background-color: white;
+    border: 1px solid lightgray;
+    border-radius: 5px;
+    padding: 10px;
+  }

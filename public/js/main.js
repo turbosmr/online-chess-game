@@ -65,6 +65,6 @@ $(function () {
      * Redirect user to game page.
      */
     socket.on('newGame', function (data) {
-        location.replace("/game/" + data.gameID);
+        document.location.replace("/game/" + data.gameID);
     });
 });

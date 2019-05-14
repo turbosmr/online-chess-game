@@ -50,6 +50,7 @@ td {
   margin-left: 2px;
   font-size: 15px;
   border: none;
+  width: 265px;
 }
 .topnav .search-container button {
   float: right;

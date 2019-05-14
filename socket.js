@@ -47,12 +47,22 @@ module.exports = function (io) {
         socket.on('createGame', function (data) {
             // Unique gameID generator
             var gameID = new IDGenerator().generate();
-            Game.create({
-                gameId: gameID,
+            var gameRoom = {
+                gameID: gameID,
                 player1: data.player1,
+                fen: 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1',
                 move: data.player1,
                 moveTimeLimit: data.moveTimeLimit,
                 gameTimeLimit: data.gameTimeLimit
+            };
+            Game.create({
+                gameId: gameRoom.gameID,
+                player1: gameRoom.player1,
+                player2: data.player2,
+                fen: gameRoom.fen,
+                move: gameRoom.move,
+                moveTimeLimit: gameRoom.moveTimeLimit,
+                gameTimeLimit: gameRoom.gameTimeLimit 
             });
             console.log(data.player1 + ' created game: ' + gameID);
             socket.emit('newGame', { gameID: gameID });

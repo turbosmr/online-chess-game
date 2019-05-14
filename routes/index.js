@@ -73,17 +73,19 @@ var getAvailGames = function (req, res, next) {
       result: null
     }
   }).then(function (results, err) {
+    console.log('finish get sql');
     if (err) {
       console.log('Error retrieving available games.');
-    }
-    else {
+    } else {
       for (var i = 0; i < results.count; i++) {
+        console.log('looping');
         availGames[i] = results.rows[i];
         hours = Math.floor((results.rows[i].moveTimeLimit / (60)));
         minutes = results.rows[i].moveTimeLimit % 60;
         timeRemFormatted = ('0' + hours).slice(-3) + 'h' + ('0' + minutes).slice(-2) + 'm';
         availGames[i].moveTime = timeRemFormatted;
       }
+      console.log('end of loop');
       req.availGames = availGames;
     }
     return next();
@@ -103,9 +105,7 @@ var getLeaderboard = function (req, res, next) {
   }).then(function (results, err) {
     if (err) {
       console.log('Error retrieving leaderboard.');
-      return next();
-    }
-    else {
+    } else {
       for (var i = 0; i < results.count; i++) {
         if (i < 10) {
           lbTop10[i] = results.rows[i];
@@ -120,8 +120,8 @@ var getLeaderboard = function (req, res, next) {
       }
       req.lbTop10 = lbTop10;
       req.lbAll = lbAll;
-      return next();
     }
+    return next();
   });
 }
 
@@ -180,6 +180,30 @@ router.get('/about', ensureAuthenticated, function (req, res) {
     currUser: req.user.userName,
     title: "About - Team 10 Chess",
     active: { About: true }
+  });
+});
+
+router.post('/addFriend', (req, res, next) => {
+  req.user.addFriends(parseInt(req.body.id)).then(function(){
+    req.user.getFriends().then(function(friends){
+      res.redirect('/profile');
+    });
+  });
+});
+
+router.post('/removeFriend', (req, res, next) => {
+  req.user.removeFriend(parseInt(req.body.id)).then(function(){
+    req.user.getFriends().then(function(friends){
+      res.redirect('/profile');
+    });
+  });
+});
+// About page
+router.get('/3d', ensureAuthenticated, function (req, res) {
+  res.render('chess3D', {
+    currUser: req.user.userName,
+    title: "About - Team 10 Chess",
+    active: { chess3D: true }
   });
 });
 
