@@ -15,12 +15,15 @@ const User = require('../models').User;
 // Profile page
 router.get('/', ensureAuthenticated, function (req, res) {
   User.findOne({ where: { userName: req.user.userName }}).then(function (user, err) {
-    res.render('profile', {
-      currUser: req.user.userName,
-      title: "Profile - Team 10 Chess",
-      active: { Profile: true },
-      boardTheme2D: user.boardTheme2D,
-      pieceTheme2D: user.pieceTheme2D
+    req.user.getFriends().then(function(friends){
+      res.render('profile', {
+        currUser: req.user.userName,
+        title: "Profile - Team 10 Chess",
+        active: { Profile: true },
+        friends: friends,
+        boardTheme2D: user.boardTheme2D,
+        pieceTheme2D: user.pieceTheme2D
+      });
     });
   });
 });

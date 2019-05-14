@@ -95,8 +95,7 @@
             <div class="row">
                 <br>
                 <div class="col-lg-12">
-                    <button type="submit" class="btn submit btn-primary pull-right" id="saveProfile">Save
-                        settings</button>
+                    <button type="submit" class="btn submit btn-primary pull-right" id="saveProfile">Save settings</button>
                 </div>
             </div>
         </div>
@@ -125,25 +124,24 @@
                     <table class="table">
                         <thead>
                             <tr>
-                                <th>Player</th>
-                                <th>Create New Game</th>
+                                <th class="col-xs-3">Player</th>
+                                <th class="col-xs-3"></th>
+                                <th class="col-xs-3"></th>
+                                <th class="col-xs-3"></th>
                             </tr>
                         </thead>
                         <tbody>
                             {{#each friends}}
                             <tr>
-                                <td>{{userName}} <span class="dot"></span> </td>
-                                <td><button type="button" class="btn btn-success btn-xs" data-toggle="modal"
-                                        data-target="#myModal">Create
-                                        Game</button></td>
-                                <td>
-                                    <form action="/removeFriend" method="POST"><input type="hidden" name="id"
-                                            value="{{id}}" />
-                                        <button type="submit" class="btn btn-success btn-xs">Remove Friend</button>
+                                <td class="col-xs-3">{{userName}}</td>
+                                <td class="col-xs-3"></td>
+                                <td class="col-xs-3"><button type="button" class="btn btn-primary btn-xs pull-right" data-toggle="modal" data-target="#myModal">Create Game</button></td>
+                                <td class="col-xs-3">
+                                    <form action="/removeFriend" method="POST"><input type="hidden" name="id" value="{{id}}"/>
+                                        <button type="submit" class="btn btn-danger btn-xs pull-right">Remove Friend</button>
                                     </form>
                                 </td>
                             </tr>
-
                             {{/each}}
                         </tbody>
                     </table>
