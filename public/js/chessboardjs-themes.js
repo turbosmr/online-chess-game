@@ -7,5 +7,9 @@ dilena_board_theme = ['#FFE5B6', '#B16228'];
 uscf_board_theme = ['#C3C6BE', '#727FA2'];
 symbol_board_theme = ['#FFFFFF', '#58AC8A'];
 
-wikipedia_piece_theme = '/images/piece_theme/wikipedia/{piece}.png';
-modern_piece_theme = '/images/piece_theme/modern/{piece}.png';
+wikipedia_piece_theme = '/images/piece_theme/2D/wikipedia/{piece}.png';
+modern_piece_theme = '/images/piece_theme/2D/modern/{piece}.png';
+classic_3D_piece_theme = '/images/piece_theme/3D/classic/{piece}.png';
+iconic_3D_piece_theme = '/images/piece_theme/3D/iconic/{piece}.png';
+bauhaus_3D_piece_theme = '/images/piece_theme/3D/bauhaus/{piece}.png';
+mueller_3D_piece_theme = '/images/piece_theme/3D/mueller/{piece}.png';
