@@ -5,9 +5,11 @@ $(function () {
   //hides dropdown content
   $(".boardTheme2D_img").hide();
   $(".pieceTheme2D_img").hide();
+  $(".pieceTheme3D_img").hide();
   //unhides first option content
   $("." + boardTheme2D).show();
   $("." + pieceTheme2D).show();
+  $('.classic_3D_piece_theme').show();
 
   //listen to dropdown for change
   $(".boardTheme2D_option").change(function () {
@@ -22,6 +24,12 @@ $(function () {
       //unhides current item
       $('.' + $(this).val()).show();
   });
+  $(".pieceTheme3D_option").change(function () {
+      //rehide content on change
+      $('.pieceTheme3D_img').hide();
+      //unhides current item
+      $('.' + $(this).val()).show();
+  });
 })
 
 var loadDoc = function () {
@@ -33,25 +41,15 @@ var loadDoc = function () {
           let html = '';
           html += '<div class="well friendsSearchScroll">\
                       <table class="table">\
-                          <thead>\
-                              <tr>\
-                                  <th class="col-xs-3">Player</th>\
-                                  <th class="col-xs-3"></th>\
-                                  <th class="col-xs-3"></th>\
-                                  <th class="col-xs-3"></th>\
-                              </tr>\
-                          </thead>\
-                          <tbody>';
+                          <tbody>'
           data.users.forEach(user => {
               html += '       <tr> \
                                   <td class="col-xs-3">'+ user.userName + '</td>\
-                                  <td class="col-xs-3">\
-                                      <form action="/profile/addFriend" method="POST"><input type="hidden" name="id" value="'+ user.id + '">\
-                                          <button type="submit" class="btn btn-success btn-xs pull-right">Add</button>\
-                                      </form>\
-                                  </td>\
                                   <td class="col-xs-3"></td>\
                                   <td class="col-xs-3"></td>\
+                                  <td class="col-xs-3"><form action="/profile/addFriend" method="POST"><input type="hidden" name="id" value="'+ user.id + '">\
+                                  <button type="submit" class="btn btn-success btn-xs pull-right">Add</button>\
+                              </form></td>\
                               </tr>';
           });
           html += '       </tbody>\
