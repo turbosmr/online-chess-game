@@ -450,7 +450,7 @@
     if (cfg.hasOwnProperty('boardTheme') !== true ||
         cfg.boardTheme == undefined || 
         cfg.boardTheme.length != 2 ){
-      cfg.boardTheme = ["#505050", "#969696"];
+      cfg.boardTheme = ['#505050', '#969696'];
     }
   
     // animation speeds
@@ -984,8 +984,8 @@
   }
   
   function addBoardTheme() {
-    var wcol = cfg.boardTheme[0];
-    var bcol = cfg.boardTheme[1];
+    var wcol = '#' + cfg.boardTheme[0].slice(2);
+    var bcol = '#' + cfg.boardTheme[1].slice(2);
   
     containerEl.find(".white-1e1d7").css("background-color", wcol)
     containerEl.find(".white-1e1d7").css("color", bcol)

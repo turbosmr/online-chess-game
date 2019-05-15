@@ -28,7 +28,10 @@ module.exports = (sequelize, DataTypes) => {
     result: DataTypes.STRING,
     startTime: DataTypes.TIME,
     endTime: DataTypes.TIME,
-    moveTimeLimit: DataTypes.INTEGER,
+    moveTimeLimit: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
     makeMoveBy: DataTypes.DOUBLE,
     gameTimeLimit: DataTypes.INTEGER
   }, {});

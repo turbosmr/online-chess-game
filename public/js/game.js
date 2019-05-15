@@ -534,8 +534,8 @@ $(function () {
             $('#board').css('width', '525px');
             $('#board').css('height', '393px');
             cfg.backgroundColor = 0x383434;
-            cfg.darkSquareColor = 0x646464;
-            cfg.lightSquareColor = 0x969696;
+            cfg.lightSquareColor = Number(cfg.boardTheme[0]);
+            cfg.darkSquareColor = Number(cfg.boardTheme[1]);
             cfg.blackPieceColor = 0x000000;
             cfg.blackPieceSpecular = 0x646464;
             cfg.pieceSet = '/assets/chesspieces/classic/{piece}.json';

@@ -73,4 +73,19 @@ $(function () {
     socket.on('newGame', function (data) {
         document.location.replace("/game/" + data.gameID);
     });
+
+    /**
+     * Render newly created games.
+     */
+    socket.on('newGameCreated', function (data) {
+        let html = '<tr>\
+        <td class="col-xs-3">'+ data.player1 +'</td>\
+        <td class="col-xs-3">'+ data.moveTime +'</td>\
+        <td class="col-xs-2"></td>\
+        <td class="col-xs-4"><a type="button" href="/game/'+ data.gameID +'"\
+            class="btn pull-right btn-success btn-xs">Join</a></td>\
+      </tr>';
+        //$('#availGamesScroll').prepend(html);
+        $(html).prependTo('#availGamesScroll').hide().fadeIn(2000);
+    });
 });

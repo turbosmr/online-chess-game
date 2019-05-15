@@ -44,12 +44,12 @@ var getCurrGames = function (req, res, next) {
         if (results.rows[i].turns > 0) {
           hours = Math.floor((timeRem / (1000 * 60 * 60)));
           minutes = Math.floor((timeRem % (1000 * 60 * 60)) / (1000 * 60));
-          timeRemFormatted = ('0' + hours).slice(-3) + 'h' + ('0' + minutes).slice(-2) + 'm';
+          timeRemFormatted = parseInt(hours, 10) + 'h' + parseInt(minutes, 10) + 'm';
         }
         else {
           hours = Math.floor((results.rows[i].moveTimeLimit / (60)));
           minutes = results.rows[i].moveTimeLimit % 60;
-          timeRemFormatted = ('0' + hours).slice(-3) + 'h' + ('0' + minutes).slice(-2) + 'm';
+          timeRemFormatted = parseInt(hours, 10) + 'h' + parseInt(minutes, 10) + 'm';
         }
         currGames[i].moveTime = timeRemFormatted;
       }
@@ -69,16 +69,20 @@ var getAvailGames = function (req, res, next) {
     where: {
       player2: null,
       result: null
-    }
+    },
+    order: [
+      ['createdAt','DESC'],
+    ]
   }).then(function (results, err) {
     if (err) {
       console.log('Error retrieving available games.');
-    } else {
+    } 
+    else {
       for (var i = 0; i < results.count; i++) {
         availGames[i] = results.rows[i];
         hours = Math.floor((results.rows[i].moveTimeLimit / (60)));
         minutes = results.rows[i].moveTimeLimit % 60;
-        timeRemFormatted = ('0' + hours).slice(-3) + 'h' + ('0' + minutes).slice(-2) + 'm';
+        timeRemFormatted = parseInt(hours, 10) + 'h' + parseInt(minutes, 10) + 'm';
         availGames[i].moveTime = timeRemFormatted;
       }
       req.availGames = availGames;

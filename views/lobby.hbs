@@ -29,7 +29,7 @@
               <th class="col-xs-3"></th>
             </tr>
           </thead>
-          <tbody id="gamesScroll">
+          <tbody id="currGamesScroll">
             {{#each currGames}}
             <tr>
               <td class="col-xs-3">{{this.oppName}} {{#if this.oppActive}}<span class="dot"></span>{{/if}}</td>
@@ -55,7 +55,7 @@
                 <th class="col-xs-3"></th>
               </tr>
             </thead>
-            <tbody id="gamesScroll">
+            <tbody id="availGamesScroll">
               {{#each availGames}}
               <tr>
                 <td class="col-xs-3">{{this.player1}}</td>

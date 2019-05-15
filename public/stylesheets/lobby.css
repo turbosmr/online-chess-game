@@ -22,8 +22,14 @@
     border-radius: 5px;
     padding: 10px;
 }
-/* lets the avialble games and current games wells be able to scroll */
-#gamesScroll {
+/* lets the current games wells be able to scroll */
+#currGamesScroll {
+  height: 118px;
+  overflow-y: auto;
+  width: 100%;
+}
+/* lets the available games wells be able to scroll */
+#availGamesScroll {
   height: 118px;
   overflow-y: auto;
   width: 100%;

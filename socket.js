@@ -48,26 +48,27 @@ module.exports = function (io) {
          */
         socket.on('createGame', function (data) {
             // Unique gameID generator
-            var gameID = new IDGenerator().generate();
-            var gameRoom = {
-                gameID: gameID,
+            var gameID = new IDGenerator().generate(),
+                hours,
+                minutes,
+                timeRemFormatted;
+            return Game.create({
+                gameId: gameID,
                 player1: data.player1,
-                fen: 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1',
                 move: data.player1,
-                moveTimeLimit: data.moveTimeLimit,
-                gameTimeLimit: data.gameTimeLimit
-            };
-            Game.create({
-                gameId: gameRoom.gameID,
-                player1: gameRoom.player1,
-                player2: data.player2,
-                fen: gameRoom.fen,
-                move: gameRoom.move,
-                moveTimeLimit: gameRoom.moveTimeLimit,
-                gameTimeLimit: gameRoom.gameTimeLimit 
+                moveTimeLimit: data.moveTimeLimit
+            }).then(function (game) {
+                console.log(game.player1 + ' created game: ' + game.gameId);
+                hours = Math.floor((game.moveTimeLimit / (60)));
+                minutes = game.moveTimeLimit % 60;
+                timeRemFormatted = parseInt(hours, 10) + 'h' + parseInt(minutes, 10) + 'm';
+                socket.broadcast.emit('newGameCreated', { 
+                    gameID: game.gameId, 
+                    player1: game.player1,
+                    moveTime: timeRemFormatted
+                });
+                socket.emit('newGame', { gameID: game.gameId });
             });
-            console.log(data.player1 + ' created game: ' + gameID);
-            socket.emit('newGame', { gameID: gameID });
         });
 
         /**
@@ -205,7 +206,7 @@ module.exports = function (io) {
         /**
          * Move timer.
          */
-        setInterval(function () {
+        /*setInterval(function () {
             Game.findAndCountAll({
                 where: {
                     [Op.not]: [{ player2: null }],
@@ -243,7 +244,7 @@ module.exports = function (io) {
                     }
                 }
             });
-        }, 1000);
+        }, 1000);*/
     });
 
     function updateUserStat(game) {

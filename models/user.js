@@ -32,11 +32,18 @@ module.exports = (sequelize, DataTypes) => {
     isActive: DataTypes.BOOLEAN,
     boardTheme2D: {
       type: DataTypes.STRING,
+      allowNull: false,
       defaultValue: 'default_board_theme'
     },
     pieceTheme2D: {
       type: DataTypes.STRING,
+      allowNull: false,
       defaultValue: 'wikipedia_piece_theme'
+    },
+    pieceTheme3D: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      defaultValue: 'classic_3D_piece_theme'
     }
   }, {});
   User.associate = function(models) {
