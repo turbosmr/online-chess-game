@@ -533,12 +533,12 @@ $(function () {
         if (dimensions >= 3) {
             $('#board').css('width', '525px');
             $('#board').css('height', '393px');
-            cfg.backgroundColor = 0x383434;
-            cfg.darkSquareColor = 0x646464;
-            cfg.lightSquareColor = 0x969696;
+            cfg.backgroundColor = 0xFFFFFF;
+            cfg.darkSquareColor = 0xFFFFFF;
+            cfg.lightSquareColor = 0xFFFFFF;
             cfg.blackPieceColor = 0x000000;
             cfg.blackPieceSpecular = 0x646464;
-            cfg.pieceSet = '/assets/chesspieces/classic/{piece}.json';
+            cfg.pieceSet = '/assets/chesspieces/iconic/{piece}.json';
             board = new ChessBoard3('board', cfg);
         } else {
             $('#board').css('width', '526px');

@@ -5,9 +5,11 @@ $(function () {
   //hides dropdown content
   $(".boardTheme2D_img").hide();
   $(".pieceTheme2D_img").hide();
+  $(".pieceTheme3D_img").hide();
   //unhides first option content
   $("." + boardTheme2D).show();
   $("." + pieceTheme2D).show();
+  $('.classic_3D_piece_theme').show();
 
   //listen to dropdown for change
   $(".boardTheme2D_option").change(function () {
@@ -19,6 +21,12 @@ $(function () {
   $(".pieceTheme2D_option").change(function () {
       //rehide content on change
       $('.pieceTheme2D_img').hide();
+      //unhides current item
+      $('.' + $(this).val()).show();
+  });
+  $(".pieceTheme3D_option").change(function () {
+      //rehide content on change
+      $('.pieceTheme3D_img').hide();
       //unhides current item
       $('.' + $(this).val()).show();
   });
