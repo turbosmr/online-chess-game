@@ -3,7 +3,7 @@
   display: block;
 }
 .chesspiece img {
-  max-height: 80px;
+  max-height: 48px;
 }
 .btn.padding{
   padding:5px;
