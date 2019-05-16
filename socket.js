@@ -62,6 +62,7 @@ module.exports = function (io) {
                 hours = Math.floor((game.moveTimeLimit / (60)));
                 minutes = game.moveTimeLimit % 60;
                 timeRemFormatted = parseInt(hours, 10) + 'h' + parseInt(minutes, 10) + 'm';
+                // handle rendering newly created game in lobby
                 socket.broadcast.emit('newGameCreated', { 
                     gameID: game.gameId, 
                     player1: game.player1,
@@ -115,7 +116,8 @@ module.exports = function (io) {
                                     pgn: game.pgn,
                                     rejoin: rejoin,
                                     boardTheme2D: user.boardTheme2D,
-                                    pieceTheme2D: user.pieceTheme2D
+                                    pieceTheme2D: user.pieceTheme2D,
+                                    pieceTheme3D: user.pieceTheme3D
                                 });
                             });
                         });

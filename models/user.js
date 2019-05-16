@@ -38,7 +38,7 @@ module.exports = (sequelize, DataTypes) => {
     pieceTheme2D: {
       type: DataTypes.STRING,
       allowNull: false,
-      defaultValue: 'wikipedia_piece_theme'
+      defaultValue: 'wikipedia_2D_piece_theme'
     },
     pieceTheme3D: {
       type: DataTypes.STRING,

@@ -1,6 +1,7 @@
 $(function () {
   document.getElementById(boardTheme2D).selected = "true";
   document.getElementById(pieceTheme2D).selected = "true";
+  document.getElementById(pieceTheme3D).selected = "true";
 
   //hides dropdown content
   $(".boardTheme2D_img").hide();
@@ -9,7 +10,7 @@ $(function () {
   //unhides first option content
   $("." + boardTheme2D).show();
   $("." + pieceTheme2D).show();
-  $('.classic_3D_piece_theme').show();
+  $("." + pieceTheme3D).show();
 
   //listen to dropdown for change
   $(".boardTheme2D_option").change(function () {
@@ -31,6 +32,21 @@ $(function () {
       $('.' + $(this).val()).show();
   });
 })
+
+$('#saveProfile').on('click', function () {
+  var boardTheme2D = $(".boardTheme2D_option option:selected").val();
+  var pieceTheme2D = $(".pieceTheme2D_option option:selected").val();
+  var pieceTheme3D = $(".pieceTheme3D_option option:selected").val();
+  
+  $.ajax({
+    url: '/profile/save',
+    type: 'POST',
+    data: { boardTheme2D: boardTheme2D, pieceTheme2D: pieceTheme2D, pieceTheme3D: pieceTheme3D },
+    success: function () {
+      location.replace("/profile");
+    }
+  });
+});
 
 var loadDoc = function () {
   $.ajax({
@@ -72,20 +88,6 @@ $('.create').each(function () {
 });
 socket.on('newGame', function (data) {
   document.location.replace("/game/" + data.gameID);
-});
-
-$('#saveProfile').on('click', function () {
-  var boardTheme2D = $(".boardTheme2D_option option:selected").val();
-  var pieceTheme2D = $(".pieceTheme2D_option option:selected").val();
-  
-  $.ajax({
-    url: '/profile/save',
-    type: 'POST',
-    data: { boardTheme2D: boardTheme2D, pieceTheme2D: pieceTheme2D },
-    success: function () {
-      location.replace("/profile");
-    }
-  });
 });
 
 /**

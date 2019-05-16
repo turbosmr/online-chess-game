@@ -270,6 +270,7 @@ $(function () {
 
         cfg.boardTheme = window[data.boardTheme2D];
         cfg.pieceTheme = window[data.pieceTheme2D];
+        cfg.pieceSet = window[data.pieceTheme3D];
         cfg.position = data.fen;
         board = ChessBoard('board', cfg);
 
@@ -538,7 +539,7 @@ $(function () {
             cfg.darkSquareColor = Number(cfg.boardTheme[1]);
             cfg.blackPieceColor = 0x000000;
             cfg.blackPieceSpecular = 0x646464;
-            cfg.pieceSet = '/assets/chesspieces/iconic/{piece}.json';
+            cfg.whitePieceColor = 0xffffff;
             board = new ChessBoard3('board', cfg);
         } else {
             $('#board').css('width', '526px');

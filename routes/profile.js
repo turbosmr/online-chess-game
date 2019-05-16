@@ -22,7 +22,8 @@ router.get('/', ensureAuthenticated, function (req, res) {
         active: { Profile: true },
         friends: friends,
         boardTheme2D: user.boardTheme2D,
-        pieceTheme2D: user.pieceTheme2D
+        pieceTheme2D: user.pieceTheme2D,
+        pieceTheme3D: user.pieceTheme3D
       });
     });
   });
@@ -32,7 +33,8 @@ router.get('/', ensureAuthenticated, function (req, res) {
 router.post('/save', (req, res, next) => {
   User.update({
     boardTheme2D: req.body.boardTheme2D,
-    pieceTheme2D: req.body.pieceTheme2D
+    pieceTheme2D: req.body.pieceTheme2D,
+    pieceTheme3D: req.body.pieceTheme3D
   }, { where: { userName: req.user.userName } });
   res.redirect('/profile');
 });
