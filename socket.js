@@ -107,7 +107,25 @@ module.exports = function (io) {
                                 }
                             }
                         }).then(function () {
-                            User.findOne({ where: { userName: data.currUser } }).then(function (user) {
+                            User.findAll({ where: { 
+                                [Op.or]: [{ userName: game.player1 }, { userName: game.player2 }]
+                            } }).then(function (user) {
+                                var currUserRating, oppRating, boardTheme2D, pieceTheme2D, pieceTheme3D;
+                                if (user[0].userName == data.currUser) {
+                                    boardTheme2D = user[0].boardTheme2D;
+                                    pieceTheme2D = user[0].pieceTheme2D;
+                                    pieceTheme3D = user[0].pieceTheme3D;
+                                    currUserRating = user[0].rating;
+                                    oppRating = user[1].rating;
+                                }
+                                else {
+                                    boardTheme2D = user[1].boardTheme2D;
+                                    pieceTheme2D = user[1].pieceTheme2D;
+                                    pieceTheme3D = user[1].pieceTheme3D;
+                                    currUserRating = user[1].rating;
+                                    oppRating = user[0].rating;
+                                }
+                                console.log(user)
                                 socket.emit('joinedGame', {
                                     gameID: game.gameId,
                                     player1: game.player1,
@@ -115,9 +133,11 @@ module.exports = function (io) {
                                     fen: game.fen,
                                     pgn: game.pgn,
                                     rejoin: rejoin,
-                                    boardTheme2D: user.boardTheme2D,
-                                    pieceTheme2D: user.pieceTheme2D,
-                                    pieceTheme3D: user.pieceTheme3D
+                                    boardTheme2D: boardTheme2D,
+                                    pieceTheme2D: pieceTheme2D,
+                                    pieceTheme3D: pieceTheme3D,
+                                    currUserRating: currUserRating,
+                                    oppRating: oppRating
                                 });
                             });
                         });
@@ -129,8 +149,9 @@ module.exports = function (io) {
                         });
                         socket.join(game.gameId);
                         console.log(data.currUser + ' has joined game: ' + game.gameId);
-                        socket.broadcast.to(game.gameId).emit('oppJoined', { oppName: data.currUser });
-                        User.findOne({ where: { userName: data.currUser } }).then(function (user) {
+                        User.findAll({ where: { 
+                            [Op.or]: [{ userName: game.player1 }, { userName: game.player2 }]
+                        } }).then(function (user) {
                             // Let other users know that game is filled
                             socket.broadcast.emit('gameFilled', { gameID: game.gameId });
                             socket.emit('joinedGame', {
@@ -140,7 +161,15 @@ module.exports = function (io) {
                                 fen: game.fen,
                                 pgn: game.pgn,
                                 rejoin: rejoin,
-                                boardTheme2D: user.boardTheme2D
+                                boardTheme2D: user[1].boardTheme2D,
+                                pieceTheme2D: user[1].pieceTheme2D,
+                                pieceTheme3D: user[1].pieceTheme3D,
+                                currUserRating: user[1].rating,
+                                oppRating: user[0].rating
+                            });
+                            socket.broadcast.to(game.gameId).emit('oppJoined', { 
+                                oppName: data.currUser, 
+                                oppRating: user[0].rating 
                             });
                         });
                     }
@@ -205,6 +234,13 @@ module.exports = function (io) {
          */
         socket.on('offerDraw', function (data) {
             socket.broadcast.to(data.gameID).emit('offeredDraw', data);
+        });
+
+        /**
+         * Player has resigned. Alert opponent.
+         */
+        socket.on('resignGame', function (data) {
+            socket.broadcast.to(data.gameID).emit('resignedGame');
         });
 
         /**

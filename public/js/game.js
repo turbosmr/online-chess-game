@@ -161,7 +161,9 @@ $(function () {
             $('#moveStatus').remove();
             $('#userHello').remove();
             socket.emit('gameEnd', { gameID: gameID, fen: game.fen(), pgn: game.pgn(), result: 'Resignation' });
-            location.replace("/");
+            //location.replace("/");
+            socket.emit('resignGame', { gameID: gameID });
+            alert('Once you exit the game, it will no longer exist.');
         }
     });
 
@@ -229,6 +231,7 @@ $(function () {
         var message = 'Your opponent, ' + data.oppName + ' has joined the match.';
         $('#userHello').html(message);
         $('#oppName').html(data.oppName);
+        $('#oppName').append('\t(' + data.oppRating + ')');
 
         isGameActive = true;
 
@@ -285,11 +288,14 @@ $(function () {
                 // P1 has created new game
                 $('#oppName').html('Waiting for an opponent to join...');
                 $('#currUser').html(data.player1);
+                $('#currUser').append('\t(' + data.currUserRating + ')');
                 isGameActive = false;
             }
             else {
                 $('#oppName').html(data.player2);
+                $('#oppName').append('\t(' + data.oppRating + ')');
                 $('#currUser').html(data.player1);
+                $('#currUser').append('\t(' + data.currUserRating + ')');
             }
         }
         // Check if current user is P2
@@ -297,7 +303,9 @@ $(function () {
             player2 = true;
             board.flip();
             $('#oppName').html(data.player1);
+            $('#oppName').append('\t(' + data.oppRating + ')');
             $('#currUser').html(data.player2);
+            $('#currUser').append('\t(' + data.currUserRating + ')');
         }
 
         // Check move status
@@ -345,6 +353,7 @@ $(function () {
             oppResigned = true;
         }
         alert(checkGameStatus());
+        alert('Once you exit the game, it will no longer exist.')
     });
 
     /**
@@ -370,6 +379,7 @@ $(function () {
         else {
             alert('Time expired, you won!');
         }
+        alert('Once you exit the game, it will no longer exist.');
     });
 
     /**
@@ -388,6 +398,14 @@ $(function () {
     });
 
     /**
+     * Opponent has resigned. Alert current user. 
+     */
+    socket.on('resignedGame', function () {
+        alert('Opponent has resigned, you win!');
+        alert('Once you exit the game, it will no longer exist.');
+    });
+
+    /**
      * Check who has the current move, and render the message. 
      */
     var checkMove = function () {
@@ -398,14 +416,14 @@ $(function () {
             else if ((player1 == true && game.turn() == 'w') || (player2 == true && game.turn() == 'b')) {
                 document.getElementById("offerDraw").disabled = false;
                 document.getElementById("resignGame").disabled = false;
-                return 'Your move!';
+                return 'Your move';
             }
             else {
                 document.getElementById("submitMove").disabled = true;
                 document.getElementById("undoMove").disabled = true;
                 document.getElementById("offerDraw").disabled = true;
                 document.getElementById("resignGame").disabled = true;
-                return 'Opponent\'s move.';
+                return 'Opponent\'s move';
             }
         }
     }
