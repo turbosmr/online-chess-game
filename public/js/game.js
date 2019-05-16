@@ -12,14 +12,17 @@ $(function () {
     });
 
     // Retrieve messages from database upon entering chatroom
-    socket.on('retrieve messages', function (data) {
-            $('#messages').append($('<li>').text(data.userName + ": " + data.message));
+    socket.on('retrieve game chat', function (data) {
+        $('#messages').append("<li><b>" + data.userName + "</b>: " + data.message);
+        // new message recieved, scroll to bottom
+        scrollToBottom();
     });
 
+    // Submit game chat message
     $('form').submit(function (e) {
         e.preventDefault(); // prevents page reloading
         if ($('#m').val() != '') {
-            socket.emit('game chat message', {
+            socket.emit('game chat', {
                 gameId: gameID,
                 username: currUser,
                 msg: $('#m').val()
@@ -29,14 +32,14 @@ $(function () {
         return false;
     });
 
-    // Display messages on screen
-    socket.on('game chat message', function (data) {
-        $('#messages').append($('<li>').text(data.username + ": " + data.msg));
-        //when msg recieved scroll to bottom
+    // Display game chat messages on screen
+    socket.on('game chat', function (data) {
+        $('#messages').append("<li><b>" + data.username + "</b>: " + data.msg);
+        // new message recieved, scroll to bottom
         scrollToBottom();
     });
 
-    //message scroll
+    /* Begin message scroll functionality */
     var $el = $("#messagesList");
     var messagesList = document.getElementById('messagesList')
     function anim() {
@@ -48,14 +51,14 @@ $(function () {
         $el.stop();
     }
 
-    //scroll to bottom
+    // Scroll to bottom
     function scrollToBottom() {
         messagesList.scrollTop = messagesList.scrollHeight;
     }
 
-    //when hovering stop animation of scrolling
+    // When hovering, stop animation of scrolling
     $el.hover(stop, anim);
-    //end of message scroll
+    /* End of message scroll functionality */
 
     /* Begin chessboard configuration */
     var board,
@@ -158,6 +161,7 @@ $(function () {
             $('#moveStatus').remove();
             $('#userHello').remove();
             socket.emit('gameEnd', { gameID: gameID, fen: game.fen(), pgn: game.pgn(), result: 'Resignation' });
+            location.replace("/");
         }
     });
 
@@ -264,6 +268,9 @@ $(function () {
             game.load_pgn(data.pgn);
         }
 
+        cfg.boardTheme = window[data.boardTheme2D];
+        cfg.pieceTheme = window[data.pieceTheme2D];
+        cfg.pieceSet = window[data.pieceTheme3D];
         cfg.position = data.fen;
         board = ChessBoard('board', cfg);
 
@@ -528,11 +535,11 @@ $(function () {
             $('#board').css('width', '525px');
             $('#board').css('height', '393px');
             cfg.backgroundColor = 0x383434;
-            cfg.darkSquareColor = 0x646464;
-            cfg.lightSquareColor = 0x969696;
+            cfg.lightSquareColor = Number(cfg.boardTheme[0]);
+            cfg.darkSquareColor = Number(cfg.boardTheme[1]);
             cfg.blackPieceColor = 0x000000;
             cfg.blackPieceSpecular = 0x646464;
-            cfg.pieceSet = '/assets/chesspieces/classic/{piece}.json';
+            cfg.whitePieceColor = 0xffffff;
             board = new ChessBoard3('board', cfg);
         } else {
             $('#board').css('width', '526px');

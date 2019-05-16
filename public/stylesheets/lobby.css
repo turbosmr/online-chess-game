@@ -1,57 +1,72 @@
-.lobbyGamesScroll {
-    height:174px;
-    overflow-y: auto;
-}
-.leaderBoardScroll {
-    height:456px;
-    overflow-y:scroll;
-}
-td {
-    font-weight: lighter;
-}
+
+/* gives all the wells in the lobby to be even at the bottom */
 .lobbyWells {
     height:585px;
 }
+
 .center {
   text-align: center;
 }
+
+.btn.btn-success {
+  width: 50px;
+}
+
 .table-fixed thead {
   width: 97%;
 }
+/* gives the wells for current games and avilable games the color, border color, and padding for spacing */
 .gamesWell {
     background-color: white;
     border: 1px solid lightgray;
     border-radius: 5px;
     padding: 10px;
 }
-#gamesScroll {
+/* lets the current games wells be able to scroll */
+#currGamesScroll {
   height: 118px;
   overflow-y: auto;
   width: 100%;
 }
+/* lets the available games wells be able to scroll */
+#availGamesScroll {
+  height: 118px;
+  overflow-y: auto;
+  width: 100%;
+}
+/* gives the well the top 10 it's color, border color, and padding for spacing */
 .lbTop10Well {
     background-color: white;
     border: 1px solid lightgray;
     border-radius: 5px;
     padding: 10px;
-    height: 450px;
+    height: 448px;
 }
+/* gives the leader board the it's scroll and dimentions */
 #lbAllScroll {
   height: 300px;
   overflow-y: auto;
   width: 100%;
 }
-.well {
+/* used to scroll the lobby chat and give the message div it's propper height */
+.lobbyChatScroll {
+  height:421px;
+  overflow-y:scroll;
   background-color: white;
+  border: 1px solid lightgray;
+  border-radius: 5px;
+  padding: 10px;
 }
+
 .table-fixed thead, .table-fixed tbody, .table-fixed tr, .table-fixed td, .table-fixed th {
   display: block;
 }
+
 .table-fixed tbody td, .table-fixed thead > tr> th {
   float: left;
   border-bottom-width: 0;
 }
-
+/* needed to give the text for online players spacing from the chat input */
 #players-online {
   padding-top: 15px;
 }

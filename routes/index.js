@@ -1,4 +1,4 @@
-/* This file handles routing except for registration and login */
+/* This file handles "/" routes */
 
 const express = require('express');
 const { ensureAuthenticated, forwardAuthenticated } = require('../config/auth');
@@ -16,7 +16,6 @@ var getCurrGames = function (req, res, next) {
   var currGames = [],
     now,
     timeRem,
-    days,
     hours,
     minutes,
     timeRemFormatted;
@@ -45,12 +44,12 @@ var getCurrGames = function (req, res, next) {
         if (results.rows[i].turns > 0) {
           hours = Math.floor((timeRem / (1000 * 60 * 60)));
           minutes = Math.floor((timeRem % (1000 * 60 * 60)) / (1000 * 60));
-          timeRemFormatted = ('0' + hours).slice(-3) + 'h' + ('0' + minutes).slice(-2) + 'm';
+          timeRemFormatted = parseInt(hours, 10) + 'h' + parseInt(minutes, 10) + 'm';
         }
         else {
           hours = Math.floor((results.rows[i].moveTimeLimit / (60)));
           minutes = results.rows[i].moveTimeLimit % 60;
-          timeRemFormatted = ('0' + hours).slice(-3) + 'h' + ('0' + minutes).slice(-2) + 'm';
+          timeRemFormatted = parseInt(hours, 10) + 'h' + parseInt(minutes, 10) + 'm';
         }
         currGames[i].moveTime = timeRemFormatted;
       }
@@ -62,7 +61,6 @@ var getCurrGames = function (req, res, next) {
 
 var getAvailGames = function (req, res, next) {
   var availGames = [],
-    days,
     hours,
     minutes,
     timeRemFormatted;
@@ -71,21 +69,22 @@ var getAvailGames = function (req, res, next) {
     where: {
       player2: null,
       result: null
-    }
+    },
+    order: [
+      ['createdAt','DESC'],
+    ]
   }).then(function (results, err) {
-    console.log('finish get sql');
     if (err) {
       console.log('Error retrieving available games.');
-    } else {
+    } 
+    else {
       for (var i = 0; i < results.count; i++) {
-        console.log('looping');
         availGames[i] = results.rows[i];
         hours = Math.floor((results.rows[i].moveTimeLimit / (60)));
         minutes = results.rows[i].moveTimeLimit % 60;
-        timeRemFormatted = ('0' + hours).slice(-3) + 'h' + ('0' + minutes).slice(-2) + 'm';
+        timeRemFormatted = parseInt(hours, 10) + 'h' + parseInt(minutes, 10) + 'm';
         availGames[i].moveTime = timeRemFormatted;
       }
-      console.log('end of loop');
       req.availGames = availGames;
     }
     return next();
@@ -98,6 +97,7 @@ var getLeaderboard = function (req, res, next) {
 
   User.findAndCountAll({
     order: [
+      ['rating','DESC'],
       ['winCount', 'DESC'],
       ['loseCount', 'ASC'],
       ['drawCount', 'DESC']
@@ -146,37 +146,6 @@ router.get('/lobby', ensureAuthenticated, getCurrGames, getAvailGames, getLeader
   });
 });
 
-//search request searchController.search do the function callback at search controller
-router.get('/search', ensureAuthenticated, function (req, res) {
-  if (req.xhr || req.accepts('json, html') === 'json') {
-    User.findAll({ where: { userName: { [Op.like]: '%' + req.query.search + '%' } } }).then(function (users) {
-      console.log('users = ', users);
-      if (users) {
-        res.send({ users: users });
-      } else {
-        res.send({ users: undefined });
-      }
-    });
-
-  } else {
-    //Do something else by reloading the page.
-    console.log('not ajax byebye');
-    res.send({ users: undefined });
-  }
-});
-
-// Profile page
-router.get('/profile', ensureAuthenticated, function (req, res) {
-  req.user.getFriends().then(function(friends){
-    res.render('profile', {
-      currUser: req.user.userName,
-      title: "Profile - Team 10 Chess",
-      active: { Profile: true },
-      friends: friends
-    });
-  });
-});
-
 // How to Play page
 router.get('/howToPlay', ensureAuthenticated, function (req, res) {
   res.render('howToPlay', {
@@ -192,30 +161,6 @@ router.get('/about', ensureAuthenticated, function (req, res) {
     currUser: req.user.userName,
     title: "About - Team 10 Chess",
     active: { About: true }
-  });
-});
-
-router.post('/addFriend', (req, res, next) => {
-  req.user.addFriends(parseInt(req.body.id)).then(function(){
-    req.user.getFriends().then(function(friends){
-      res.redirect('/profile');
-    });
-  });
-});
-
-router.post('/removeFriend', (req, res, next) => {
-  req.user.removeFriend(parseInt(req.body.id)).then(function(){
-    req.user.getFriends().then(function(friends){
-      res.redirect('/profile');
-    });
-  });
-});
-// About page
-router.get('/3d', ensureAuthenticated, function (req, res) {
-  res.render('chess3D', {
-    currUser: req.user.userName,
-    title: "About - Team 10 Chess",
-    active: { chess3D: true }
   });
 });
 
