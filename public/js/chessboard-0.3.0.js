@@ -443,7 +443,7 @@
         cfg.pieceTheme == undefined ||
         (typeof cfg.pieceTheme !== 'string' &&
          typeof cfg.pieceTheme !== 'function')) {
-      cfg.pieceTheme = '/images/piece_theme/wikipedia/{piece}.png';
+      cfg.pieceTheme = '/images/piece_theme/2D/wikipedia/{piece}.png';
     }
   
     // default color board theme

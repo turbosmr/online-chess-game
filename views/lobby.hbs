@@ -14,7 +14,7 @@
 </h5>
 <br>
 
-<!-- Current games and Avialable games -->
+<!-- Current games and available games -->
 <div class="row">
   <div class="col-md-4">
     <div class="well lobbyWells well-sm">
@@ -42,7 +42,7 @@
           </tbody>
         </table>
       </div>
-      <!-- Avialable games -->
+      <!-- Available games -->
       <h3 class="text-center">Available Games</h3>
       <div class="panel-group">
         <div class="gamesWell">
@@ -57,12 +57,13 @@
             </thead>
             <tbody id="availGamesScroll">
               {{#each availGames}}
-              <tr>
+              <tr id="{{this.gameId}}">
                 <td class="col-xs-3">{{this.player1}}</td>
                 <td class="col-xs-3">{{this.moveTime}}</td>
                 <td class="col-xs-2"></td>
-                <td class="col-xs-4"><a type="button" href="/game/{{this.gameId}}"
-                    class="btn pull-right btn-success btn-xs">Join</a></td>
+                <td class="col-xs-4">
+                  <a type="button" href="/game/{{this.gameId}}" class="btn pull-right btn-success btn-xs" id="{{this.gameId}}">Join</a>
+                </td>
               </tr>
               {{/each}}
             </tbody>

@@ -2,16 +2,11 @@ const express = require('express');
 const http = require('http');
 const path = require('path');
 const socketIO = require('socket.io');
-//const mysql = require('mysql');
 const exphbs = require('express-handlebars');
-//const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const passport = require('passport')
 const flash = require('connect-flash');
 const session = require("express-session");
-const gameChatModel = require('./models/index').GameChats;
-const leaderboardModel = require('./models/index').Leaderboard;
-const userModel = require('./models/index').User;
 
 const app = express();
 const server = http.Server(app);
@@ -75,8 +70,5 @@ app.set('port', 8081);
 server.listen(app.get('port'), function () {
     console.log('Starting server on port ' + app.get('port'));
 });
-
-/* End connection with DB */
-// pool.end
 
 module.exports = app;
