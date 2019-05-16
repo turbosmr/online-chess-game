@@ -8,11 +8,16 @@ const User = require('../models').User;
 
 const { ensureAuthenticated, forwardAuthenticated } = require('../config/auth');
 
+// Users index page
+router.get('/', forwardAuthenticated, function (req, res) {
+  res.redirect('/users/login');
+});
+
 // Login page
 router.get('/login', forwardAuthenticated, function (req, res) {
   res.render('login', {
     title: "Login - Team 10 Chess",
-    active: {Login: true}
+    active: { Login: true }
   });
 });
 
@@ -20,7 +25,7 @@ router.get('/login', forwardAuthenticated, function (req, res) {
 router.get('/register', forwardAuthenticated, function (req, res) {
   res.render('register', {
     title: "Register - Team 10 Chess",
-    active: {Register: true}
+    active: { Register: true }
   });
 });
 
@@ -95,10 +100,10 @@ router.post('/login', (req, res, next) => {
 
 // Logout
 router.get('/logout', ensureAuthenticated, (req, res) => {
-  User.findOne({ where: { userName: req.user.userName }}).then(function (user, err) {
+  User.findOne({ where: { userName: req.user.userName } }).then(function (user, err) {
     user.update({ isActive: false });
   });
-  
+
   req.logout();
   req.flash('success', 'You are logged out');
   res.redirect('/users/login');
