@@ -110,13 +110,16 @@ module.exports = function (io) {
                             User.findAll({ where: { 
                                 [Op.or]: [{ userName: game.player1 }, { userName: game.player2 }]
                             } }).then(function (user) {
+                                console.log(user)
                                 var currUserRating, oppRating, boardTheme2D, pieceTheme2D, pieceTheme3D;
                                 if (user[0].userName == data.currUser) {
                                     boardTheme2D = user[0].boardTheme2D;
                                     pieceTheme2D = user[0].pieceTheme2D;
                                     pieceTheme3D = user[0].pieceTheme3D;
                                     currUserRating = user[0].rating;
-                                    oppRating = user[1].rating;
+                                    if (game.player2 != null) {
+                                        oppRating = user[1].rating;
+                                    }
                                 }
                                 else {
                                     boardTheme2D = user[1].boardTheme2D;
@@ -125,7 +128,6 @@ module.exports = function (io) {
                                     currUserRating = user[1].rating;
                                     oppRating = user[0].rating;
                                 }
-                                console.log(user)
                                 socket.emit('joinedGame', {
                                     gameID: game.gameId,
                                     player1: game.player1,

@@ -62,7 +62,8 @@
                 <td class="col-xs-3">{{this.moveTime}}</td>
                 <td class="col-xs-2"></td>
                 <td class="col-xs-4">
-                  <a type="button" href="/game/{{this.gameId}}" class="btn pull-right btn-success btn-xs" id="{{this.gameId}}">Join</a>
+                  <a type="button" href="/game/{{this.gameId}}" class="btn pull-right btn-success btn-xs"
+                    id="{{this.gameId}}">Join</a>
                 </td>
               </tr>
               {{/each}}
@@ -160,32 +161,30 @@
             <!-- Leader Board Modal body, the tbody will scroll -->
             <div class="modal-body">
               <div class="panel-group">
-                <div class="steveWell">
-                  <table class="table table-fixed">
-                    <thead>
-                      <tr>
-                        <th class="col-xs-2">Rank</th>
-                        <th class="col-xs-2">Player</th>
-                        <th class="col-xs-2">Rating</th>
-                        <th class="col-xs-2">Wins</th>
-                        <th class="col-xs-2">Losses</th>
-                        <th class="col-xs-2">Draws</th>
-                      </tr>
-                    </thead>
-                    <tbody id="lbAllScroll">
-                      {{#each lbAll}}
-                      <tr>
-                        <td class="col-xs-2">{{this.rank}}</td>
-                        <td class="col-xs-2">{{this.userName}}</td>
-                        <td class="col-xs-2">{{this.rating}}</td>
-                        <td class="col-xs-2">{{this.winCount}}</td>
-                        <td class="col-xs-2">{{this.loseCount}}</td>
-                        <td class="col-xs-2">{{this.drawCount}}</td>
-                      </tr>
-                      {{/each}}
-                    </tbody>
-                  </table>
-                </div>
+                <table class="table table-fixed">
+                  <thead>
+                    <tr>
+                      <th class="col-xs-2">Rank</th>
+                      <th class="col-xs-2">Player</th>
+                      <th class="col-xs-2">Rating</th>
+                      <th class="col-xs-2">Wins</th>
+                      <th class="col-xs-2">Losses</th>
+                      <th class="col-xs-2">Draws</th>
+                    </tr>
+                  </thead>
+                  <tbody id="lbAllScroll">
+                    {{#each lbAll}}
+                    <tr>
+                      <td class="col-xs-2">{{this.rank}}</td>
+                      <td class="col-xs-2">{{this.userName}}</td>
+                      <td class="col-xs-2">{{this.rating}}</td>
+                      <td class="col-xs-2">{{this.winCount}}</td>
+                      <td class="col-xs-2">{{this.loseCount}}</td>
+                      <td class="col-xs-2">{{this.drawCount}}</td>
+                    </tr>
+                    {{/each}}
+                  </tbody>
+                </table>
               </div>
 
               <!-- Leader Board Modal footer -->
