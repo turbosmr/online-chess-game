@@ -1,3 +1,23 @@
-.howToPlay {
-    height: 100px;
-}
+.card {
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.25);
+    transition: 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+    margin: 0 auto; 
+    float: none; 
+    margin-bottom: 10px; 
+  }
+  .card:hover {
+    transform: scale(1.03);
+    transition: 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+  img.center {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    }
+    h4{
+        color:black;
+        font-size: 30px;
+        text-emphasis-style: bold;
+        
+        background: white;
+    }

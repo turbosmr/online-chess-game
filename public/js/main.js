@@ -78,7 +78,7 @@ $(function () {
      * Render newly created game.
      */
     socket.on('newGameCreated', function (data) {
-        let html = '<tr>\
+        let html = '<tr id="'+ data.gameID +'">\
                         <td class="col-xs-3">'+ data.player1 +'</td>\
                         <td class="col-xs-3">'+ data.moveTime +'</td>\
                         <td class="col-xs-2"></td>\
@@ -86,5 +86,17 @@ $(function () {
                         class="btn pull-right btn-success btn-xs">Join</a></td>\
                     </tr>';
         $(html).prependTo('#availGamesScroll').hide().fadeIn(2000);
+    });
+
+    /**
+     * Remove game once available game is filled.
+     */
+    socket.on('gameFilled', function (data) {
+        console.log('game filled')
+        //$('#' + data.gameID).removeAttr('href');
+        //$('#' + data.gameID).attr('disabled', 'true');
+        $('#' + data.gameID).fadeOut(2000, function () {
+            $(this).remove();
+        });
     });
 });

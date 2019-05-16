@@ -107,7 +107,27 @@ module.exports = function (io) {
                                 }
                             }
                         }).then(function () {
-                            User.findOne({ where: { userName: data.currUser } }).then(function (user) {
+                            User.findAll({ where: { 
+                                [Op.or]: [{ userName: game.player1 }, { userName: game.player2 }]
+                            } }).then(function (user) {
+                                console.log(user)
+                                var currUserRating, oppRating, boardTheme2D, pieceTheme2D, pieceTheme3D;
+                                if (user[0].userName == data.currUser) {
+                                    boardTheme2D = user[0].boardTheme2D;
+                                    pieceTheme2D = user[0].pieceTheme2D;
+                                    pieceTheme3D = user[0].pieceTheme3D;
+                                    currUserRating = user[0].rating;
+                                    if (game.player2 != null) {
+                                        oppRating = user[1].rating;
+                                    }
+                                }
+                                else {
+                                    boardTheme2D = user[1].boardTheme2D;
+                                    pieceTheme2D = user[1].pieceTheme2D;
+                                    pieceTheme3D = user[1].pieceTheme3D;
+                                    currUserRating = user[1].rating;
+                                    oppRating = user[0].rating;
+                                }
                                 socket.emit('joinedGame', {
                                     gameID: game.gameId,
                                     player1: game.player1,
@@ -115,9 +135,11 @@ module.exports = function (io) {
                                     fen: game.fen,
                                     pgn: game.pgn,
                                     rejoin: rejoin,
-                                    boardTheme2D: user.boardTheme2D,
-                                    pieceTheme2D: user.pieceTheme2D,
-                                    pieceTheme3D: user.pieceTheme3D
+                                    boardTheme2D: boardTheme2D,
+                                    pieceTheme2D: pieceTheme2D,
+                                    pieceTheme3D: pieceTheme3D,
+                                    currUserRating: currUserRating,
+                                    oppRating: oppRating
                                 });
                             });
                         });
@@ -129,8 +151,11 @@ module.exports = function (io) {
                         });
                         socket.join(game.gameId);
                         console.log(data.currUser + ' has joined game: ' + game.gameId);
-                        socket.broadcast.to(game.gameId).emit('oppJoined', { oppName: data.currUser });
-                        User.findOne({ where: { userName: data.currUser } }).then(function (user) {
+                        User.findAll({ where: { 
+                            [Op.or]: [{ userName: game.player1 }, { userName: game.player2 }]
+                        } }).then(function (user) {
+                            // Let other users know that game is filled
+                            socket.broadcast.emit('gameFilled', { gameID: game.gameId });
                             socket.emit('joinedGame', {
                                 gameID: game.gameId,
                                 player1: game.player1,
@@ -138,7 +163,15 @@ module.exports = function (io) {
                                 fen: game.fen,
                                 pgn: game.pgn,
                                 rejoin: rejoin,
-                                boardTheme2D: user.boardTheme2D
+                                boardTheme2D: user[1].boardTheme2D,
+                                pieceTheme2D: user[1].pieceTheme2D,
+                                pieceTheme3D: user[1].pieceTheme3D,
+                                currUserRating: user[1].rating,
+                                oppRating: user[0].rating
+                            });
+                            socket.broadcast.to(game.gameId).emit('oppJoined', { 
+                                oppName: data.currUser, 
+                                oppRating: user[0].rating 
                             });
                         });
                     }
@@ -206,9 +239,16 @@ module.exports = function (io) {
         });
 
         /**
+         * Player has resigned. Alert opponent.
+         */
+        socket.on('resignGame', function (data) {
+            socket.broadcast.to(data.gameID).emit('resignedGame');
+        });
+
+        /**
          * Move timer.
          */
-        /*setInterval(function () {
+        setInterval(function () {
             Game.findAndCountAll({
                 where: {
                     [Op.not]: [{ player2: null }],
@@ -246,7 +286,7 @@ module.exports = function (io) {
                     }
                 }
             });
-        }, 1000);*/
+        }, 1000);
     });
 
     function updateUserStat(game) {
@@ -255,15 +295,11 @@ module.exports = function (io) {
         var p2Rating;
 
         User.findAndCountAll().then(function(users,error) {
-            
-            for(var i = 0; i < users.count; i++)
-            {
-                if(users.rows[i].userName == game.player1)
-                {
+            for (var i = 0; i < users.count; i++) {
+                if (users.rows[i].userName == game.player1) {
                     p1Rating = users.rows[i].rating;
                 }
-                else if(users.rows[i].userName == game.player2)
-                {
+                else if (users.rows[i].userName == game.player2) {
                     p2Rating = users.rows[i].rating;
                 }
             }
@@ -271,32 +307,26 @@ module.exports = function (io) {
             console.log('p1 rating: ' + p1Rating);
             console.log('p2 rating: ' + p2Rating);
 
-            //determine k-factor for p1 and p2
+            // determine k-factor for p1 and p2
             var k1Factor;
             var k2Factor;
-            if(p1Rating < 2100)
-            {
+            if (p1Rating < 2100) {
                 k1Factor = 32;
             }
-            else if(p1Rating >= 2100 && p1Rating <= 2400)
-            {
+            else if (p1Rating >= 2100 && p1Rating <= 2400) {
                 k1Factor = 24;
             }
-            else
-            {
+            else {
                 k1Factor = 16;
             }
 
-            if(p2Rating < 2100)
-            {
+            if (p2Rating < 2100) {
                 k2Factor = 32;
             }
-            else if(p2Rating >= 2100 && p2Rating <= 2400)
-            {
+            else if (p2Rating >= 2100 && p2Rating <= 2400) {
                 k2Factor = 24;
             }
-            else
-            {
+            else {
                 k2Factor = 16;
             }
 
@@ -304,9 +334,7 @@ module.exports = function (io) {
             console.log('k2Factor: ' + k2Factor);
 
             if (game.result == 'Checkmate' || game.result == 'Move Time Expired' || game.result == 'Resignation') {
-
                 if (game.move != game.player1) {
-    
                     var elo = EloRating.calculate(p1Rating, p2Rating, true, k1Factor);
                     console.log(game.player1 + ' elo: ' + elo.playerRating + ', ' + game.player2 +  ' elo: ' + elo.opponentRating);
                     // Winner; update user's win count and rating
@@ -340,8 +368,7 @@ module.exports = function (io) {
                 var expectedScore = EloRating.expected(p1Rating, p2Rating);
                 var difference = k1Factor + (0.5 * expectedScore);
 
-                if(p1Rating > p2Rating)
-                {
+                if (p1Rating > p2Rating) {
                     // Update users' draw count
                     User.update({
                         drawCount: Sequelize.literal('drawCount + 1'),
@@ -353,8 +380,7 @@ module.exports = function (io) {
                         rating: Sequelize.literal('rating +' + difference)
                     }, { where: { userName: game.player2 } });
                 }
-                else if(p1Rating < p2Rating)
-                {
+                else if (p1Rating < p2Rating) {
                     // Update users' draw count
                     User.update({
                         drawCount: Sequelize.literal('drawCount + 1'),
@@ -366,8 +392,7 @@ module.exports = function (io) {
                         rating: Sequelize.literal('rating -' + difference)
                     }, { where: { userName: game.player2 } });
                 }
-                else
-                {
+                else {
                     // Update users' draw count
                     User.update({
                         drawCount: Sequelize.literal('drawCount + 1')

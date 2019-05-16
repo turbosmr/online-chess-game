@@ -55,22 +55,28 @@ var loadDoc = function () {
       data: { search: $('input')[0].value, },
       success: function (data) {
           let html = '';
-          html += '<div class="well friendsSearchScroll">\
-                      <table class="table">\
-                          <tbody>'
-          data.users.forEach(user => {
-              html += '       <tr> \
-                                  <td class="col-xs-3">'+ user.userName + '</td>\
-                                  <td class="col-xs-3"></td>\
-                                  <td class="col-xs-3"></td>\
-                                  <td class="col-xs-3"><form action="/profile/addFriend" method="POST"><input type="hidden" name="id" value="'+ user.id + '">\
-                                  <button type="submit" class="btn btn-success btn-xs pull-right">Add</button>\
-                              </form></td>\
-                              </tr>';
-          });
-          html += '       </tbody>\
+          html += '<div class="well friendsSearchScroll">'
+          if (data.users.length == 0) {
+            html += 'No users found.\
+                    </div>';
+          }
+          else {
+            html += '<table class="table">\
+                      <tbody>';
+            data.users.forEach(user => {
+                html += '<tr>\
+                          <td class="col-xs-3">'+ user.userName + '</td>\
+                          <td class="col-xs-3"></td>\
+                          <td class="col-xs-3"></td>\
+                          <td class="col-xs-3"><form action="/profile/addFriend" method="POST"><input type="hidden" name="id" value="'+ user.id + '">\
+                            <button type="submit" class="btn btn-success btn-xs pull-right">Add</button>\
+                            </form></td>\
+                          </tr>';
+            });
+            html += '   </tbody>\
                       </table>\
-                  </div>'
+                    </div>'
+          }
           $('#search-results').html(html);
       },
       error: function () {
