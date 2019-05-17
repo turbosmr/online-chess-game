@@ -18,26 +18,28 @@
                                 </div>
                             </div>
                             <div class="col-xs-2 px-0 ">
+                                <div class="card text-center " data-toggle="modal" data-target=".enPassantModal">
+                                    <img src="../images/chessMoves/enPassant/enPassant2.PNG" class="img-responsive">
+                                    <p>En Passant move</p>
+                                </div>
+                            </div>
+                            
+                            <div class="col-xs-2 px-0 ">
                                 <div class="card text-center " data-toggle="modal" data-target=".kMoveModal">
                                     <img src="../images/chessMoves/knightMove/kMove2.PNG" class="img-responsive">
                                     <p>Knight move</p>
                                 </div>
                             </div>
-                            <div class="col-xs-2 px-0 ">
-                                <div class="card text-center " data-toggle="modal" data-target=".bMoveModal">
-                                    <img src="../images/chessMoves/bishopMoves/bAttack.PNG" class="img-responsive">
-                                    <p>Bishop move</p>
-                                </div>
-                            </div>
+                            
                         </div>
                     </div>
                     </br>
                     <div class="row">
                         <div class="container">
                             <div class="col-xs-2 px-0 ">
-                                <div class="card text-center " data-toggle="modal" data-target=".qMoveModal">
-                                    <img src="../images/chessMoves/qMoves/qAttack.PNG" class="img-responsive">
-                                    <p>Queen move</p>
+                                <div class="card text-center " data-toggle="modal" data-target=".bMoveModal">
+                                    <img src="../images/chessMoves/bishopMoves/bAttack.PNG" class="img-responsive">
+                                    <p>Bishop move</p>
                                 </div>
                             </div>
                             <div class="col-xs-2 px-0 ">
@@ -47,9 +49,9 @@
                                 </div>
                             </div>
                             <div class="col-xs-2 px-0 ">
-                                <div class="card text-center " data-toggle="modal" data-target=".kingMoveModal">
-                                    <img src="../images/chessMoves/kMoves/kMove1.PNG" class="img-responsive">
-                                    <p>King move</p>
+                                <div class="card text-center " data-toggle="modal" data-target=".qMoveModal">
+                                    <img src="../images/chessMoves/qMoves/qAttack.PNG" class="img-responsive">
+                                    <p>Queen move</p>
                                 </div>
                             </div>
 
@@ -59,6 +61,12 @@
                     <div class="row">
                         <div class="container">
                             <div class="col-xs-2 px-0 ">
+                                <div class="card text-center " data-toggle="modal" data-target=".kingMoveModal">
+                                    <img src="../images/chessMoves/kMoves/kMove1.PNG" class="img-responsive">
+                                    <p>King move</p>
+                                </div>
+                            </div>
+                            <div class="col-xs-2 px-0 ">
                                 <div class="card text-center " data-toggle="modal" data-target=".castlingModal">
                                     <img src="../images/chessMoves/kMoves/castle.PNG" class="img-responsive">
                                     <p>Castling move</p>
@@ -66,9 +74,9 @@
                             </div>
 
                             <div class="col-xs-2 px-0 ">
-                                <div class="card text-center " data-toggle="modal" data-target=".enPassantModal">
+                                <div class="card text-center " data-toggle="modal" data-target=".defendModal">
                                     <img src="../images/chessMoves/enPassant/enPassant2.PNG" class="img-responsive">
-                                    <p>En Passant move</p>
+                                    <p>Defending the king from check</p>
                                 </div>
                             </div>
                         </div>
@@ -127,6 +135,20 @@
                             alt="...">
                         <div class="carousel-caption">
                             <h4>Finish the move</h4>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <img class="center img-responsive" src="../images/chessMoves/pawnmoves/pReadyToQ.PNG"
+                            alt="...">
+                        <div class="carousel-caption">
+                            <h4>Pawn ready for promotion</h4>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <img class="center img-responsive" src="../images/chessMoves/pawnmoves/pToQ.PNG"
+                            alt="...">
+                        <div class="carousel-caption">
+                            <h4>Pawn promoted to Queen</h4>
                         </div>
                     </div>
                 </div>
@@ -431,6 +453,56 @@
                     <span class="glyphicon glyphicon-chevron-left"></span>
                 </a>
                 <a class="right carousel-control" href="#carousel-enPassantModal" role="button" data-slide="next">
+                    <span class="glyphicon glyphicon-chevron-right"></span>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade defendModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <div id="carousel-defendModal" class="carousel slide" data-ride="carousel">
+                <!-- Wrapper for slides -->
+                <div class="carousel-inner">
+                    <div class="item active">
+
+                        <img class="center img-responsive" src="../images/chessMoves/defend/firstCheck.PNG"
+                            alt="...">
+                        <div class="carousel-caption">
+                            <h4>First check</h4>
+                        </div>
+
+                    </div>
+                    <div class="item">
+                        <img class="center img-responsive" src="../images/chessMoves/defend/defend.PNG"
+                            alt="...">
+                        <div class="carousel-caption">
+                            <h4>Defend with pawn</h4>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <img class="center img-responsive" src="../images/chessMoves/defend/defend2.PNG"
+                            alt="...">
+                        <div class="carousel-caption">
+                            <h4>Start check mate</h4>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <img class="center img-responsive" src="../images/chessMoves/defend/checkmate.PNG"
+                            alt="...">
+                        <div class="carousel-caption">
+                            <h4>Finish checkmate</h4>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Controls -->
+                <a class="left carousel-control" href="#carousel-defendModal" role="button" data-slide="prev">
+                    <span class="glyphicon glyphicon-chevron-left"></span>
+                </a>
+                <a class="right carousel-control" href="#carousel-defendModal" role="button" data-slide="next">
                     <span class="glyphicon glyphicon-chevron-right"></span>
                 </a>
             </div>
