@@ -110,7 +110,7 @@ module.exports = function (io) {
                             User.findAll({ where: { 
                                 [Op.or]: [{ userName: game.player1 }, { userName: game.player2 }]
                             } }).then(function (user) {
-                                console.log(user)
+                                //console.log(user)
                                 var currUserRating, oppRating, boardTheme2D, pieceTheme2D, pieceTheme3D;
                                 if (user[0].userName == data.currUser) {
                                     boardTheme2D = user[0].boardTheme2D;
@@ -152,10 +152,23 @@ module.exports = function (io) {
                         socket.join(game.gameId);
                         console.log(data.currUser + ' has joined game: ' + game.gameId);
                         User.findAll({ where: { 
-                            [Op.or]: [{ userName: game.player1 }, { userName: game.player2 }]
+                            [Op.or]: [{ userName: game.player1 }, { userName: data.currUser }]
                         } }).then(function (user) {
-                            // Let other users know that game is filled
-                            socket.broadcast.emit('gameFilled', { gameID: game.gameId });
+                            var currUserRating, oppRating, boardTheme2D, pieceTheme2D, pieceTheme3D;
+                            if (user[1].userName == data.currUser) {
+                                boardTheme2D = user[1].boardTheme2D;
+                                pieceTheme2D = user[1].pieceTheme2D;
+                                pieceTheme3D = user[1].pieceTheme3D;
+                                currUserRating = user[1].rating;
+                                oppRating = user[0].rating;
+                            }
+                            else {
+                                boardTheme2D = user[0].boardTheme2D;
+                                pieceTheme2D = user[0].pieceTheme2D;
+                                pieceTheme3D = user[0].pieceTheme3D;
+                                currUserRating = user[0].rating;
+                                oppRating = user[1].rating;
+                            }
                             socket.emit('joinedGame', {
                                 gameID: game.gameId,
                                 player1: game.player1,
@@ -163,16 +176,18 @@ module.exports = function (io) {
                                 fen: game.fen,
                                 pgn: game.pgn,
                                 rejoin: rejoin,
-                                boardTheme2D: user[1].boardTheme2D,
-                                pieceTheme2D: user[1].pieceTheme2D,
-                                pieceTheme3D: user[1].pieceTheme3D,
-                                currUserRating: user[1].rating,
-                                oppRating: user[0].rating
+                                boardTheme2D: boardTheme2D,
+                                pieceTheme2D: pieceTheme2D,
+                                pieceTheme3D: pieceTheme3D,
+                                currUserRating: currUserRating,
+                                oppRating: oppRating
                             });
                             socket.broadcast.to(game.gameId).emit('oppJoined', { 
                                 oppName: data.currUser, 
-                                oppRating: user[0].rating 
+                                oppRating: currUserRating 
                             });
+                            // Let other users know that game is filled
+                            socket.broadcast.emit('gameFilled', { gameID: game.gameId });
                         });
                     }
                     // Game is full
@@ -254,7 +269,7 @@ module.exports = function (io) {
                     [Op.not]: [{ player2: null }],
                     turns: { [Op.gt]: 0 },
                     result: null
-                }
+                }, logging: false
             }).then(function (results, err) {
                 var game,
                     now,
@@ -275,12 +290,13 @@ module.exports = function (io) {
                     timeRemFormatted = 'Move Time Left: ' + ('0' + days).slice(-2) + ':' + ('0' + hours).slice(-2) + ':' + ('0' + minutes).slice(-2) + ':' + ('0' + seconds).slice(-2)
                     if (timeRem > 0) {
                         io.in(game.gameId).emit('moveTimer', { timeRem: timeRemFormatted });
-                        //console.log(('0'  + days).slice(-2) + ':' + ('0'  + hours).slice(-2) + ':' + ('0'  + minutes).slice(-2) + ':' + ('0' + seconds).slice(-2));
                     }
                     else {
-                        game.update({
-                            result: 'Move Time Expired'
-                        });
+                        if (game.result == null) {
+                            game.update({
+                                result: 'Move Time Expired'
+                            });
+                        }
                         updateUserStat(game);
                         socket.in(game.gameId).emit('moveTimeExpired');
                     }
@@ -290,9 +306,10 @@ module.exports = function (io) {
     });
 
     function updateUserStat(game) {
-
-        var p1Rating;
-        var p2Rating;
+        var p1Rating,
+            p2Rating,
+            k1Factor,
+            k2Factor;
 
         User.findAndCountAll().then(function(users,error) {
             for (var i = 0; i < users.count; i++) {
@@ -308,8 +325,6 @@ module.exports = function (io) {
             console.log('p2 rating: ' + p2Rating);
 
             // determine k-factor for p1 and p2
-            var k1Factor;
-            var k2Factor;
             if (p1Rating < 2100) {
                 k1Factor = 32;
             }

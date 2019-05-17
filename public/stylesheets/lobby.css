@@ -48,6 +48,17 @@
   overflow-y: auto;
   width: 100%;
 }
+/* gives the model it's height for close button to not be too high
+ and padding so the tilte is correct height from bottom */
+.lb-body {
+  height: 470px;
+  padding-top: 0px;
+}
+/* for the title in the leaderboard to be correct height from top */
+.lb-modal {
+  text-align: center;
+  padding-top: 12px;
+}
 /* used to scroll the lobby chat and give the message div it's propper height */
 .lobbyChatScroll {
   height:421px;
