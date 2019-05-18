@@ -135,8 +135,14 @@ $(function () {
 
         // Print move history
         $('#move-history-pgn').html(game.pgn({ max_width: 10, newline_char: '<br />' }));
-
-        socket.emit('playTurn', { gameID: gameID, fen: game.fen(), pgn: game.pgn(), turn: game.turn() });
+        
+        if (game.game_over()) {
+            alert(checkGameStatus());
+            socket.emit('gameEnd', { gameID: gameID, fen: game.fen(), pgn: game.pgn(), turn: game.turn(), result: result });
+        }
+        else {
+            socket.emit('playTurn', { gameID: gameID, fen: game.fen(), pgn: game.pgn(), turn: game.turn() });
+        }
     });
 
     $('#undoMove').on('click', function () {
@@ -163,7 +169,6 @@ $(function () {
             socket.emit('gameEnd', { gameID: gameID, fen: game.fen(), pgn: game.pgn(), result: 'Resignation' });
             //location.replace("/");
             socket.emit('resignGame', { gameID: gameID });
-            alert('Once you exit the game, it will no longer exist.');
         }
     });
 
@@ -333,11 +338,6 @@ $(function () {
 
         // Print move history
         $('#move-history-pgn').html(game.pgn({ max_width: 10, newline_char: '<br />' }));
-
-        if (game.game_over() == true) {
-            alert(checkGameStatus());
-            socket.emit('gameEnd', { gameID: gameID, fen: game.fen(), pgn: game.pgn(), result: result });
-        }
     });
 
     /**
@@ -345,15 +345,31 @@ $(function () {
      * Notify the user about either scenario and end the game. 
      */
     socket.on('gameEnded', function (data) {
+        game.load(data.fen);
+        game.load_pgn(data.pgn);
+        board.position(data.fen);
+
+        game2.load_pgn(game.pgn());
+        history = game2.history();
+        hist_index = history.length;
+
+        // Check move status
+        $('#moveStatus').html(checkMove());
+
+        // Print move history
+        $('#move-history-pgn').html(game.pgn({ max_width: 10, newline_char: '<br />' }));
+
         isGameActive = false;
+
         if (data.result == 'Draw') {
             drawAccepted = true;
         }
         else if (data.result == 'Resignation') {
             oppResigned = true;
         }
+
         alert(checkGameStatus());
-        alert('Once you exit the game, it will no longer exist.')
+        alert('Once you exit the game, it will no longer exist.');
     });
 
     /**
@@ -370,15 +386,18 @@ $(function () {
         isGameActive = false;
         document.getElementById("offerDraw").disabled = true;
         document.getElementById("resignGame").disabled = true;
+
         $('#moveTimer').remove();
         $('#moveStatus').remove();
         $('#userHello').remove();
+
         if ((game.turn() == 'w' && player1 == true) || (game.turn() == 'b' && player2 == true)) {
             alert('Time expired, you lost!');
         }
         else {
             alert('Time expired, you won!');
         }
+
         alert('Once you exit the game, it will no longer exist.');
     });
 
@@ -387,6 +406,7 @@ $(function () {
      */
     socket.on('offeredDraw', function (data) {
         var r = confirm('Opponent has requested for a draw. Accept?');
+
         if (r == true) {
             document.getElementById("offerDraw").disabled = true;
             document.getElementById("resignGame").disabled = true;
@@ -402,7 +422,6 @@ $(function () {
      */
     socket.on('resignedGame', function () {
         alert('Opponent has resigned, you win!');
-        alert('Once you exit the game, it will no longer exist.');
     });
 
     /**

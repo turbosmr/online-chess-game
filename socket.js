@@ -154,7 +154,7 @@ module.exports = function (io) {
                         User.findAll({ where: { 
                             [Op.or]: [{ userName: game.player1 }, { userName: data.currUser }]
                         } }).then(function (user) {
-                            var currUserRating, oppRating, boardTheme2D, pieceTheme2D, pieceTheme3D;
+                            var currUserRating, oppRating, boardTheme2D, pieceTheme2D, pieceTheme3D, oppName;
                             if (user[1].userName == data.currUser) {
                                 boardTheme2D = user[1].boardTheme2D;
                                 pieceTheme2D = user[1].pieceTheme2D;
@@ -187,7 +187,25 @@ module.exports = function (io) {
                                 oppRating: currUserRating 
                             });
                             // Let other users know that game is filled
-                            socket.broadcast.emit('gameFilled', { gameID: game.gameId });
+                            /*if (game.player1 == data.currUser) {
+                                oppName = game.player2;
+                            }
+                            else {
+                                oppName = game.player1;
+                            }*/
+                            var gameID = new IDGenerator().generate(),
+                            hours,
+                            minutes,
+                            timeRemFormatted;
+                            hours = Math.floor((game.moveTimeLimit / (60)));
+                            minutes = game.moveTimeLimit % 60;
+                            timeRemFormatted = parseInt(hours, 10) + 'h' + parseInt(minutes, 10) + 'm';
+                            socket.broadcast.emit('gameFilled', { 
+                                gameID: game.gameId,
+                                oppName: game.player2,
+                                moveTime: timeRemFormatted,
+                                move: game.move
+                            });
                         });
                     }
                     // Game is full
@@ -235,9 +253,18 @@ module.exports = function (io) {
          */
         socket.on('gameEnd', function (data) {
             Game.findOne({ where: { gameId: data.gameID } }).then(function (game) {
+                var move;
+                if (data.turn == 'w') {
+                    move = game.player1;
+                }
+                else {
+                    move = game.player2;
+                }
                 return game.update({
                     fen: data.fen,
                     pgn: data.pgn,
+                    turns: Sequelize.literal('turns + 1'),
+                    move: move,
                     result: data.result
                 });
             }).then(function (game) {
@@ -263,7 +290,7 @@ module.exports = function (io) {
         /**
          * Move timer.
          */
-        setInterval(function () {
+        /*setInterval(function () {
             Game.findAndCountAll({
                 where: {
                     [Op.not]: [{ player2: null }],
@@ -302,7 +329,7 @@ module.exports = function (io) {
                     }
                 }
             });
-        }, 1000);
+        }, 1000);*/
     });
 
     function updateUserStat(game) {
