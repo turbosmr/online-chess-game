@@ -137,6 +137,7 @@ $(function () {
         $('#move-history-pgn').html(game.pgn({ max_width: 10, newline_char: '<br />' }));
         
         if (game.game_over()) {
+            isGameActive = false;
             alert(checkGameStatus());
             socket.emit('gameEnd', { gameID: gameID, fen: game.fen(), pgn: game.pgn(), turn: game.turn(), result: result });
         }
@@ -369,7 +370,6 @@ $(function () {
         }
 
         alert(checkGameStatus());
-        alert('Once you exit the game, it will no longer exist.');
     });
 
     /**
@@ -497,6 +497,8 @@ $(function () {
         else if (oppResigned == true) {
             message = 'Opponent has resigned, you win!';
         }
+        document.getElementById("submitMove").disabled = true;
+        document.getElementById("undoMove").disabled = true;
         document.getElementById("offerDraw").disabled = true;
         document.getElementById("resignGame").disabled = true;
         $('#moveTimer').remove();

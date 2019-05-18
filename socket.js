@@ -154,7 +154,14 @@ module.exports = function (io) {
                         User.findAll({ where: { 
                             [Op.or]: [{ userName: game.player1 }, { userName: data.currUser }]
                         } }).then(function (user) {
-                            var currUserRating, oppRating, boardTheme2D, pieceTheme2D, pieceTheme3D, oppName;
+                            var currUserRating, 
+                                oppRating, 
+                                boardTheme2D, 
+                                pieceTheme2D, 
+                                pieceTheme3D,
+                                hours,
+                                minutes,
+                                timeRemFormatted;
                             if (user[1].userName == data.currUser) {
                                 boardTheme2D = user[1].boardTheme2D;
                                 pieceTheme2D = user[1].pieceTheme2D;
@@ -187,16 +194,6 @@ module.exports = function (io) {
                                 oppRating: currUserRating 
                             });
                             // Let other users know that game is filled
-                            /*if (game.player1 == data.currUser) {
-                                oppName = game.player2;
-                            }
-                            else {
-                                oppName = game.player1;
-                            }*/
-                            var gameID = new IDGenerator().generate(),
-                            hours,
-                            minutes,
-                            timeRemFormatted;
                             hours = Math.floor((game.moveTimeLimit / (60)));
                             minutes = game.moveTimeLimit % 60;
                             timeRemFormatted = parseInt(hours, 10) + 'h' + parseInt(minutes, 10) + 'm';

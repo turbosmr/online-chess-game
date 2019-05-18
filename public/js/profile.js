@@ -84,23 +84,11 @@ var loadDoc = function () {
       }
   });
 };
-var socket = io();
-$('.create').each(function () {
-  $(this).on('click', function (e) {
-      var moveTimeLimit = $("#moveTimeLimit option:selected").val();
-      var gameTimeLimit = $("#gameTimeLimit option:selected").val();
-      socket.emit('createGame', { player1: currUser, player2: e.target.value, moveTimeLimit: moveTimeLimit, gameTimeLimit: gameTimeLimit });
-  });
-});
-socket.on('newGame', function (data) {
-  document.location.replace("/game/" + data.gameID);
-});
 
 /**
  * Create a new game.
  */
 $('#new').on('click', function () {
-  let html = '';
   if ($('#moveTimeLimit').val()) {
       $('#new').attr("data-dismiss", "modal");
       var moveTimeLimit = $("#moveTimeLimit option:selected").val();
@@ -109,4 +97,10 @@ $('#new').on('click', function () {
   else {
       alert('Please select a move time limit.');
   }
+});
+
+var socket = io();
+
+socket.on('newGame', function (data) {
+  document.location.replace("/game/" + data.gameID);
 });
