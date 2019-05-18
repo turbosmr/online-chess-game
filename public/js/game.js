@@ -169,7 +169,7 @@ $(function () {
             $('#userHello').remove();
             socket.emit('gameEnd', { gameID: gameID, fen: game.fen(), pgn: game.pgn(), result: 'Resignation' });
             //location.replace("/");
-            socket.emit('resignGame', { gameID: gameID });
+            //socket.emit('resignGame', { gameID: gameID });
         }
     });
 
@@ -420,9 +420,9 @@ $(function () {
     /**
      * Opponent has resigned. Alert current user. 
      */
-    socket.on('resignedGame', function () {
+    /*socket.on('resignedGame', function () {
         alert('Opponent has resigned, you win!');
-    });
+    });*/
 
     /**
      * Check who has the current move, and render the message. 
