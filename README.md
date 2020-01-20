@@ -19,7 +19,7 @@ By: **Steve Rentschler**
 
 Here's a demo of our Online Multiplayer Chess Game:
 
-<img src='https://media.giphy.com/media/ihGanCN11SFq8h3NL6/giphy.gif' width='' alt='Video Walkthrough' />
+<img src='https://media.giphy.com/media/KxnKVOI4YVfjPlzMOa/giphy.gif' width='' alt='Video Walkthrough' />
 
 GIF created with [giphy](https://giphy.com).
 
