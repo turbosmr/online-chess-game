@@ -1,32 +1,23 @@
-# csc667-teamproject-team10
-# Pre-work - *Tip Calculator*
+# CSC 667-teamproject-team10
 
-**Tip Calculator** is a tip calculator application for iOS.
+**Online Multiplayer Chess Game**.
 
-Submitted by: **Steve Rentschler**
+By: **Steve Rentschler**
 
-Time spent: 2 hours spent in total
+## About:
 
-## User Stories
+ * Play one on one with another live person
+ * Create or join an existing game
+ * play in 2D or 3D
+ * You can chooose the time per move
+ * Players are ranked bassed off of the chess rating system (displayed next to their name)
+ * You can go through the history of the game on the game screen by pressing the history buttons
+ * You can change your board and chess pieces in the profile page
+ * Chat with everyone in the lobby or one on one on the game screen
 
-The following **required** functionality is complete:
+## Demo 
 
-* [x] User can enter a bill amount, choose a tip percentage, and see the tip and total values.
-
-The following **optional** features are implemented:
-* [ ] Settings page to change the default tip percentage.
-* [ ] UI animations
-* [ ] Remembering the bill amount across app restarts (if <10mins)
-* [ ] Using locale-specific currency and currency thousands separators.
-* [ ] Making sure the keyboard is always visible and the bill amount is always the first responder. This way the user doesn't have to tap anywhere to use this app. Just launch the app and start typing.
-
-The following **additional** features are implemented:
-
-- [ ] List anything else that you can get done to improve the app functionality!
-
-## Video Walkthrough 
-
-Here's a walkthrough of implemented user stories:
+Here's a demo of our Online Multiplayer Chess Game:
 
 <img src='https://media.giphy.com/media/ihGanCN11SFq8h3NL6/giphy.gif' width='' alt='Video Walkthrough' />
 
@@ -34,5 +25,5 @@ GIF created with [giphy](https://giphy.com).
 
 ## Notes
 
-The tutoral video provided by Code Path for the tip calculator was using a slightly older version of Xcode, so I had to do a few google searches to find some of the menus and I had a problem getting recordit to work so I used giphy instead to upload the gif.
+This was our CSC 667 team project for SFSU. I was the Team Lead and Front-end Lead. I managed the team, designed the project with input and collaboration from the team, and did the majority of the front-end code.
 
