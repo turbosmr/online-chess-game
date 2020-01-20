@@ -11,7 +11,7 @@ By: **Steve Rentschler**
  * play in 2D or 3D
  * You can chooose the time per move
  * Players are ranked bassed off of the chess rating system (displayed next to their name)
- * You can go through the history of the game on the game screen by pressing the history buttons
+ * You can go through the history on the game screen by pressing the history buttons
  * You can change your board and chess pieces in the profile page
  * Chat with everyone in the lobby or one on one on the game screen
 
