@@ -15,7 +15,7 @@ GIF created with [giphy](https://giphy.com).
  * Play one on one with another live person
  * Create or join an existing game
  * play in 2D or 3D
- * You can chooose the time per move
+ * You can choose the time per move
  * Players are ranked bassed off of the chess rating system (displayed next to their name)
  * You can go through the history on the game screen by pressing the history buttons
  * You can change your board and chess pieces in the profile page
