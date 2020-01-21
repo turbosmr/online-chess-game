@@ -1,6 +1,6 @@
 # Online Multiplayer Chess Game
 
-**CSC 667-teamproject-team10**.
+**CSC 667-team project-team10**
 
 By: **Steve Rentschler**
 
