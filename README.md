@@ -4,6 +4,14 @@
 
 By: **Steve Rentschler**
 
+## Demo 
+
+Here's a demo of our Online Multiplayer Chess Game:
+
+<img src='https://media.giphy.com/media/KxnKVOI4YVfjPlzMOa/giphy.gif' width='' alt='Video Walkthrough' />
+
+GIF created with [giphy](https://giphy.com).
+
 ## About:
 
  * Play one on one with another live person
@@ -14,14 +22,6 @@ By: **Steve Rentschler**
  * You can go through the history on the game screen by pressing the history buttons
  * You can change your board and chess pieces in the profile page
  * Chat with everyone in the lobby or one on one on the game screen
-
-## Demo 
-
-Here's a demo of our Online Multiplayer Chess Game:
-
-<img src='https://media.giphy.com/media/KxnKVOI4YVfjPlzMOa/giphy.gif' width='' alt='Video Walkthrough' />
-
-GIF created with [giphy](https://giphy.com).
 
 ## Notes
 
