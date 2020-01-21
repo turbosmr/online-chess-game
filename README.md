@@ -6,8 +6,6 @@ By: **Steve Rentschler**
 
 ## Demo 
 
-Here's a demo of our Online Multiplayer Chess Game:
-
 <img src='https://media.giphy.com/media/KxnKVOI4YVfjPlzMOa/giphy.gif' width='' alt='Video Walkthrough' />
 
 GIF created with [giphy](https://giphy.com).
