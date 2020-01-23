@@ -12,7 +12,7 @@ GIF created with [giphy](https://giphy.com).
 
 ## About:
 
- * Play one on one with another live person
+ * Play chess one on one with another live person
  * Create or join an existing game
  * play in 2D or 3D
  * You can choose the time per move
