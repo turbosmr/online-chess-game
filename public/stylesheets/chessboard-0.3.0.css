@@ -15,10 +15,10 @@
 
 /* board */
 .board-b72b1 {
-  border: 3px solid white;
+  border: 0px solid white;
   -moz-box-sizing: content-box;
   box-sizing: content-box;
-  border-radius: 5px;
+  border-radius: 3px;
 }
 
 /* square */

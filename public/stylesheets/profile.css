@@ -11,17 +11,21 @@
 .friendsScroll {
   height:174px;
   overflow-y:scroll;
+  color: white;
+  background-color:rgb(40, 40, 40);
 }
 .friendsSearchScroll {
     height:100px;
     overflow-y:scroll;
+    color: white;
+    background-color:rgb(40, 40, 40);
   }
 .profileWells {
   height: auto;
 }
 .topnav {
   overflow: hidden;
-  background-color: white;
+
 }
 .topnav a {
   float: left;

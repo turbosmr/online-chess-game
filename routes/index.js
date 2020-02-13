@@ -25,7 +25,10 @@ var getCurrGames = function (req, res, next) {
       [Op.or]: [{ player1: req.user.userName }, { player2: req.user.userName }],
       [Op.not]: [{ player2: null }],
       result: null
-    }
+    },
+    order: [
+      ['createdAt','DESC'],
+    ]
   }).then(function (results, err) {
     if (err) {
       console.log('Error retrieving current games.');

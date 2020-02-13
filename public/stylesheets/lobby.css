@@ -17,7 +17,7 @@
 }
 /* gives the wells for current games and avilable games the color, border color, and padding for spacing */
 .gamesWell {
-    background-color: white;
+    background-color: rgb(40, 40, 40);
     border: 1px solid lightgray;
     border-radius: 5px;
     padding: 10px;
@@ -34,9 +34,13 @@
   overflow-y: auto;
   width: 100%;
 }
+.cg {
+  color: white;
+}
+
 /* gives the well the top 10 it's color, border color, and padding for spacing */
 .lbTop10Well {
-    background-color: white;
+    background-color: rgb(40, 40, 40);
     border: 1px solid lightgray;
     border-radius: 5px;
     padding: 10px;
@@ -54,6 +58,15 @@
   height: 470px;
   padding-top: 0px;
 }
+.modal-content {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color:rgb(40, 40, 40);
+}
+.lb-model-well {
+  background-color:rgb(40, 40, 40);
+  color: black;
+}
 /* for the title in the leaderboard to be correct height from top */
 .lb-modal {
   text-align: center;
@@ -63,7 +76,7 @@
 .lobbyChatScroll {
   height:421px;
   overflow-y:scroll;
-  background-color: white;
+  background-color: rgb(40, 40, 40);
   border: 1px solid lightgray;
   border-radius: 5px;
   padding: 10px;
@@ -71,6 +84,7 @@
 
 .table-fixed thead, .table-fixed tbody, .table-fixed tr, .table-fixed td, .table-fixed th {
   display: block;
+  color: white;
 }
 
 .table-fixed tbody td, .table-fixed thead > tr> th {
@@ -80,4 +94,5 @@
 /* needed to give the text for online players spacing from the chat input */
 #players-online {
   padding-top: 15px;
+  color: white;
 }

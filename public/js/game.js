@@ -135,8 +135,15 @@ $(function () {
 
         // Print move history
         $('#move-history-pgn').html(game.pgn({ max_width: 10, newline_char: '<br />' }));
-
-        socket.emit('playTurn', { gameID: gameID, fen: game.fen(), pgn: game.pgn(), turn: game.turn() });
+        
+        if (game.game_over()) {
+            isGameActive = false;
+            alert(checkGameStatus());
+            socket.emit('gameEnd', { gameID: gameID, fen: game.fen(), pgn: game.pgn(), turn: game.turn(), result: result });
+        }
+        else {
+            socket.emit('playTurn', { gameID: gameID, fen: game.fen(), pgn: game.pgn(), turn: game.turn() });
+        }
     });
 
     $('#undoMove').on('click', function () {
@@ -162,8 +169,7 @@ $(function () {
             $('#userHello').remove();
             socket.emit('gameEnd', { gameID: gameID, fen: game.fen(), pgn: game.pgn(), result: 'Resignation' });
             //location.replace("/");
-            socket.emit('resignGame', { gameID: gameID });
-            alert('Once you exit the game, it will no longer exist.');
+            //socket.emit('resignGame', { gameID: gameID });
         }
     });
 
@@ -333,11 +339,6 @@ $(function () {
 
         // Print move history
         $('#move-history-pgn').html(game.pgn({ max_width: 10, newline_char: '<br />' }));
-
-        if (game.game_over() == true) {
-            alert(checkGameStatus());
-            socket.emit('gameEnd', { gameID: gameID, fen: game.fen(), pgn: game.pgn(), result: result });
-        }
     });
 
     /**
@@ -345,15 +346,30 @@ $(function () {
      * Notify the user about either scenario and end the game. 
      */
     socket.on('gameEnded', function (data) {
+        game.load(data.fen);
+        game.load_pgn(data.pgn);
+        board.position(data.fen);
+
+        game2.load_pgn(game.pgn());
+        history = game2.history();
+        hist_index = history.length;
+
+        // Check move status
+        $('#moveStatus').html(checkMove());
+
+        // Print move history
+        $('#move-history-pgn').html(game.pgn({ max_width: 10, newline_char: '<br />' }));
+
         isGameActive = false;
+
         if (data.result == 'Draw') {
             drawAccepted = true;
         }
         else if (data.result == 'Resignation') {
             oppResigned = true;
         }
+
         alert(checkGameStatus());
-        alert('Once you exit the game, it will no longer exist.')
     });
 
     /**
@@ -370,15 +386,18 @@ $(function () {
         isGameActive = false;
         document.getElementById("offerDraw").disabled = true;
         document.getElementById("resignGame").disabled = true;
+
         $('#moveTimer').remove();
         $('#moveStatus').remove();
         $('#userHello').remove();
+
         if ((game.turn() == 'w' && player1 == true) || (game.turn() == 'b' && player2 == true)) {
             alert('Time expired, you lost!');
         }
         else {
             alert('Time expired, you won!');
         }
+
         alert('Once you exit the game, it will no longer exist.');
     });
 
@@ -387,6 +406,7 @@ $(function () {
      */
     socket.on('offeredDraw', function (data) {
         var r = confirm('Opponent has requested for a draw. Accept?');
+
         if (r == true) {
             document.getElementById("offerDraw").disabled = true;
             document.getElementById("resignGame").disabled = true;
@@ -400,10 +420,9 @@ $(function () {
     /**
      * Opponent has resigned. Alert current user. 
      */
-    socket.on('resignedGame', function () {
+    /*socket.on('resignedGame', function () {
         alert('Opponent has resigned, you win!');
-        alert('Once you exit the game, it will no longer exist.');
-    });
+    });*/
 
     /**
      * Check who has the current move, and render the message. 
@@ -478,6 +497,8 @@ $(function () {
         else if (oppResigned == true) {
             message = 'Opponent has resigned, you win!';
         }
+        document.getElementById("submitMove").disabled = true;
+        document.getElementById("undoMove").disabled = true;
         document.getElementById("offerDraw").disabled = true;
         document.getElementById("resignGame").disabled = true;
         $('#moveTimer').remove();
@@ -552,7 +573,7 @@ $(function () {
         if (dimensions >= 3) {
             $('#board').css('width', '525px');
             $('#board').css('height', '393px');
-            cfg.backgroundColor = 0x383434;
+            cfg.backgroundColor = 0x423E3E;
             cfg.lightSquareColor = Number(cfg.boardTheme[0]);
             cfg.darkSquareColor = Number(cfg.boardTheme[1]);
             cfg.blackPieceColor = 0x000000;

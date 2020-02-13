@@ -33,17 +33,14 @@ h5.welcome-login-reg-shadow {
 
 .reg-login-bg {
   /* The image used */
-  background-image: url("/images/chessbg.jpg");
   /* Center and scale the image nicely */
   background-position: center;
   background-repeat: no-repeat;
   background-size:cover;
-  height: 400px;
 }
 /* adjust the height of the alert messages to be center in the background of the register/login page */ 
 .reg-login-messages {
-  padding-top: 80px;
-  min-height: 52px;
+  min-height: 20px;
   width: 250px;
   margin: auto;
 }
@@ -61,22 +58,19 @@ h5.welcome-login-reg-shadow {
 
 .banner, h1.bannerHeader {
   /* The image used */
-  background-image: url("/images/chessbg.jpg");
+  background-image: url("/images/PTQlogo2.png");
   /* Full height */
   max-height: 100%;
   max-width: 100%;
-  height: 150px; 
+  height: 120px; 
   width: 100%;
   /* Center and scale the image nicely */
   background-position: 0;
   background-repeat: no-repeat;
   background-size:100%;
   /* CSS for banner header text */
-  font-weight: lighter;
-  font-size: 50px;
-  line-height: 150px;
+  line-height: 60px;
   text-align: center;
-  text-shadow: 1px 1px black;
   color:white;
 }
 
@@ -86,13 +80,17 @@ h5.welcome-login-reg-shadow {
 }
 /* color and padding of the footer */
 .footer{
-  background-color:rgb(37, 36, 36);
+  background-color:rgb(40, 40, 40);
   color: white;
   padding: 30px;
 }
 /* this makes the footer stay at the bottom (aka: sticky footer) */
 .footer-pushdown {
   min-height: calc(100% - 89px);
+}
+
+.navbar-inverse {
+  background-color:rgb(40, 40, 40);
 }
 
 * { 
@@ -107,6 +105,7 @@ h5.welcome-login-reg-shadow {
   list-style-type: none;
   margin: 0;
   padding-top: 0px;
+  color: white;
 }
 /* padding for messages */
 #messages li { 
@@ -114,7 +113,8 @@ h5.welcome-login-reg-shadow {
 }
 /* gives the chat light color difference between lines */
 #messages li:nth-child(odd) { 
-  background: #eee; 
+  color: white;
+  background: rgb(56, 52, 52); 
 }
 
 form { 
@@ -131,7 +131,7 @@ input {
 }
 /* makkes all wells white */ 
 .well {
-  background-color:white;
+  background-color:rgb(40, 40, 40);
 }
 
 .center-block{
@@ -151,8 +151,9 @@ input {
   margin-left: 5px;
 }
 /* text style and zero padding so that the text dosen't have too much spacing*/
-h3, h4, h5, p  {
+h3, h4, h5, p, h1  {
   padding-top: 0;
   font-family: Arial, Helvetica, sans-serif;
+  color: white;
 }
 

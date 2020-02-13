@@ -75,7 +75,7 @@ $(function () {
     });
 
     /**
-     * Render newly created game.
+     * Preprend newly created game into available games well.
      */
     socket.on('newGameCreated', function (data) {
         let html = '<tr id="'+ data.gameID +'">\
@@ -89,14 +89,21 @@ $(function () {
     });
 
     /**
-     * Remove game once available game is filled.
+     * Remove game once available game is filled,
+     * and preprend filled  game into current games well.
      */
     socket.on('gameFilled', function (data) {
-        console.log('game filled')
-        //$('#' + data.gameID).removeAttr('href');
-        //$('#' + data.gameID).attr('disabled', 'true');
         $('#' + data.gameID).fadeOut(2000, function () {
             $(this).remove();
         });
+        
+        let html = '<tr id="'+ data.gameID +'">\
+                        <td class="col-xs-3">'+ data.oppName +'</td>\
+                        <td class="col-xs-3">'+ data.moveTime +'</td>\
+                        <td class="col-xs-3">'+ data.move +'</td>\
+                        <td class="col-xs-3"><a type="button" href="/game/'+ data.gameID +'"\
+                        class="btn pull-right btn-success btn-xs">Rejoin</a></td>\
+                    </tr>';
+        $(html).prependTo('#currGamesScroll').hide().fadeIn(2000);
     });
 });

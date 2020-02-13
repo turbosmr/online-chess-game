@@ -154,7 +154,14 @@ module.exports = function (io) {
                         User.findAll({ where: { 
                             [Op.or]: [{ userName: game.player1 }, { userName: data.currUser }]
                         } }).then(function (user) {
-                            var currUserRating, oppRating, boardTheme2D, pieceTheme2D, pieceTheme3D;
+                            var currUserRating, 
+                                oppRating, 
+                                boardTheme2D, 
+                                pieceTheme2D, 
+                                pieceTheme3D,
+                                hours,
+                                minutes,
+                                timeRemFormatted;
                             if (user[1].userName == data.currUser) {
                                 boardTheme2D = user[1].boardTheme2D;
                                 pieceTheme2D = user[1].pieceTheme2D;
@@ -187,7 +194,15 @@ module.exports = function (io) {
                                 oppRating: currUserRating 
                             });
                             // Let other users know that game is filled
-                            socket.broadcast.emit('gameFilled', { gameID: game.gameId });
+                            hours = Math.floor((game.moveTimeLimit / (60)));
+                            minutes = game.moveTimeLimit % 60;
+                            timeRemFormatted = parseInt(hours, 10) + 'h' + parseInt(minutes, 10) + 'm';
+                            socket.broadcast.emit('gameFilled', { 
+                                gameID: game.gameId,
+                                oppName: game.player2,
+                                moveTime: timeRemFormatted,
+                                move: game.move
+                            });
                         });
                     }
                     // Game is full
@@ -235,9 +250,18 @@ module.exports = function (io) {
          */
         socket.on('gameEnd', function (data) {
             Game.findOne({ where: { gameId: data.gameID } }).then(function (game) {
+                var move;
+                if (data.turn == 'w') {
+                    move = game.player1;
+                }
+                else {
+                    move = game.player2;
+                }
                 return game.update({
                     fen: data.fen,
                     pgn: data.pgn,
+                    turns: Sequelize.literal('turns + 1'),
+                    move: move,
                     result: data.result
                 });
             }).then(function (game) {
@@ -287,7 +311,13 @@ module.exports = function (io) {
                     hours = Math.floor((timeRem % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
                     minutes = Math.floor((timeRem % (1000 * 60 * 60)) / (1000 * 60));
                     seconds = Math.floor((timeRem % (1000 * 60)) / 1000);
-                    timeRemFormatted = 'Move Time Left: ' + ('0' + days).slice(-2) + ':' + ('0' + hours).slice(-2) + ':' + ('0' + minutes).slice(-2) + ':' + ('0' + seconds).slice(-2)
+                    if (days > 1) {
+                        timeRemFormatted = 'Move Time: ' + days +' Days'
+                    }
+                    else {
+                        timeRemFormatted = 'Move Time: ' + ('0' + hours).slice(-2) + ':' 
+                        + ('0' + minutes).slice(-2) + ':' + ('0' + seconds).slice(-2)
+                    }
                     if (timeRem > 0) {
                         io.in(game.gameId).emit('moveTimer', { timeRem: timeRemFormatted });
                     }
