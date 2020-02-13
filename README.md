@@ -1,17 +1,11 @@
 # Online Multiplayer Chess Game
  # csc667-teamproject-team10
-
- **CSC 667-team project-team10**
- # Todo:
-
+ 
  By: **Steve Rentschler**
- 1. Change the name of the repo with the correct team number.
-
+ 
  ## Demo 
- 2. Invite all members to your repository.
 
  <img src='https://media.giphy.com/media/KxnKVOI4YVfjPlzMOa/giphy.gif' width='' alt='Video Walkthrough' />
- 3. When ready, initialize your repository with the initial state of your project.
 
  GIF created with [giphy](https://giphy.com).
 
